@@ -1,25 +1,24 @@
+'use strict';
+
 //setup Dependencies
 var express  = require('express'),
-bodyParser   = require('body-parser'),
-cookieParser = require('cookie-parser'),
-csrf         = require('csurf'),
-session      = require('express-session'),
-state        = require('express-state'),
-flash        = require('express-flash'),
-cluster      = require('express-cluster'),
-hbs          = require('./lib/exphbs'),
-routes       = require('./routes'),
-middleware   = require('./middleware'),
-config       = require('./config'),
-utils        = require('./lib/utils'),
-port         = (process.env.PORT || 8000);
+    bodyParser   = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    csrf         = require('csurf'),
+    session      = require('express-session'),
+    state        = require('express-state'),
+    flash        = require('express-flash'),
+
+    hbs          = require('./lib/exphbs'),
+    middleware   = require('./middleware'),
+    config       = require('./config'),
+
+    User         = require('./lib/user'),
+
+    port         = (process.env.PORT || 8000);
 
 
-//Comment out the line below if you want to enable cluster support.
 setupServer();
-
-//Uncomment the line below if you want to enable cluster support.
-//cluster(setupServer);
 
 
 function setupServer (worker) {
@@ -40,11 +39,6 @@ function setupServer (worker) {
 
     //Change "App" to whatever your application's name is, or leave it like this.
     app.set('state namespace', 'App');
-
-    //Create an empty Data object and expose it to the client. This
-    //will be available on the client under App.Data.
-    //This is just an example, so feel free to remove this.
-    app.expose({}, 'Data');
 
     if (app.get('env') === 'development') {
       app.use(middleware.logger('tiny'));
@@ -68,7 +62,7 @@ function setupServer (worker) {
     app.use(cookieParser());
 
     // Session Handling
-    app.use(session({secret: 'keyboard cat', resave: true, saveUninitialized: true}));
+    app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
 
 
     // Flash Message Support
@@ -89,6 +83,20 @@ function setupServer (worker) {
         next();
     });
 
+    app.use(function (req, res, next) {
+      var contacts = req.session.contacts;
+      if (!contacts) {
+        req.session.contactCount = 0;
+        req.session.contacts = [];
+      }
+
+      app.expose({
+        contacts: req.session.contacts
+      }, 'Data');
+
+      next();
+    });
+
     // Use the router.
     app.use(router);
 
@@ -99,31 +107,53 @@ function setupServer (worker) {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
-    // The exposeTemplates() method makes the Handlebars templates that are inside /shared/templates/
-    // available to the client.
-    var User = require('./lib/user.js'); User('joshyu');
-
-    //router.get('/', [ middleware.exposeTemplates(), routes.render('home') ]);
-    router.get('/', [ middleware.exposeTemplates(), function (req, res, next) {
-        res.render("home", {
+    router.get('/users/:id?', [ middleware.exposeTemplates(), function (req, res) {
+        var current;
+        if (req.params.id) {
+            req.session.contacts.forEach(function (contact) {
+                if (contact.id == parseInt(req.params.id, 10)) {
+                    current = contact;
+                }
+            });
+        }
+        console.log(current);
+        res.render("users", {
             data: {
-                name: "chris",
-                value: "new"
+                contacts: req.session.contacts,
+                current: current
             }
         });
     } ]);
 
-    router.post('/add', function (req, res, next) {
-        console.log(req.body.name);
-        res.redirect('/');
+    router.post('/api/add', function (req, res) {
+        var user = new User({
+            id: req.session.contactCount,
+            name: req.body.name
+        });
+
+        req.session.contacts.push({
+            id: user.getID(),
+            name: user.getName()
+        });
+        req.session.contactCount++;
+
+        if (!req.xhr) {
+            res.redirect('/users');
+        } else {
+            res.statusCode = 201;
+            res.json({
+                id: user.getID(),
+                name: user.getName()
+            });
+        }
     });
 
     // Error handling middleware
-    app.use(function(req, res, next){
+    app.use(function(req, res){
         res.render('404', { status: 404, url: req.url });
     });
 
-    app.use(function(err, req, res, next){
+    app.use(function(err, req, res){
         res.render('500', {
             status: err.status || 500,
             error: err

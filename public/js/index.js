@@ -2,54 +2,82 @@
 
 var User = require("../../lib/user.js");
 var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime.js");
+var request = require('request');
 
-var test = function(name, y = 3) {
-  console.log(name, y);
+var contacts = App.Data.contacts;
+
+var viewCurrentUser = document.querySelector(".current-user");
+var viewContacts = document.querySelector(".contacts");
+
+var initCurrentUser = function () {
+
+  var links = viewContacts.querySelectorAll('.contact a');
+
+  var linkClick = function (event) {
+    event.preventDefault();
+
+    var id = event.target.dataset.id;
+    var current;
+
+    contacts.forEach(function(contact) {
+      if (contact.id === parseInt(id, 10)) {
+        current = contact;
+      }
+    });
+
+    var template = Handlebars.template(App.templates['current-user']);
+    var html = template({data: {
+      current: current
+    }});
+    viewCurrentUser.innerHTML = html;
+  };
+
+  for(let i=0; i<links.length; i++) {
+    links[i].addEventListener('click', linkClick);
+  }
 };
 
-new User('joddychris');
-test('dave');
-
-var value = '';
-var count = 0;
-
 var init = function () {
-  var button = document.querySelector(".update");
-  var viewTest = document.querySelector(".test");
-  var input = document.querySelector(".input");
-  var output = document.querySelector(".output");
+  var form = document.getElementById("contact-add");
 
-  value = input.value;
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  button.addEventListener('click', function () {
-    var template = Handlebars.template(App.templates.test);
-    var html = template({data: {
-      name: "Tilos" + count,
-      value: value
-    }});
-    viewTest.innerHTML = html;
-    init();
+    var name = event.target.elements.name.value;
+
+    var user = new User({
+      name: name
+    });
+
+    var post_data = {
+      _csrf: event.target.elements._csrf.value,
+      name: name,
+    };
+
+    request.post({
+      url: event.target.action,
+      form: post_data,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }, function(err,httpResponse,body) {
+
+      var result = JSON.parse(body);
+      contacts.push({
+        id: result.id,
+        name: result.name
+      });
+
+      var template = Handlebars.template(App.templates.contacts);
+      var html = template({data: {
+        contacts: contacts
+      }});
+      viewContacts.innerHTML = html;
+
+      initCurrentUser();
+    });
   });
-
-  input.addEventListener('keyup', function(event) {
-    value = event.target.value;
-    output.textContent = value;
-  });
-  input.addEventListener('change', function(event) {
-    value = event.target.value;
-    output.textContent = value;
-  });
-
-  count++;
 };
 
 init();
-
-var fives = [];
-var nums = [0, 2, 5, 6, 8, 20, 10];
-nums.forEach(v => {
-  if (v % 5 === 0) {
-    fives.push(v);
-  }
-});
-
+initCurrentUser();

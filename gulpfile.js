@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
-var uglify = require('gulp-uglify');
+//var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var to5ify = require("6to5ify");
 var nodemon = require("gulp-nodemon");
@@ -44,7 +44,9 @@ gulp.task('scripts', function() {
 gulp.task('dev', function () {
     nodemon({
         script: 'server.js',
-        nodeArgs: ['--harmony']
+        nodeArgs: ['--harmony'],
+        ext: 'js json handlebars',
+        ignore: ["public/js/dist/*"],
     })
       .on('start', ['scripts'])
       .on('restart', ['scripts']);
