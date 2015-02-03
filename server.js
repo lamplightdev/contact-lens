@@ -69,7 +69,7 @@ function setupServer (worker) {
     app.use(express.static(config.dirs.pub));
 
     app.use(csrf());
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
         var token = req.csrfToken();
         res.cookie('XSRF-TOKEN', token);
         res.locals._csrf = token;
@@ -92,6 +92,9 @@ function setupServer (worker) {
       next();
     });
 
+
+    app.use(middleware.exposeTemplates());
+
     // Use the router.
     app.use(router);
 
@@ -102,18 +105,27 @@ function setupServer (worker) {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
-    router.get('/contacts/:id?', [ middleware.exposeTemplates(), function (req, res) {
+    router.get('/contacts/:id?', function (req, res) {
         var ctrlr = new ControllerContacts(null, {
             contacts: req.session.contacts,
             currentID: req.params.id
         });
 
         res.render("view-contacts", ctrlr.getViewData());
-    } ]);
+    });
 
-    router.get('/account/', [ middleware.exposeTemplates(), function (req, res) {
+    router.post('/contacts/:id?', function (req, res) {
+        var ctrlr = new ControllerContacts(null, {
+            contacts: req.session.contacts,
+            currentID: req.params.id
+        });
+
+        res.render("view-contacts", ctrlr.getViewData());
+    });
+
+    router.get('/account/', function (req, res) {
         res.render("view-account");
-    } ]);
+    });
 
     router.post('/api/add', function (req, res) {
         var contact = new Contact({

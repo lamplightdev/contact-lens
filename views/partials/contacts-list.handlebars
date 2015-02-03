@@ -1,8 +1,10 @@
 {{#if contacts}}
   {{#each contacts}}
-    <div class='contact'>
-      <a href='/contacts/{{this.id}}' data-id='{{this.id}}'>{{this.name}}</a>
-      <form action='/api/contacts/delete/{{this.id}}' method='post'>
+    <div class='contact' data-id='{{this.id}}'>
+      <a href='/contacts/{{this.id}}' data-action='open'>{{this.name}}</a>
+      <form action='' method='post' data-action='remove' data-api-action='/api/contacts/{{this.id}}'>
+        <input type='hidden' name='_csrf' value='{{../_csrf}}'>
+        <input type='hidden' name='id' value='{{this.id}}'>
         <button type='submit'>remove</button>
       </form>
     </div>
