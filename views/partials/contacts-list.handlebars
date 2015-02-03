@@ -1,0 +1,7 @@
+{{#if contacts}}
+  {{#each contacts}}
+    <div class='contact'><a href='/contacts/{{this.id}}' data-id='{{this.id}}'>{{this.name}}</a></div>
+  {{/each}}
+{{else}}
+  No contacts
+{{/if}}
