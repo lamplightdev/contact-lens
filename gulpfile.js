@@ -7,6 +7,7 @@ var browserify = require('browserify');
 var sourcemaps = require('gulp-sourcemaps');
 var to5ify = require("6to5ify");
 var nodemon = require("gulp-nodemon");
+//var sass = require('gulp-sass');
 
 
 var getBundleName = function () {
@@ -15,7 +16,13 @@ var getBundleName = function () {
   return version + '.' + name + '.' + 'min';
 };
 
-
+/*
+gulp.task('sass', function () {
+  gulp.src('./public/sass/main.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./public/css'));
+});
+*/
 gulp.task('scripts', function() {
 
   var bundler = browserify({
