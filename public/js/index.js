@@ -1,35 +1,40 @@
 "use strict";
 
-var User = require("../../lib/user.js");
+var ControllerContacts = require("../../lib/controllers/contacts.js");
 var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime.js");
-var request = require('request');
+var request = require('browser-request');
 
-var contacts = App.Data.contacts;
+for(var key in App.templates) {
+    if(App.templates.hasOwnProperty(key)) {
+        Handlebars.registerPartial(key, Handlebars.template(App.templates[key]));
+    }
+}
 
-var viewCurrentUser = document.querySelector(".current-user");
-var viewContacts = document.querySelector(".contacts");
+var viewContainer = document.querySelector('.container');
+//var viewCurrentContact = document.querySelector(".current-contact");
 
-var initCurrentUser = function () {
+
+var ctrlr = new ControllerContacts(App.templates['contacts'], {
+  contacts: App.Data.contacts,
+  _csrf: App.Data._csrf
+}, function () {
+  init();
+  initCurrentContact();
+});
+
+
+var initCurrentContact = function () {
+  var viewContacts = document.querySelector(".list");
+  var viewCurrentContact = document.querySelector(".current-contact");
 
   var links = viewContacts.querySelectorAll('.contact a');
 
   var linkClick = function (event) {
     event.preventDefault();
 
-    var id = event.target.dataset.id;
-    var current;
+    ctrlr.setCurrent(event.target.dataset.id);
 
-    contacts.forEach(function(contact) {
-      if (contact.id === parseInt(id, 10)) {
-        current = contact;
-      }
-    });
-
-    var template = Handlebars.template(App.templates['current-user']);
-    var html = template({data: {
-      current: current
-    }});
-    viewCurrentUser.innerHTML = html;
+    ctrlr.renderPart(App.templates['contacts-current-contact'], viewCurrentContact);
   };
 
   for(let i=0; i<links.length; i++) {
@@ -39,15 +44,12 @@ var initCurrentUser = function () {
 
 var init = function () {
   var form = document.getElementById("contact-add");
+  var viewContacts = document.querySelector(".list");
 
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
     var name = event.target.elements.name.value;
-
-    var user = new User({
-      name: name
-    });
 
     var post_data = {
       _csrf: event.target.elements._csrf.value,
@@ -63,21 +65,17 @@ var init = function () {
     }, function(err,httpResponse,body) {
 
       var result = JSON.parse(body);
-      contacts.push({
+      ctrlr.addContact({
         id: result.id,
         name: result.name
       });
 
-      var template = Handlebars.template(App.templates.contacts);
-      var html = template({data: {
-        contacts: contacts
-      }});
-      viewContacts.innerHTML = html;
-
-      initCurrentUser();
+      ctrlr.renderPart(App.templates['contacts-list'], viewContacts, function() {
+        initCurrentContact();
+      });
     });
   });
 };
 
 init();
-initCurrentUser();
+initCurrentContact();

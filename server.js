@@ -13,7 +13,8 @@ var express  = require('express'),
     middleware   = require('./middleware'),
     config       = require('./config'),
 
-    User         = require('./lib/user'),
+    Contact         = require('./lib/contact'),
+    ControllerContacts = require('./lib/controllers/contacts.js'),
 
     port         = (process.env.PORT || 8000);
 
@@ -71,15 +72,12 @@ function setupServer (worker) {
     // Specify the public directory.
     app.use(express.static(config.dirs.pub));
 
-    // Uncomment this line if you are using Bower, and have a bower_components directory.
-    // Before uncommenting this line, go into config/index.js and add config.dirs.bower there.
-    //app.use(express.static(config.dirs.bower));
-
     app.use(csrf());
     app.use(function(req, res, next) {
         var token = req.csrfToken();
         res.cookie('XSRF-TOKEN', token);
         res.locals._csrf = token;
+
         next();
     });
 
@@ -91,7 +89,8 @@ function setupServer (worker) {
       }
 
       app.expose({
-        contacts: req.session.contacts
+        contacts: req.session.contacts,
+        _csrf: res.locals._csrf
       }, 'Data');
 
       next();
@@ -107,43 +106,34 @@ function setupServer (worker) {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
-    router.get('/users/:id?', [ middleware.exposeTemplates(), function (req, res) {
-        var current;
-        if (req.params.id) {
-            req.session.contacts.forEach(function (contact) {
-                if (contact.id == parseInt(req.params.id, 10)) {
-                    current = contact;
-                }
-            });
-        }
-        console.log(current);
-        res.render("users", {
-            data: {
-                contacts: req.session.contacts,
-                current: current
-            }
+    router.get('/contacts/:id?', [ middleware.exposeTemplates(), function (req, res) {
+        var ctrlr = new ControllerContacts(null, {
+            contacts: req.session.contacts,
+            currentID: req.params.id
         });
+
+        res.render("view", ctrlr.getViewData());
     } ]);
 
     router.post('/api/add', function (req, res) {
-        var user = new User({
+        var contact = new Contact({
             id: req.session.contactCount,
             name: req.body.name
         });
 
         req.session.contacts.push({
-            id: user.getID(),
-            name: user.getName()
+            id: contact.getID(),
+            name: contact.getName()
         });
         req.session.contactCount++;
 
         if (!req.xhr) {
-            res.redirect('/users');
+            res.redirect('/contacts');
         } else {
             res.statusCode = 201;
             res.json({
-                id: user.getID(),
-                name: user.getName()
+                id: contact.getID(),
+                name: contact.getName()
             });
         }
     });
