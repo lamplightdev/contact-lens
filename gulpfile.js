@@ -11,7 +11,7 @@ var nodemon = require("gulp-nodemon");
 
 var getBundleName = function () {
   var version = require('./package.json').version;
-  var name = require('./package.json').name;
+  var name = require('./package.json').name.toLowerCase().replace(/[^a-z0-9]/g, '');
   return version + '.' + name + '.' + 'min';
 };
 

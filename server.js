@@ -7,7 +7,6 @@ var express  = require('express'),
     csrf         = require('csurf'),
     session      = require('express-session'),
     state        = require('express-state'),
-    flash        = require('express-flash'),
 
     hbs          = require('./lib/exphbs'),
     middleware   = require('./middleware'),
@@ -66,9 +65,6 @@ function setupServer (worker) {
     app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
 
 
-    // Flash Message Support
-    app.use(flash());
-
     // Specify the public directory.
     app.use(express.static(config.dirs.pub));
 
@@ -112,7 +108,11 @@ function setupServer (worker) {
             currentID: req.params.id
         });
 
-        res.render("view", ctrlr.getViewData());
+        res.render("view-contacts", ctrlr.getViewData());
+    } ]);
+
+    router.get('/account/', [ middleware.exposeTemplates(), function (req, res) {
+        res.render("view-account");
     } ]);
 
     router.post('/api/add', function (req, res) {

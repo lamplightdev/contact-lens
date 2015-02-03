@@ -1,81 +1,65 @@
 "use strict";
 
+var Router = require("../../lib/router.js");
+
+var ControllerAccount = require("../../lib/controllers/account.js");
 var ControllerContacts = require("../../lib/controllers/contacts.js");
+
+var ViewAccount = require("../../lib/views/account.js");
+var ViewContacts = require("../../lib/views/contacts.js");
+
 var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime.js");
-var request = require('browser-request');
+var urlparse = require('url').parse;
+
+var viewContainer = document.getElementById('view');
+var currentView = null;
+
 
 for(var key in App.templates) {
-    if(App.templates.hasOwnProperty(key)) {
-        Handlebars.registerPartial(key, Handlebars.template(App.templates[key]));
-    }
+  if(App.templates.hasOwnProperty(key)) {
+    Handlebars.registerPartial(key, Handlebars.template(App.templates[key]));
+  }
 }
 
-var viewContainer = document.querySelector('.container');
-//var viewCurrentContact = document.querySelector(".current-contact");
+Router
+  .add(/^contacts$/, function (preRendered) {
+    console.log('contacts');
+    currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
+      contacts: App.Data.contacts,
+      _csrf: App.Data._csrf
+    }), currentView instanceof ViewContacts, preRendered);
+  })
 
+  .add(/^contacts\/(.*)$/, function (preRendered, id) {
+    console.log('contacts id');
+    currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
+      contacts: App.Data.contacts,
+      _csrf: App.Data._csrf
+    }), currentView instanceof ViewContacts, preRendered);
 
-var ctrlr = new ControllerContacts(App.templates['contacts'], {
-  contacts: App.Data.contacts,
-  _csrf: App.Data._csrf
-}, function () {
-  init();
-  initCurrentContact();
-});
+    currentView.selectContact(id);
+  })
 
+  .add(/account/, function (preRendered) {
+    console.log('account');
+    currentView = new ViewAccount(Router, App.templates, viewContainer, new ControllerAccount(App.templates['account']), currentView instanceof ViewAccount, preRendered);
+  })
 
-var initCurrentContact = function () {
-  var viewContacts = document.querySelector(".list");
-  var viewCurrentContact = document.querySelector(".current-contact");
+  .add(function() {
+    console.log('default');
+  })
 
-  var links = viewContacts.querySelectorAll('.contact a');
+  .listen()
+  .check(true);
 
-  var linkClick = function (event) {
-    event.preventDefault();
+function nav(event) {
+  event.preventDefault();
 
-    ctrlr.setCurrent(event.target.dataset.id);
+  Router.navigate(urlparse(event.target.href).pathname);
+}
 
-    ctrlr.renderPart(App.templates['contacts-current-contact'], viewCurrentContact);
-  };
+var navLinks = document.querySelectorAll('[data-nav]');
+for(let i=0; i<navLinks.length; i++) {
+  navLinks[i].addEventListener('click', nav);
+}
 
-  for(let i=0; i<links.length; i++) {
-    links[i].addEventListener('click', linkClick);
-  }
-};
-
-var init = function () {
-  var form = document.getElementById("contact-add");
-  var viewContacts = document.querySelector(".list");
-
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    var name = event.target.elements.name.value;
-
-    var post_data = {
-      _csrf: event.target.elements._csrf.value,
-      name: name,
-    };
-
-    request.post({
-      url: event.target.action,
-      form: post_data,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    }, function(err,httpResponse,body) {
-
-      var result = JSON.parse(body);
-      ctrlr.addContact({
-        id: result.id,
-        name: result.name
-      });
-
-      ctrlr.renderPart(App.templates['contacts-list'], viewContacts, function() {
-        initCurrentContact();
-      });
-    });
-  });
-};
-
-init();
-initCurrentContact();

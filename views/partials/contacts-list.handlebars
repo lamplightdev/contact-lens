@@ -1,6 +1,11 @@
 {{#if contacts}}
   {{#each contacts}}
-    <div class='contact'><a href='/contacts/{{this.id}}' data-id='{{this.id}}'>{{this.name}}</a></div>
+    <div class='contact'>
+      <a href='/contacts/{{this.id}}' data-id='{{this.id}}'>{{this.name}}</a>
+      <form action='/api/contacts/delete/{{this.id}}' method='post'>
+        <button type='submit'>remove</button>
+      </form>
+    </div>
   {{/each}}
 {{else}}
   No contacts
