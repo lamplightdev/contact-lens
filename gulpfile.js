@@ -7,7 +7,7 @@ var browserify = require('browserify');
 var sourcemaps = require('gulp-sourcemaps');
 var to5ify = require("6to5ify");
 var nodemon = require("gulp-nodemon");
-//var sass = require('gulp-sass');
+var sass = require('gulp-sass');
 
 
 var getBundleName = function () {
@@ -16,13 +16,12 @@ var getBundleName = function () {
   return version + '.' + name + '.' + 'min';
 };
 
-/*
 gulp.task('sass', function () {
-  gulp.src('./public/sass/main.scss')
+  gulp.src('./public/styles/main.scss')
     .pipe(sass())
     .pipe(gulp.dest('./public/css'));
 });
-*/
+
 gulp.task('scripts', function() {
 
   var bundler = browserify({
@@ -51,10 +50,10 @@ gulp.task('scripts', function() {
 gulp.task('dev', function () {
     nodemon({
         script: 'server.js',
-        nodeArgs: ['--harmony'],
+        //nodeArgs: ['--harmony'],
         ext: 'js json handlebars',
         ignore: ["public/js/dist/*"],
     })
-      .on('start', ['scripts'])
-      .on('restart', ['scripts']);
+      .on('start', ['scripts', 'sass'])
+      .on('restart', ['scripts', 'sass']);
 });

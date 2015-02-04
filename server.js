@@ -1,5 +1,7 @@
 'use strict';
 
+require("6to5/register");
+
 //setup Dependencies
 var express  = require('express'),
     bodyParser   = require('body-parser'),
@@ -105,6 +107,18 @@ function setupServer (worker) {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
+    router.delete('/api/contacts/:id', function (req, res) {
+        var ctrlr = new ControllerContacts(null, {
+            contacts: req.session.contacts,
+            currentID: req.params.id
+        });
+
+        ctrlr.removeCurrent();
+
+        res.statusCode = 204;
+        res.end();
+    });
+
     router.get('/contacts/:id?', function (req, res) {
         var ctrlr = new ControllerContacts(null, {
             contacts: req.session.contacts,
@@ -117,10 +131,14 @@ function setupServer (worker) {
     router.post('/contacts/:id?', function (req, res) {
         var ctrlr = new ControllerContacts(null, {
             contacts: req.session.contacts,
-            currentID: req.params.id
+            currentID: req.body.id
         });
 
-        res.render("view-contacts", ctrlr.getViewData());
+        ctrlr.removeCurrent();
+
+        res.redirect('/contacts');
+
+        //res.render("view-contacts", ctrlr.getViewData());
     });
 
     router.get('/account/', function (req, res) {
