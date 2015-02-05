@@ -12,7 +12,7 @@ var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime.
 var urlparse = require('url').parse;
 
 var viewContainer = document.getElementById('view');
-var currentView = null;
+var currentCtrlr = null;
 
 
 for(var key in App.templates) {
@@ -25,10 +25,13 @@ Router
   .add(/^contacts$/, function (preRendered) {
     console.log('contacts');
 
-    var ctrlr = new ControllerContacts(App.Data.contacts);
-    ctrlr.list(App.templates['contacts'], viewContainer, {
-      _csrf: App.Data._csrf
-    });
+    if (!(currentCtrlr instanceof ControllerContacts)) {
+      currentCtrlr = new ControllerContacts(App.Data.contacts); //TODO: put viewContainer here
+
+      currentCtrlr.contacts(viewContainer, {
+        _csrf: App.Data._csrf
+      }, preRendered);
+    }
     /*
     currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
       contacts: App.Data.contacts,
@@ -39,12 +42,16 @@ Router
 
   .add(/^contacts\/(.*)$/, function (preRendered, id) {
     console.log('contacts id');
-    currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
-      contacts: App.Data.contacts,
-      _csrf: App.Data._csrf
-    }), currentView instanceof ViewContacts, preRendered);
 
-    currentView.selectContact(id);
+    if (!(currentCtrlr instanceof ControllerContacts)) {
+      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates);
+
+      currentCtrlr.contacts(viewContainer, {
+        _csrf: App.Data._csrf
+      }, preRendered);
+    } else {
+      currentCtrlr.select(id);
+    }
   })
 
   .add(/account/, function (preRendered) {
