@@ -127,21 +127,32 @@ function setupServer (worker) {
             currentID: req.params.id
         });
         */
-        console.log(req.session.contacts);
-        var ctrlr = new ControllerContacts(req.session.contacts);
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        console.log(ctrlr);
 
         res.render("view-contacts", ctrlr._getViewData());
     });
 
     router.post('/contacts/:id?', function (req, res) {
-        var ctrlr = new ControllerContacts(null, {
-            contacts: req.session.contacts,
-            currentID: req.body.id
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+            _csrf: res.locals._csrf
         });
 
-        ctrlr.removeCurrent();
+        var newModel = new ModelContact({
+            id: req.session.contacts.length,
+            name: req.body.name
+        });
 
-        res.redirect('/contacts');
+        ctrlr.add(newModel);
+
+        /*
+        ctrlr.removeCurrent();
+        */
+
+        res.redirect('/contacts/' + newModel.getID());
 
         //res.render("view-contacts", ctrlr.getViewData());
     });
@@ -151,7 +162,7 @@ function setupServer (worker) {
     });
 
     router.post('/api/add', function (req, res) {
-        var contact = new Contact({
+        var contact = new ModelContact({
             id: req.session.contactCount,
             name: req.body.name
         });

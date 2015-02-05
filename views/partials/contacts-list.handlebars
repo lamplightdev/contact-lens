@@ -1,9 +1,9 @@
-{{#if contacts}}
-  {{#each contacts}}
+{{#if model}}
+  {{#each model}}
     <div class='contact' data-id='{{this.id}}'>
       <a class='' href='/contacts/{{this.id}}' data-action='open'>{{this.name}}</a>
       <form action='' method='post' data-action='remove' data-api-action='/api/contacts/{{this.id}}'>
-        <input type='hidden' name='_csrf' value='{{../_csrf}}'>
+        <input type='hidden' name='_csrf' value='{{../extra._csrf}}'>
         <input type='hidden' name='id' value='{{this.id}}'>
         <button class='btn' type='submit'>remove</button>
       </form>

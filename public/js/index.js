@@ -26,31 +26,35 @@ Router
     console.log('contacts');
 
     if (!(currentCtrlr instanceof ControllerContacts)) {
-      currentCtrlr = new ControllerContacts(App.Data.contacts); //TODO: put viewContainer here
-
-      currentCtrlr.contacts(viewContainer, {
+      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates, viewContainer, {
         _csrf: App.Data._csrf
-      }, preRendered);
+      });
+
+      if (!preRendered) {
+        currentCtrlr.unselect();
+      }
+      currentCtrlr.list(preRendered);
+    } else {
+      currentCtrlr.unselect();
+      currentCtrlr.contactsCurrent();
     }
-    /*
-    currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
-      contacts: App.Data.contacts,
-      _csrf: App.Data._csrf
-    }), currentView instanceof ViewContacts, preRendered);
-  */
   })
 
   .add(/^contacts\/(.*)$/, function (preRendered, id) {
     console.log('contacts id');
 
     if (!(currentCtrlr instanceof ControllerContacts)) {
-      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates);
-
-      currentCtrlr.contacts(viewContainer, {
+      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates, viewContainer, {
         _csrf: App.Data._csrf
-      }, preRendered);
+      });
+
+      if (!preRendered) {
+        currentCtrlr.select(id);
+      }
+      currentCtrlr.list(preRendered);
     } else {
       currentCtrlr.select(id);
+      currentCtrlr.contactsCurrent();
     }
   })
 
