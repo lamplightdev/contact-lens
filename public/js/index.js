@@ -24,10 +24,17 @@ for(var key in App.templates) {
 Router
   .add(/^contacts$/, function (preRendered) {
     console.log('contacts');
+
+    var ctrlr = new ControllerContacts(App.Data.contacts);
+    ctrlr.list(App.templates['contacts'], viewContainer, {
+      _csrf: App.Data._csrf
+    });
+    /*
     currentView = new ViewContacts(Router, App.templates, viewContainer, new ControllerContacts(App.templates['contacts'], {
       contacts: App.Data.contacts,
       _csrf: App.Data._csrf
     }), currentView instanceof ViewContacts, preRendered);
+  */
   })
 
   .add(/^contacts\/(.*)$/, function (preRendered, id) {

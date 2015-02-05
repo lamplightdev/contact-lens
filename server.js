@@ -14,8 +14,9 @@ var express  = require('express'),
     middleware   = require('./middleware'),
     config       = require('./config'),
 
-    Contact         = require('./lib/contact'),
-    ControllerContacts = require('./lib/controllers/contacts.js'),
+    ModelContact       = require('./lib/models/contact'),
+    Collection         = require('./lib/models/collection'),
+    ControllerContacts = require('./lib/controllers/contacts'),
 
     port         = (process.env.PORT || 8000);
 
@@ -82,7 +83,6 @@ function setupServer (worker) {
     app.use(function (req, res, next) {
       var contacts = req.session.contacts;
       if (!contacts) {
-        req.session.contactCount = 0;
         req.session.contacts = [];
       }
 
@@ -120,12 +120,17 @@ function setupServer (worker) {
     });
 
     router.get('/contacts/:id?', function (req, res) {
+
+        /*
         var ctrlr = new ControllerContacts(null, {
             contacts: req.session.contacts,
             currentID: req.params.id
         });
+        */
+        console.log(req.session.contacts);
+        var ctrlr = new ControllerContacts(req.session.contacts);
 
-        res.render("view-contacts", ctrlr.getViewData());
+        res.render("view-contacts", ctrlr._getViewData());
     });
 
     router.post('/contacts/:id?', function (req, res) {
