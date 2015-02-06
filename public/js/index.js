@@ -1,5 +1,7 @@
 "use strict";
 
+require("6to5/polyfill");
+
 var RouterMain = require("../../lib/router-main");
 
 var ModelContact = require("../../lib/models/contact");

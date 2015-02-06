@@ -1,13 +1,14 @@
-<form id='contact-add' action='/contacts' method='post' data-api-action='/api/contacts'>
+<form id='contact-add' action='/contacts' method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact.id}}{{/if}}'>
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
-  <input type="hidden" name="type" value="add">
+  <input type="hidden" name="type" value="{{#if editContact}}edit{{else}}add{{/if}}">
+  <input type="hidden" name="id" value="{{editContact.id}}">
   <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield" type="text" name="name" />
+    <input class="wsk-textfield wsk-js-textfield" type="text" name="name" value="{{editContact.name}}" />
     <label class="wsk-label" for="name">Enter name</label>
   </div>
   <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield" type="email" name="email" />
+    <input class="wsk-textfield wsk-js-textfield" type="email" name="email" value="{{editContact.email}}" />
     <label class="wsk-label" for="email">Enter email</label>
   </div>
-  <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>Add</button>
+  <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
 </form>

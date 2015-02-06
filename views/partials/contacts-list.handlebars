@@ -2,7 +2,10 @@
   {{#each model}}
     <div class='contact' data-id='{{this.id}}'>
       <a class='' href='/contacts/{{this.id}}' data-action='open'>{{this.name}}</a>
-      <form action='' method='post' data-action='remove' data-api-action='/api/contacts/{{this.id}}'>
+      <div>
+        <a class='' href='/contacts/edit/{{this.id}}' data-action='edit'>edit</a>
+      </div>
+      <form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{this.id}}'>
         <input type='hidden' name='_csrf' value='{{../extra._csrf}}'>
         <input type="hidden" name="type" value="remove">
         <input type='hidden' name='id' value='{{this.id}}'>

@@ -14,6 +14,7 @@ var express  = require('express'),
     middleware   = require('./middleware'),
     config       = require('./config'),
 
+    Collection         = require('./lib/models/collection'),
     ModelContact       = require('./lib/models/contact'),
     ControllerContacts = require('./lib/controllers/contacts'),
 
@@ -82,11 +83,16 @@ function setupServer (worker) {
     app.use(function (req, res, next) {
       var contacts = req.session.contacts;
       if (!contacts) {
-        req.session.contacts = [];
+        req.session.contacts = new Collection();
+        req.session.count = 1;
+      } else {
+        req.session.contacts = new Collection(ModelContact.fromJSON(req.session.contacts));
       }
 
+      console.log('*', req.session.count, req.session.contacts);
+
       app.expose({
-        contacts: req.session.contacts,
+        contacts: req.session.contacts.toJSON(),
         _csrf: res.locals._csrf
       }, 'Data');
 
@@ -99,21 +105,6 @@ function setupServer (worker) {
     // Use the router.
     app.use(router);
 
-    function addModel(req, name) {
-        var obj = {
-            id: req.session.contacts.length + 1,
-            name: name
-        };
-
-        req.session.contacts.push(obj);
-
-        return new ModelContact(obj);
-    }
-
-
-    function removeModel(req, id) {
-        req.session.contacts.splice(id-1, 1);
-    }
 
     ///////////////////////////////////////////
     //              Routes                   //
@@ -121,37 +112,75 @@ function setupServer (worker) {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
-    router.delete('/api/contacts/:id', function (req, res) {
-        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+
+    router.post('/api/contacts', function (req, res) {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        removeModel(req, req.params.id);
-        ctrlr.removeByID(req.params.id);
+        var modelToAdd = new ModelContact({
+            id: req.session.count,
+            name: req.body.name,
+            email: req.body.email,
+        });
+
+        ctrlr.add(modelToAdd);
+        req.session.count++;
+
+        res.statusCode = 201;
+        req.session.contacts = ctrlr.getCollection();
+        res.json(modelToAdd.toJSON());
+    });
+
+    router.put('/api/contacts/:id', function (req, res) {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        var modelToEdit = new ModelContact({
+            id: parseInt(req.params.id, 10),
+            name: req.body.name,
+            email: req.body.email
+        });
+
+        ctrlr.update(modelToEdit);
+
+        res.statusCode = 200;
+        req.session.contacts = ctrlr.getCollection();
+        res.json(modelToEdit.toJSON());
+    });
+
+    router.delete('/api/contacts/:id', function (req, res) {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        ctrlr.removeByID(parseInt(req.params.id, 10));
 
         res.statusCode = 204;
+        req.session.contacts = ctrlr.getCollection();
         res.end();
     });
 
-    router.post('/api/contacts', function (req, res) {
-        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+    router.get('/contacts/edit/:id', function (req, res, next) {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        var newModel = addModel(req, req.body.name);
-        ctrlr.add(newModel);
-
-        res.statusCode = 201;
-        res.json(newModel.toJSON());
+        var edited = ctrlr.edit(parseInt(req.params.id, 10));
+        if (req.params.id && !edited) {
+            next();
+        } else {
+            res.render("view-contacts", ctrlr._getViewData());
+        }
     });
 
     router.get('/contacts/:id?', function (req, res, next) {
-
-        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        var selected = ctrlr.select(req.params.id);
+        var selected = ctrlr.select(parseInt(req.params.id, 10));
         if (req.params.id && !selected) {
             next();
         } else {
@@ -159,53 +188,49 @@ function setupServer (worker) {
         }
     });
 
-    router.post('/contacts/:id?', function (req, res) {
+    router.post('/contacts', function (req, res) {
 
-        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
         switch (req.body.type) {
             case 'add':
-                var newModel = addModel(req, req.body.name);
-                ctrlr.add(newModel);
-                res.redirect('/contacts/' + newModel.getID());
+                var modelToAdd = new ModelContact({
+                    id: req.session.count,
+                    name: req.body.name,
+                    email: req.body.email,
+                });
 
+                ctrlr.add(modelToAdd);
+                req.session.count++;
+
+                req.session.contacts = ctrlr.getCollection();
+                res.redirect('/contacts/' + modelToAdd.getID());
+            break;
+            case 'edit':
+                var modelToEdit = new ModelContact({
+                    id: parseInt(req.body.id, 10),
+                    name: req.body.name,
+                    email: req.body.email
+                });
+
+                ctrlr.update(modelToEdit);
+
+                req.session.contacts = ctrlr.getCollection();
+                res.redirect('/contacts/' + modelToEdit.getID());
             break;
             case 'remove':
-                removeModel(req, req.body.id);
-                ctrlr.removeByID(req.body.id);
+                ctrlr.removeByID(parseInt(req.body.id, 10));
 
+                req.session.contacts = ctrlr.getCollection();
                 res.redirect('/contacts/');
             break;
         }
     });
 
-    router.get('/account/', function (req, res) {
+    router.get('/account', function (req, res) {
         res.render("view-account");
-    });
-
-    router.post('/api/add', function (req, res) {
-        var contact = new ModelContact({
-            id: req.session.contactCount,
-            name: req.body.name
-        });
-
-        req.session.contacts.push({
-            id: contact.getID(),
-            name: contact.getName()
-        });
-        req.session.contactCount++;
-
-        if (!req.xhr) {
-            res.redirect('/contacts');
-        } else {
-            res.statusCode = 201;
-            res.json({
-                id: contact.getID(),
-                name: contact.getName()
-            });
-        }
     });
 
     // Error handling middleware
