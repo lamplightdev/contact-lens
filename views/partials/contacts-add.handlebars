@@ -1,5 +1,6 @@
 <form id='contact-add' action='/contacts' method='post' data-api-action='/api/contacts'>
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
+  <input type="hidden" name="type" value="add">
   <div class="wsk-input">
     <input class="wsk-textfield wsk-js-textfield" type="text" name="name" />
     <label class="wsk-label" for="name">Enter name</label>

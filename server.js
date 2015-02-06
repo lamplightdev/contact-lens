@@ -15,7 +15,6 @@ var express  = require('express'),
     config       = require('./config'),
 
     ModelContact       = require('./lib/models/contact'),
-    Collection         = require('./lib/models/collection'),
     ControllerContacts = require('./lib/controllers/contacts'),
 
     port         = (process.env.PORT || 8000);
@@ -27,7 +26,7 @@ setupServer();
 function setupServer (worker) {
     var app = express(),
         server = app.listen(port, function () {
-            console.log("Bedrock App is now listening on port " + server.address().port);
+            console.log("Contact Lens is now listening on port " + server.address().port);
         }),
         router;
 
@@ -100,10 +99,10 @@ function setupServer (worker) {
     // Use the router.
     app.use(router);
 
-    function addModel(req) {
+    function addModel(req, name) {
         var obj = {
             id: req.session.contacts.length + 1,
-            name: req.body.name
+            name: name
         };
 
         req.session.contacts.push(obj);
@@ -112,6 +111,10 @@ function setupServer (worker) {
     }
 
 
+    function removeModel(req, id) {
+        req.session.contacts.splice(id-1, 1);
+    }
+
     ///////////////////////////////////////////
     //              Routes                   //
     ///////////////////////////////////////////
@@ -119,12 +122,12 @@ function setupServer (worker) {
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
     router.delete('/api/contacts/:id', function (req, res) {
-        var ctrlr = new ControllerContacts(null, {
-            contacts: req.session.contacts,
-            currentID: req.params.id
+        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+            _csrf: res.locals._csrf
         });
 
-        ctrlr.removeCurrent();
+        removeModel(req, req.params.id);
+        ctrlr.removeByID(req.params.id);
 
         res.statusCode = 204;
         res.end();
@@ -135,7 +138,7 @@ function setupServer (worker) {
             _csrf: res.locals._csrf
         });
 
-        var newModel = addModel(req);
+        var newModel = addModel(req, req.body.name);
         ctrlr.add(newModel);
 
         res.statusCode = 201;
@@ -162,12 +165,20 @@ function setupServer (worker) {
             _csrf: res.locals._csrf
         });
 
-        var newModel = addModel(req);
-        ctrlr.add(newModel);
+        switch (req.body.type) {
+            case 'add':
+                var newModel = addModel(req, req.body.name);
+                ctrlr.add(newModel);
+                res.redirect('/contacts/' + newModel.getID());
 
-        res.redirect('/contacts/' + newModel.getID());
+            break;
+            case 'remove':
+                removeModel(req, req.body.id);
+                ctrlr.removeByID(req.body.id);
 
-        //res.render("view-contacts", ctrlr.getViewData());
+                res.redirect('/contacts/');
+            break;
+        }
     });
 
     router.get('/account/', function (req, res) {
