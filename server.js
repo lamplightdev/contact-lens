@@ -100,6 +100,17 @@ function setupServer (worker) {
     // Use the router.
     app.use(router);
 
+    function addModel(req) {
+        var obj = {
+            id: req.session.contacts.length + 1,
+            name: req.body.name
+        };
+
+        req.session.contacts.push(obj);
+
+        return new ModelContact(obj);
+    }
+
 
     ///////////////////////////////////////////
     //              Routes                   //
@@ -119,38 +130,40 @@ function setupServer (worker) {
         res.end();
     });
 
-    router.get('/contacts/:id?', function (req, res) {
-
-        /*
-        var ctrlr = new ControllerContacts(null, {
-            contacts: req.session.contacts,
-            currentID: req.params.id
-        });
-        */
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+    router.post('/api/contacts', function (req, res) {
+        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
             _csrf: res.locals._csrf
         });
 
-        console.log(ctrlr);
+        var newModel = addModel(req);
+        ctrlr.add(newModel);
 
-        res.render("view-contacts", ctrlr._getViewData());
+        res.statusCode = 201;
+        res.json(newModel.toJSON());
+    });
+
+    router.get('/contacts/:id?', function (req, res, next) {
+
+        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        var selected = ctrlr.select(req.params.id);
+        if (req.params.id && !selected) {
+            next();
+        } else {
+            res.render("view-contacts", ctrlr._getViewData());
+        }
     });
 
     router.post('/contacts/:id?', function (req, res) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+
+        var ctrlr = new ControllerContacts(ModelContact.fromJSON(req.session.contacts), [], null, {
             _csrf: res.locals._csrf
         });
 
-        var newModel = new ModelContact({
-            id: req.session.contacts.length,
-            name: req.body.name
-        });
-
+        var newModel = addModel(req);
         ctrlr.add(newModel);
-
-        /*
-        ctrlr.removeCurrent();
-        */
 
         res.redirect('/contacts/' + newModel.getID());
 
@@ -185,15 +198,19 @@ function setupServer (worker) {
     });
 
     // Error handling middleware
-    app.use(function(req, res){
-        res.render('404', { status: 404, url: req.url });
-    });
+    app.use(function (req, res) {
+        res.status(404);
 
-    app.use(function(err, req, res){
-        res.render('500', {
-            status: err.status || 500,
-            error: err
-        });
+        app.expose(true, 'Data.status404');
+
+
+        if (req.accepts('html')) {
+            res.render('404', { url: req.url });
+        } else if (req.accepts('json')) {
+            res.send({ error: 'Not found' });
+        } else {
+          res.type('txt').send('Not found');
+        }
     });
 
     return server;

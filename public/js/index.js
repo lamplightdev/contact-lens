@@ -1,18 +1,12 @@
 "use strict";
 
-var Router = require("../../lib/router.js");
+var RouterMain = require("../../lib/router-main");
 
-var ControllerAccount = require("../../lib/controllers/account.js");
-var ControllerContacts = require("../../lib/controllers/contacts.js");
+var ModelContact = require("../../lib/models/contact");
+var Collection  = require("../../lib/models/collection");
 
-var ViewAccount = require("../../lib/views/account.js");
-var ViewContacts = require("../../lib/views/contacts.js");
-
-var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime.js");
+var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime");
 var urlparse = require('url').parse;
-
-var viewContainer = document.getElementById('view');
-var currentCtrlr = null;
 
 
 for(var key in App.templates) {
@@ -21,63 +15,25 @@ for(var key in App.templates) {
   }
 }
 
-Router
-  .add(/^contacts$/, function (preRendered) {
-    console.log('contacts');
 
-    if (!(currentCtrlr instanceof ControllerContacts)) {
-      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates, viewContainer, {
-        _csrf: App.Data._csrf
-      });
+var router = new RouterMain({
+  templates: App.templates,
+  container: document.getElementById('view'),
+  contacts: new Collection(ModelContact.fromJSON(App.Data.contacts)),
+  _csrf: App.Data._csrf
+});
 
-      if (!preRendered) {
-        currentCtrlr.unselect();
-      }
-      currentCtrlr.list(preRendered);
-    } else {
-      currentCtrlr.unselect();
-      currentCtrlr.contactsCurrent();
-    }
-  })
-
-  .add(/^contacts\/(.*)$/, function (preRendered, id) {
-    console.log('contacts id');
-
-    if (!(currentCtrlr instanceof ControllerContacts)) {
-      currentCtrlr = new ControllerContacts(App.Data.contacts, App.templates, viewContainer, {
-        _csrf: App.Data._csrf
-      });
-
-      if (!preRendered) {
-        currentCtrlr.select(id);
-      }
-      currentCtrlr.list(preRendered);
-    } else {
-      currentCtrlr.select(id);
-      currentCtrlr.contactsCurrent();
-    }
-  })
-
-  .add(/account/, function (preRendered) {
-    console.log('account');
-    currentView = new ViewAccount(Router, App.templates, viewContainer, new ControllerAccount(App.templates['account']), currentView instanceof ViewAccount, preRendered);
-  })
-
-  .add(function() {
-    console.log('default');
-  })
-
-  .listen()
-  .check(true);
-
-function nav(event) {
-  event.preventDefault();
-
-  Router.navigate(urlparse(event.target.href).pathname);
+if (!App.Data.status404) {
+  router.router.check(true);
 }
+
 
 var navLinks = document.querySelectorAll('[data-nav]');
 for(let i=0; i<navLinks.length; i++) {
-  navLinks[i].addEventListener('click', nav);
+  navLinks[i].addEventListener('click', (event) => {
+    event.preventDefault();
+
+    router.router.navigate(urlparse(event.target.href).pathname);
+  });
 }
 
