@@ -1,5 +1,11 @@
 {{#if currentContact}}
-Name: {{currentContact.name}} ({{currentContact.email}})
+Name: {{currentContact.name}} ({{currentContact.email}}) -  <a class='' href='/contacts/edit/{{currentContact.id}}' data-nav>edit</a>
+<form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact.id}}'>
+  <input type='hidden' name='_csrf' value='{{extra._csrf}}'>
+  <input type="hidden" name="type" value="remove">
+  <input type='hidden' name='id' value='{{currentContact.id}}'>
+  <button class='btn' type='submit'>remove</button>
+</form>
 {{else}}
 None selected
 {{/if}}

@@ -29,13 +29,11 @@ if (!App.Data.status404) {
   router.router.check(true);
 }
 
-
-var navLinks = document.querySelectorAll('[data-nav]');
-for(let i=0; i<navLinks.length; i++) {
-  navLinks[i].addEventListener('click', (event) => {
+document.body.addEventListener('click', (event) => {
+  if (typeof event.target.dataset.nav !== 'undefined') {
     event.preventDefault();
-
+    event.stopPropagation();
     router.router.navigate(urlparse(event.target.href).pathname);
-  });
-}
+  }
+});
 
