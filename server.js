@@ -128,8 +128,9 @@ function setupServer () {
             name: req.body.name,
             email: req.body.email,
         });
-
+        modelToAdd.sync();
         ctrlr.add(modelToAdd);
+
         req.session.count++;
 
         res.statusCode = 201;
