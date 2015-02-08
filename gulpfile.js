@@ -51,7 +51,7 @@ gulp.task('dev', function () {
     nodemon({
         script: 'server.js',
         //nodeArgs: ['--harmony'],
-        ext: 'js json handlebars',
+        ext: 'js json scss handlebars',
         ignore: ["public/js/dist/*"],
     })
       .on('start', ['scripts', 'sass'])

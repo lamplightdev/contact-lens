@@ -34,6 +34,10 @@ document.body.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
     router.router.navigate(urlparse(event.target.href).pathname);
+  } else if (typeof event.target.parentNode.dataset.nav !== 'undefined') {
+    event.preventDefault();
+    event.stopPropagation();
+    router.router.navigate(urlparse(event.target.parentNode.href).pathname);
   }
 });
 

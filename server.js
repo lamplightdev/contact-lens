@@ -10,6 +10,8 @@ var express  = require('express'),
     session      = require('express-session'),
     state        = require('express-state'),
 
+    mongoose     = require('mongoose'),
+
     hbs          = require('./lib/exphbs'),
     middleware   = require('./middleware'),
     config       = require('./config'),
@@ -21,10 +23,13 @@ var express  = require('express'),
     port         = (process.env.PORT || 8000);
 
 
-setupServer();
+mongoose.connect('mongodb://localhost/contact-lens');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'db connection error:'));
+db.once('open', setupServer);
 
 
-function setupServer (worker) {
+function setupServer () {
     var app = express(),
         server = app.listen(port, function () {
             console.log("Contact Lens is now listening on port " + server.address().port);

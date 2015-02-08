@@ -13,6 +13,7 @@
     "express-session": "^1.7.5",
     "express-state": "latest",
     "handlebars": "^2.0.0-alpha.4",
+    "mongoose": "^3.8.23",
     "morgan": "^1.2.2",
     "then-request": "^2.1.0"
   },

@@ -3,12 +3,12 @@
   <input type="hidden" name="type" value="{{#if editContact}}edit{{else}}add{{/if}}">
   <input type="hidden" name="id" value="{{editContact.id}}">
   <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield" type="text" name="name" value="{{editContact.name}}" />
-    <label class="wsk-label" for="name">Enter name</label>
+    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.name}}is-dirty{{/if}}" type="text" name="name" value="{{editContact.name}}" />
+    <label class="wsk-label" for="name">Name</label>
   </div>
   <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield" type="email" name="email" value="{{editContact.email}}" />
-    <label class="wsk-label" for="email">Enter email</label>
+    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.email}}is-dirty{{/if}}" type="email" name="email" value="{{editContact.email}}" />
+    <label class="wsk-label" for="email">Email</label>
   </div>
   <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
 </form>

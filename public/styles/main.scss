@@ -19,6 +19,9 @@ body {
   margin: 0px;
 }
 
+* {
+  box-sizing: border-box;
+}
 main {
   padding: 20px;
 }
@@ -29,4 +32,11 @@ html, body {
 
 h1, h2, h3, h4, h5 {
   color: $text-color-primary;
+}
+
+$button-height: 36px !default;
+.wsk-button {
+  text-decoration: none;
+  text-align: center;
+  line-height: $button-height;
 }

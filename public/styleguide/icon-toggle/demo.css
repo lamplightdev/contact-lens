@@ -1,0 +1,3014 @@
+@charset "UTF-8";
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical; }
+
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers: h5bp.com/u
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/*
+ * Hide only visually, but have it available for screen readers: h5bp.com/v
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */ }
+@media print, (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */ }
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request: h5bp.com/r
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+
+  a,
+  a:visited {
+    text-decoration: underline; }
+
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
+
+  tr,
+  img {
+    page-break-inside: avoid; }
+
+  img {
+    max-width: 100% !important; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+/* We're splitting fonts into "preferred" and "performance" in order to optimize
+   page loading. For important text, such as the body, we want it to load
+   immediately and not wait for the web font load, whereas for other sections,
+   such as headers and titles, we're OK with things taking a bit longer to load.
+   We do have some optional classes and parameters in the mixins, in case you
+   definitely want to make sure you're using the preferred font and don't mind
+   the performance hit.
+   We should be able to improve on this once CSS Font Loading L3 becomes more
+   widely available.
+*/
+html, body {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px; }
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0; }
+
+/**
+ * Styles for HTML elements
+ */
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  opacity: 0.54;
+  font-size: 0.6em; }
+
+h1 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em; }
+
+h2 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 48px; }
+
+h3 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 40px; }
+
+h4 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  -moz-osx-font-smoothing: grayscale; }
+
+h5 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em; }
+
+h6 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  margin: 0 0 16px 0; }
+
+a {
+  font-weight: bold; }
+
+blockquote {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0.08em; }
+  blockquote:before {
+    content: '“';
+    opacity: 0.54; }
+  blockquote:after {
+    content: '”';
+    opacity: 0.54; }
+
+mark {
+  background-color: #f4ff81; }
+
+dt {
+  font-weight: 700; }
+
+/**
+ * Class Name Styles
+ */
+.wsk-typography--display-4 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 112px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em; }
+
+.wsk-typography--display-4--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 112px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.54; }
+
+.wsk-typography--display-3 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em; }
+
+.wsk-typography--display-3--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  opacity: 0.54; }
+
+.wsk-typography--display-2 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 48px; }
+
+.wsk-typography--display-2--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 48px;
+  opacity: 0.54; }
+
+.wsk-typography--display-1 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 40px; }
+
+.wsk-typography--display-1--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 40px;
+  opacity: 0.54; }
+
+.wsk-typography--headline {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  -moz-osx-font-smoothing: grayscale; }
+
+.wsk-typography--headline--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  -moz-osx-font-smoothing: grayscale;
+  opacity: 0.87; }
+
+.wsk-typography--title {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em; }
+
+.wsk-typography--title--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  opacity: 0.87; }
+
+.wsk-typography--subhead {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--subhead--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--body-2 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--Body-2--colorContrast {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--body-1 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--body-1--colorContrast {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--body-2--forcePreferredFont {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--Body-2--forcePreferredFont--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--body-1--forcePreferredFont {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--body-1--forcePreferredFont--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--caption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em; }
+
+.wsk-typography--caption--forcePreferredFont {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em; }
+
+.wsk-typography--caption--colorContrast {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  opacity: 0.54; }
+
+.wsk-typography--caption--forcePreferredFont--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  opacity: 0.54; }
+
+.wsk-typography--menu {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--menu--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--button {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.04em; }
+
+.wsk-typography--button--colorContrast {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  opacity: 0.87; }
+
+.wsk-typography--textLeft {
+  text-align: left; }
+
+.wsk-typography--textRight {
+  text-align: right; }
+
+.wsk-typography--textCenter {
+  text-align: center; }
+
+.wsk-typography--textJustify {
+  text-align: justify; }
+
+.wsk-typography--textNowrap {
+  white-space: nowrap; }
+
+.wsk-typography--textLowercase {
+  text-transform: lowercase; }
+
+.wsk-typography--textUppercase {
+  text-transform: uppercase; }
+
+.wsk-typography--textCapitalize {
+  text-transform: capitalize; }
+
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9; }
+
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9; }
+
+/**
+*
+* Material design color palettes.
+* @see http://www.google.com/design/spec/style/color.html
+*
+**/
+/* ==========  Color Palettes  ========== */
+html, body {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0; }
+
+body {
+  padding: 24px;
+  box-sizing: border-box;
+  background: #FFF; }
+
+body > h2 {
+  margin-top: 24px;
+  margin-bottom: 12px; }
+
+.PreviewBlock {
+  background: #f5f5f5;
+  padding: 20px; }
+
+@font-face {
+  font-family: 'Material-Design-Iconic-Font';
+  src: url("../../fonts/Material-Design-Iconic-Font.eot?v=1.1.1");
+  src: url("../../fonts/Material-Design-Iconic-Font.eot?#iefix&v=1.1.1") format("embedded-opentype"), url("../../fonts/Material-Design-Iconic-Font.woff?v=1.1.1") format("woff"), url("../../fonts/Material-Design-Iconic-Font.ttf?v=1.1.1") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+.wsk-icon {
+  font-family: 'Material-Design-Iconic-Font';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.wsk-icon--3d-rotation:before {
+  content: ""; }
+
+.wsk-icon--accessibility:before {
+  content: ""; }
+
+.wsk-icon--account-balance:before {
+  content: ""; }
+
+.wsk-icon--account-balance-wallet:before {
+  content: ""; }
+
+.wsk-icon--account-box:before {
+  content: ""; }
+
+.wsk-icon--account-child:before {
+  content: ""; }
+
+.wsk-icon--account-circle:before {
+  content: ""; }
+
+.wsk-icon--add-shopping-cart:before {
+  content: ""; }
+
+.wsk-icon--alarm:before {
+  content: ""; }
+
+.wsk-icon--alarm-add:before {
+  content: ""; }
+
+.wsk-icon--alarm-off:before {
+  content: ""; }
+
+.wsk-icon--alarm-on:before {
+  content: ""; }
+
+.wsk-icon--android:before {
+  content: ""; }
+
+.wsk-icon--announcement:before {
+  content: ""; }
+
+.wsk-icon--aspect-ratio:before {
+  content: ""; }
+
+.wsk-icon--assessment:before {
+  content: ""; }
+
+.wsk-icon--assignment:before {
+  content: ""; }
+
+.wsk-icon--assignment-ind:before {
+  content: ""; }
+
+.wsk-icon--assignment-late:before {
+  content: ""; }
+
+.wsk-icon--assignment-return:before {
+  content: ""; }
+
+.wsk-icon--assignment-returned:before {
+  content: ""; }
+
+.wsk-icon--assignment-turned-in:before {
+  content: ""; }
+
+.wsk-icon--autorenew:before {
+  content: ""; }
+
+.wsk-icon--backup:before {
+  content: ""; }
+
+.wsk-icon--book:before {
+  content: ""; }
+
+.wsk-icon--bookmark:before {
+  content: ""; }
+
+.wsk-icon--bookmark-outline:before {
+  content: ""; }
+
+.wsk-icon--bug-report:before {
+  content: ""; }
+
+.wsk-icon--cached:before {
+  content: ""; }
+
+.wsk-icon--class:before {
+  content: ""; }
+
+.wsk-icon--credit-card:before {
+  content: ""; }
+
+.wsk-icon--dashboard:before {
+  content: ""; }
+
+.wsk-icon--delete:before {
+  content: ""; }
+
+.wsk-icon--description:before {
+  content: ""; }
+
+.wsk-icon--dns:before {
+  content: ""; }
+
+.wsk-icon--done:before {
+  content: ""; }
+
+.wsk-icon--done-all:before {
+  content: ""; }
+
+.wsk-icon--event:before {
+  content: ""; }
+
+.wsk-icon--exit-to-app:before {
+  content: ""; }
+
+.wsk-icon--explore:before {
+  content: ""; }
+
+.wsk-icon--extension:before {
+  content: ""; }
+
+.wsk-icon--face-unlock:before {
+  content: ""; }
+
+.wsk-icon--favorite:before {
+  content: ""; }
+
+.wsk-icon--favorite-outline:before {
+  content: ""; }
+
+.wsk-icon--find-in-page:before {
+  content: ""; }
+
+.wsk-icon--find-replace:before {
+  content: ""; }
+
+.wsk-icon--flip-to-back:before {
+  content: ""; }
+
+.wsk-icon--flip-to-front:before {
+  content: ""; }
+
+.wsk-icon--get-app:before {
+  content: ""; }
+
+.wsk-icon--grade:before {
+  content: ""; }
+
+.wsk-icon--group-work:before {
+  content: ""; }
+
+.wsk-icon--help:before {
+  content: ""; }
+
+.wsk-icon--highlight-remove:before {
+  content: ""; }
+
+.wsk-icon--history:before {
+  content: ""; }
+
+.wsk-icon--home:before {
+  content: ""; }
+
+.wsk-icon--https:before {
+  content: ""; }
+
+.wsk-icon--info:before {
+  content: ""; }
+
+.wsk-icon--info-outline:before {
+  content: ""; }
+
+.wsk-icon--input:before {
+  content: ""; }
+
+.wsk-icon--invert-colors:before {
+  content: ""; }
+
+.wsk-icon--label:before {
+  content: ""; }
+
+.wsk-icon--label-outline:before {
+  content: ""; }
+
+.wsk-icon--language:before {
+  content: ""; }
+
+.wsk-icon--launch:before {
+  content: ""; }
+
+.wsk-icon--list:before {
+  content: ""; }
+
+.wsk-icon--lock:before {
+  content: ""; }
+
+.wsk-icon--lock-open:before {
+  content: ""; }
+
+.wsk-icon--lock-outline:before {
+  content: ""; }
+
+.wsk-icon--loyalty:before {
+  content: ""; }
+
+.wsk-icon--markunread-mailbox:before {
+  content: ""; }
+
+.wsk-icon--note-add:before {
+  content: ""; }
+
+.wsk-icon--open-in-browser:before {
+  content: ""; }
+
+.wsk-icon--open-in-new:before {
+  content: ""; }
+
+.wsk-icon--open-with:before {
+  content: ""; }
+
+.wsk-icon--pageview:before {
+  content: ""; }
+
+.wsk-icon--payment:before {
+  content: ""; }
+
+.wsk-icon--perm-camera-mic:before {
+  content: ""; }
+
+.wsk-icon--perm-contact-cal:before {
+  content: ""; }
+
+.wsk-icon--perm-data-setting:before {
+  content: ""; }
+
+.wsk-icon--perm-device-info:before {
+  content: ""; }
+
+.wsk-icon--perm-identity:before {
+  content: ""; }
+
+.wsk-icon--perm-media:before {
+  content: ""; }
+
+.wsk-icon--perm-phone-msg:before {
+  content: ""; }
+
+.wsk-icon--perm-scan-wifi:before {
+  content: ""; }
+
+.wsk-icon--picture-in-picture:before {
+  content: ""; }
+
+.wsk-icon--polymer:before {
+  content: ""; }
+
+.wsk-icon--print:before {
+  content: ""; }
+
+.wsk-icon--query-builder:before {
+  content: ""; }
+
+.wsk-icon--question-answer:before {
+  content: ""; }
+
+.wsk-icon--receipt:before {
+  content: ""; }
+
+.wsk-icon--redeem:before {
+  content: ""; }
+
+.wsk-icon--reorder:before {
+  content: ""; }
+
+.wsk-icon--report-problem:before {
+  content: ""; }
+
+.wsk-icon--restore:before {
+  content: ""; }
+
+.wsk-icon--room:before {
+  content: ""; }
+
+.wsk-icon--schedule:before {
+  content: ""; }
+
+.wsk-icon--search:before {
+  content: ""; }
+
+.wsk-icon--settings:before {
+  content: ""; }
+
+.wsk-icon--settings-applications:before {
+  content: ""; }
+
+.wsk-icon--settings-backup-restore:before {
+  content: ""; }
+
+.wsk-icon--settings-bluetooth:before {
+  content: ""; }
+
+.wsk-icon--settings-cell:before {
+  content: ""; }
+
+.wsk-icon--settings-display:before {
+  content: ""; }
+
+.wsk-icon--settings-ethernet:before {
+  content: ""; }
+
+.wsk-icon--settings-input-antenna:before {
+  content: ""; }
+
+.wsk-icon--settings-input-component:before {
+  content: ""; }
+
+.wsk-icon--settings-input-composite:before {
+  content: ""; }
+
+.wsk-icon--settings-input-hdmi:before {
+  content: ""; }
+
+.wsk-icon--settings-input-svideo:before {
+  content: ""; }
+
+.wsk-icon--settings-overscan:before {
+  content: ""; }
+
+.wsk-icon--settings-phone:before {
+  content: ""; }
+
+.wsk-icon--settings-power:before {
+  content: ""; }
+
+.wsk-icon--settings-remote:before {
+  content: ""; }
+
+.wsk-icon--settings-voice:before {
+  content: ""; }
+
+.wsk-icon--shop:before {
+  content: ""; }
+
+.wsk-icon--shopping-basket:before {
+  content: ""; }
+
+.wsk-icon--shopping-cart:before {
+  content: ""; }
+
+.wsk-icon--shop-two:before {
+  content: ""; }
+
+.wsk-icon--speaker-notes:before {
+  content: ""; }
+
+.wsk-icon--spellcheck:before {
+  content: ""; }
+
+.wsk-icon--star-rate:before {
+  content: ""; }
+
+.wsk-icon--stars:before {
+  content: ""; }
+
+.wsk-icon--store:before {
+  content: ""; }
+
+.wsk-icon--subject:before {
+  content: ""; }
+
+.wsk-icon--supervisor-account:before {
+  content: ""; }
+
+.wsk-icon--swap-horiz:before {
+  content: ""; }
+
+.wsk-icon--swap-vert:before {
+  content: ""; }
+
+.wsk-icon--swap-vert-circle:before {
+  content: ""; }
+
+.wsk-icon--system-update-tv:before {
+  content: ""; }
+
+.wsk-icon--tab:before {
+  content: ""; }
+
+.wsk-icon--tab-unselected:before {
+  content: ""; }
+
+.wsk-icon--theaters:before {
+  content: ""; }
+
+.wsk-icon--thumb-down:before {
+  content: ""; }
+
+.wsk-icon--thumbs-up-down:before {
+  content: ""; }
+
+.wsk-icon--thumb-up:before {
+  content: ""; }
+
+.wsk-icon--toc:before {
+  content: ""; }
+
+.wsk-icon--today:before {
+  content: ""; }
+
+.wsk-icon--track-changes:before {
+  content: ""; }
+
+.wsk-icon--translate:before {
+  content: ""; }
+
+.wsk-icon--trending-down:before {
+  content: ""; }
+
+.wsk-icon--trending-neutral:before {
+  content: ""; }
+
+.wsk-icon--trending-up:before {
+  content: ""; }
+
+.wsk-icon--turned-in:before {
+  content: ""; }
+
+.wsk-icon--turned-in-not:before {
+  content: ""; }
+
+.wsk-icon--verified-user:before {
+  content: ""; }
+
+.wsk-icon--view-agenda:before {
+  content: ""; }
+
+.wsk-icon--view-array:before {
+  content: ""; }
+
+.wsk-icon--view-carousel:before {
+  content: ""; }
+
+.wsk-icon--view-column:before {
+  content: ""; }
+
+.wsk-icon--view-day:before {
+  content: ""; }
+
+.wsk-icon--view-headline:before {
+  content: ""; }
+
+.wsk-icon--view-list:before {
+  content: ""; }
+
+.wsk-icon--view-module:before {
+  content: ""; }
+
+.wsk-icon--view-quilt:before {
+  content: ""; }
+
+.wsk-icon--view-stream:before {
+  content: ""; }
+
+.wsk-icon--view-week:before {
+  content: ""; }
+
+.wsk-icon--visibility:before {
+  content: ""; }
+
+.wsk-icon--visibility-off:before {
+  content: ""; }
+
+.wsk-icon--wallet-giftcard:before {
+  content: ""; }
+
+.wsk-icon--wallet-membership:before {
+  content: ""; }
+
+.wsk-icon--wallet-travel:before {
+  content: ""; }
+
+.wsk-icon--work:before {
+  content: ""; }
+
+.wsk-icon--error:before {
+  content: ""; }
+
+.wsk-icon--warning:before {
+  content: ""; }
+
+.wsk-icon--album:before {
+  content: ""; }
+
+.wsk-icon--av-timer:before {
+  content: ""; }
+
+.wsk-icon--closed-caption:before {
+  content: ""; }
+
+.wsk-icon--equalizer:before {
+  content: ""; }
+
+.wsk-icon--explicit:before {
+  content: ""; }
+
+.wsk-icon--fast-forward:before {
+  content: ""; }
+
+.wsk-icon--fast-rewind:before {
+  content: ""; }
+
+.wsk-icon--games:before {
+  content: ""; }
+
+.wsk-icon--hearing:before {
+  content: ""; }
+
+.wsk-icon--high-quality:before {
+  content: ""; }
+
+.wsk-icon--loop:before {
+  content: ""; }
+
+.wsk-icon--mic:before {
+  content: ""; }
+
+.wsk-icon--mic-none:before {
+  content: ""; }
+
+.wsk-icon--mic-off:before {
+  content: ""; }
+
+.wsk-icon--movie:before {
+  content: ""; }
+
+.wsk-icon--my-library-add:before {
+  content: ""; }
+
+.wsk-icon--my-library-books:before {
+  content: ""; }
+
+.wsk-icon--my-library-music:before {
+  content: ""; }
+
+.wsk-icon--new-releases:before {
+  content: ""; }
+
+.wsk-icon--not-interested:before {
+  content: ""; }
+
+.wsk-icon--pause:before {
+  content: ""; }
+
+.wsk-icon--pause-circle-fill:before {
+  content: ""; }
+
+.wsk-icon--pause-circle-outline:before {
+  content: ""; }
+
+.wsk-icon--play-arrow:before {
+  content: ""; }
+
+.wsk-icon--play-circle-fill:before {
+  content: ""; }
+
+.wsk-icon--play-circle-outline:before {
+  content: ""; }
+
+.wsk-icon--playlist-add:before {
+  content: ""; }
+
+.wsk-icon--play-shopping-bag:before {
+  content: ""; }
+
+.wsk-icon--queue:before {
+  content: ""; }
+
+.wsk-icon--queue-music:before {
+  content: ""; }
+
+.wsk-icon--radio:before {
+  content: ""; }
+
+.wsk-icon--recent-actors:before {
+  content: ""; }
+
+.wsk-icon--repeat:before {
+  content: ""; }
+
+.wsk-icon--repeat-one:before {
+  content: ""; }
+
+.wsk-icon--replay:before {
+  content: ""; }
+
+.wsk-icon--shuffle:before {
+  content: ""; }
+
+.wsk-icon--skip-next:before {
+  content: ""; }
+
+.wsk-icon--skip-previous:before {
+  content: ""; }
+
+.wsk-icon--snooze:before {
+  content: ""; }
+
+.wsk-icon--stop:before {
+  content: ""; }
+
+.wsk-icon--subtitles:before {
+  content: ""; }
+
+.wsk-icon--surround-sound:before {
+  content: ""; }
+
+.wsk-icon--videocam:before {
+  content: ""; }
+
+.wsk-icon--videocam-off:before {
+  content: ""; }
+
+.wsk-icon--video-collection:before {
+  content: ""; }
+
+.wsk-icon--volume-down:before {
+  content: ""; }
+
+.wsk-icon--volume-mute:before {
+  content: ""; }
+
+.wsk-icon--volume-off:before {
+  content: ""; }
+
+.wsk-icon--volume-up:before {
+  content: ""; }
+
+.wsk-icon--web:before {
+  content: ""; }
+
+.wsk-icon--business:before {
+  content: ""; }
+
+.wsk-icon--call:before {
+  content: ""; }
+
+.wsk-icon--call-end:before {
+  content: ""; }
+
+.wsk-icon--call-made:before {
+  content: ""; }
+
+.wsk-icon--call-merge:before {
+  content: ""; }
+
+.wsk-icon--call-missed:before {
+  content: ""; }
+
+.wsk-icon--call-received:before {
+  content: ""; }
+
+.wsk-icon--call-split:before {
+  content: ""; }
+
+.wsk-icon--chat:before {
+  content: ""; }
+
+.wsk-icon--clear-all:before {
+  content: ""; }
+
+.wsk-icon--comment:before {
+  content: ""; }
+
+.wsk-icon--contacts:before {
+  content: ""; }
+
+.wsk-icon--dialer-sip:before {
+  content: ""; }
+
+.wsk-icon--dialpad:before {
+  content: ""; }
+
+.wsk-icon--dnd-on:before {
+  content: ""; }
+
+.wsk-icon--email:before {
+  content: ""; }
+
+.wsk-icon--forum:before {
+  content: ""; }
+
+.wsk-icon--import-export:before {
+  content: ""; }
+
+.wsk-icon--invert-colors-off:before {
+  content: ""; }
+
+.wsk-icon--invert-colors-on:before {
+  content: ""; }
+
+.wsk-icon--live-help:before {
+  content: ""; }
+
+.wsk-icon--location-off:before {
+  content: ""; }
+
+.wsk-icon--location-on:before {
+  content: ""; }
+
+.wsk-icon--message:before {
+  content: ""; }
+
+.wsk-icon--messenger:before {
+  content: ""; }
+
+.wsk-icon--no-sim:before {
+  content: ""; }
+
+.wsk-icon--phone:before {
+  content: ""; }
+
+.wsk-icon--portable-wifi-off:before {
+  content: ""; }
+
+.wsk-icon--quick-contacts-dialer:before {
+  content: ""; }
+
+.wsk-icon--quick-contacts-mail:before {
+  content: ""; }
+
+.wsk-icon--ring-volume:before {
+  content: ""; }
+
+.wsk-icon--stay-current-landscape:before {
+  content: ""; }
+
+.wsk-icon--stay-current-portrait:before {
+  content: ""; }
+
+.wsk-icon--stay-primary-landscape:before {
+  content: ""; }
+
+.wsk-icon--stay-primary-portrait:before {
+  content: ""; }
+
+.wsk-icon--swap-calls:before {
+  content: ""; }
+
+.wsk-icon--textsms:before {
+  content: ""; }
+
+.wsk-icon--voicemail:before {
+  content: ""; }
+
+.wsk-icon--vpn-key:before {
+  content: ""; }
+
+.wsk-icon--add:before {
+  content: ""; }
+
+.wsk-icon--add-box:before {
+  content: ""; }
+
+.wsk-icon--add-circle:before {
+  content: ""; }
+
+.wsk-icon--add-circle-outline:before {
+  content: ""; }
+
+.wsk-icon--archive:before {
+  content: ""; }
+
+.wsk-icon--backspace:before {
+  content: ""; }
+
+.wsk-icon--block:before {
+  content: ""; }
+
+.wsk-icon--clear:before {
+  content: ""; }
+
+.wsk-icon--content-copy:before {
+  content: ""; }
+
+.wsk-icon--content-cut:before {
+  content: ""; }
+
+.wsk-icon--content-paste:before {
+  content: ""; }
+
+.wsk-icon--create:before {
+  content: ""; }
+
+.wsk-icon--drafts:before {
+  content: ""; }
+
+.wsk-icon--filter-list:before {
+  content: ""; }
+
+.wsk-icon--flag:before {
+  content: ""; }
+
+.wsk-icon--forward:before {
+  content: ""; }
+
+.wsk-icon--gesture:before {
+  content: ""; }
+
+.wsk-icon--inbox:before {
+  content: ""; }
+
+.wsk-icon--link:before {
+  content: ""; }
+
+.wsk-icon--mail:before {
+  content: ""; }
+
+.wsk-icon--markunread:before {
+  content: ""; }
+
+.wsk-icon--redo:before {
+  content: ""; }
+
+.wsk-icon--remove:before {
+  content: ""; }
+
+.wsk-icon--remove-circle:before {
+  content: ""; }
+
+.wsk-icon--remove-circle-outline:before {
+  content: ""; }
+
+.wsk-icon--reply:before {
+  content: ""; }
+
+.wsk-icon--reply-all:before {
+  content: ""; }
+
+.wsk-icon--report:before {
+  content: ""; }
+
+.wsk-icon--save:before {
+  content: ""; }
+
+.wsk-icon--select-all:before {
+  content: ""; }
+
+.wsk-icon--send:before {
+  content: ""; }
+
+.wsk-icon--sort:before {
+  content: ""; }
+
+.wsk-icon--text-format:before {
+  content: ""; }
+
+.wsk-icon--undo:before {
+  content: ""; }
+
+.wsk-icon--access-alarm:before {
+  content: ""; }
+
+.wsk-icon--access-alarms:before {
+  content: ""; }
+
+.wsk-icon--access-time:before {
+  content: ""; }
+
+.wsk-icon--add-alarm:before {
+  content: ""; }
+
+.wsk-icon--airplanemode-off:before {
+  content: ""; }
+
+.wsk-icon--airplanemode-on:before {
+  content: ""; }
+
+.wsk-icon--battery-20:before {
+  content: ""; }
+
+.wsk-icon--battery-30:before {
+  content: ""; }
+
+.wsk-icon--battery-50:before {
+  content: ""; }
+
+.wsk-icon--battery-60:before {
+  content: ""; }
+
+.wsk-icon--battery-80:before {
+  content: ""; }
+
+.wsk-icon--battery-90:before {
+  content: ""; }
+
+.wsk-icon--battery-alert:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-20:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-30:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-50:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-60:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-80:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-90:before {
+  content: ""; }
+
+.wsk-icon--battery-charging-full:before {
+  content: ""; }
+
+.wsk-icon--battery-full:before {
+  content: ""; }
+
+.wsk-icon--battery-std:before {
+  content: ""; }
+
+.wsk-icon--battery-unknown:before {
+  content: ""; }
+
+.wsk-icon--bluetooth:before {
+  content: ""; }
+
+.wsk-icon--bluetooth-connected:before {
+  content: ""; }
+
+.wsk-icon--bluetooth-disabled:before {
+  content: ""; }
+
+.wsk-icon--bluetooth-searching:before {
+  content: ""; }
+
+.wsk-icon--brightness-auto:before {
+  content: ""; }
+
+.wsk-icon--brightness-high:before {
+  content: ""; }
+
+.wsk-icon--brightness-low:before {
+  content: ""; }
+
+.wsk-icon--brightness-medium:before {
+  content: ""; }
+
+.wsk-icon--data-usage:before {
+  content: ""; }
+
+.wsk-icon--developer-mode:before {
+  content: ""; }
+
+.wsk-icon--devices:before {
+  content: ""; }
+
+.wsk-icon--dvr:before {
+  content: ""; }
+
+.wsk-icon--gps-fixed:before {
+  content: ""; }
+
+.wsk-icon--gps-not-fixed:before {
+  content: ""; }
+
+.wsk-icon--gps-off:before {
+  content: ""; }
+
+.wsk-icon--location-disabled:before {
+  content: ""; }
+
+.wsk-icon--location-searching:before {
+  content: ""; }
+
+.wsk-icon--multitrack-audio:before {
+  content: ""; }
+
+.wsk-icon--network-cell:before {
+  content: ""; }
+
+.wsk-icon--network-wifi:before {
+  content: ""; }
+
+.wsk-icon--nfc:before {
+  content: ""; }
+
+.wsk-icon--now-wallpaper:before {
+  content: ""; }
+
+.wsk-icon--now-widgets:before {
+  content: ""; }
+
+.wsk-icon--screen-lock-landscape:before {
+  content: ""; }
+
+.wsk-icon--screen-lock-portrait:before {
+  content: ""; }
+
+.wsk-icon--screen-lock-rotation:before {
+  content: ""; }
+
+.wsk-icon--screen-rotation:before {
+  content: ""; }
+
+.wsk-icon--sd-storage:before {
+  content: ""; }
+
+.wsk-icon--settings-system-daydream:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-0-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-1-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-2-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-3-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-4-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-connected-no-internet-0-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-connected-no-internet-1-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-connected-no-internet-2-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-connected-no-internet-3-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-connected-no-internet-4-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-no-sim:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-null:before {
+  content: ""; }
+
+.wsk-icon--signal-cellular-off:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-0-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-1-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-2-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-3-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-4-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-off:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-1-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-2-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-3-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-4-bar:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-connected-no-internet:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-connected-no-internet-1:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-connected-no-internet-2:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-connected-no-internet-3:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-connected-no-internet-4:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-not-connected:before {
+  content: ""; }
+
+.wsk-icon--signal-wifi-statusbar-null:before {
+  content: ""; }
+
+.wsk-icon--storage:before {
+  content: ""; }
+
+.wsk-icon--usb:before {
+  content: ""; }
+
+.wsk-icon--wifi-lock:before {
+  content: ""; }
+
+.wsk-icon--wifi-tethering:before {
+  content: ""; }
+
+.wsk-icon--attach-file:before {
+  content: ""; }
+
+.wsk-icon--attach-money:before {
+  content: ""; }
+
+.wsk-icon--border-all:before {
+  content: ""; }
+
+.wsk-icon--border-bottom:before {
+  content: ""; }
+
+.wsk-icon--border-clear:before {
+  content: ""; }
+
+.wsk-icon--border-color:before {
+  content: ""; }
+
+.wsk-icon--border-horizontal:before {
+  content: ""; }
+
+.wsk-icon--border-inner:before {
+  content: ""; }
+
+.wsk-icon--border-left:before {
+  content: ""; }
+
+.wsk-icon--border-outer:before {
+  content: ""; }
+
+.wsk-icon--border-right:before {
+  content: ""; }
+
+.wsk-icon--border-style:before {
+  content: ""; }
+
+.wsk-icon--border-top:before {
+  content: ""; }
+
+.wsk-icon--border-vertical:before {
+  content: ""; }
+
+.wsk-icon--format-align-center:before {
+  content: ""; }
+
+.wsk-icon--format-align-justify:before {
+  content: ""; }
+
+.wsk-icon--format-align-left:before {
+  content: ""; }
+
+.wsk-icon--format-align-right:before {
+  content: ""; }
+
+.wsk-icon--format-bold:before {
+  content: ""; }
+
+.wsk-icon--format-clear:before {
+  content: ""; }
+
+.wsk-icon--format-color-fill:before {
+  content: ""; }
+
+.wsk-icon--format-color-reset:before {
+  content: ""; }
+
+.wsk-icon--format-color-text:before {
+  content: ""; }
+
+.wsk-icon--format-indent-decrease:before {
+  content: ""; }
+
+.wsk-icon--format-indent-increase:before {
+  content: ""; }
+
+.wsk-icon--format-italic:before {
+  content: ""; }
+
+.wsk-icon--format-line-spacing:before {
+  content: ""; }
+
+.wsk-icon--format-list-bulleted:before {
+  content: ""; }
+
+.wsk-icon--format-list-numbered:before {
+  content: ""; }
+
+.wsk-icon--format-paint:before {
+  content: ""; }
+
+.wsk-icon--format-quote:before {
+  content: ""; }
+
+.wsk-icon--format-size:before {
+  content: ""; }
+
+.wsk-icon--format-strikethrough:before {
+  content: ""; }
+
+.wsk-icon--format-textdirection-l-to-r:before {
+  content: ""; }
+
+.wsk-icon--format-textdirection-r-to-l:before {
+  content: ""; }
+
+.wsk-icon--format-underline:before {
+  content: ""; }
+
+.wsk-icon--functions:before {
+  content: ""; }
+
+.wsk-icon--insert-chart:before {
+  content: ""; }
+
+.wsk-icon--insert-comment:before {
+  content: ""; }
+
+.wsk-icon--insert-drive-file:before {
+  content: ""; }
+
+.wsk-icon--insert-emoticon:before {
+  content: ""; }
+
+.wsk-icon--insert-invitation:before {
+  content: ""; }
+
+.wsk-icon--insert-link:before {
+  content: ""; }
+
+.wsk-icon--insert-photo:before {
+  content: ""; }
+
+.wsk-icon--merge-type:before {
+  content: ""; }
+
+.wsk-icon--mode-comment:before {
+  content: ""; }
+
+.wsk-icon--mode-edit:before {
+  content: ""; }
+
+.wsk-icon--publish:before {
+  content: ""; }
+
+.wsk-icon--vertical-align-bottom:before {
+  content: ""; }
+
+.wsk-icon--vertical-align-center:before {
+  content: ""; }
+
+.wsk-icon--vertical-align-top:before {
+  content: ""; }
+
+.wsk-icon--wrap-text:before {
+  content: ""; }
+
+.wsk-icon--attachment:before {
+  content: ""; }
+
+.wsk-icon--cloud:before {
+  content: ""; }
+
+.wsk-icon--cloud-circle:before {
+  content: ""; }
+
+.wsk-icon--cloud-done:before {
+  content: ""; }
+
+.wsk-icon--cloud-download:before {
+  content: ""; }
+
+.wsk-icon--cloud-off:before {
+  content: ""; }
+
+.wsk-icon--cloud-queue:before {
+  content: ""; }
+
+.wsk-icon--cloud-upload:before {
+  content: ""; }
+
+.wsk-icon--file-download:before {
+  content: ""; }
+
+.wsk-icon--file-upload:before {
+  content: ""; }
+
+.wsk-icon--folder:before {
+  content: ""; }
+
+.wsk-icon--folder-open:before {
+  content: ""; }
+
+.wsk-icon--folder-shared:before {
+  content: ""; }
+
+.wsk-icon--cast:before {
+  content: ""; }
+
+.wsk-icon--cast-connected:before {
+  content: ""; }
+
+.wsk-icon--computer:before {
+  content: ""; }
+
+.wsk-icon--desktop-mac:before {
+  content: ""; }
+
+.wsk-icon--desktop-windows:before {
+  content: ""; }
+
+.wsk-icon--dock:before {
+  content: ""; }
+
+.wsk-icon--gamepad:before {
+  content: ""; }
+
+.wsk-icon--headset:before {
+  content: ""; }
+
+.wsk-icon--headset-mic:before {
+  content: ""; }
+
+.wsk-icon--keyboard:before {
+  content: ""; }
+
+.wsk-icon--keyboard-alt:before {
+  content: ""; }
+
+.wsk-icon--keyboard-arrow-down:before {
+  content: ""; }
+
+.wsk-icon--keyboard-arrow-left:before {
+  content: ""; }
+
+.wsk-icon--keyboard-arrow-right:before {
+  content: ""; }
+
+.wsk-icon--keyboard-arrow-up:before {
+  content: ""; }
+
+.wsk-icon--keyboard-backspace:before {
+  content: ""; }
+
+.wsk-icon--keyboard-capslock:before {
+  content: ""; }
+
+.wsk-icon--keyboard-control:before {
+  content: ""; }
+
+.wsk-icon--keyboard-hide:before {
+  content: ""; }
+
+.wsk-icon--keyboard-return:before {
+  content: ""; }
+
+.wsk-icon--keyboard-tab:before {
+  content: ""; }
+
+.wsk-icon--keyboard-voice:before {
+  content: ""; }
+
+.wsk-icon--laptop:before {
+  content: ""; }
+
+.wsk-icon--laptop-chromebook:before {
+  content: ""; }
+
+.wsk-icon--laptop-mac:before {
+  content: ""; }
+
+.wsk-icon--laptop-windows:before {
+  content: ""; }
+
+.wsk-icon--memory:before {
+  content: ""; }
+
+.wsk-icon--mouse:before {
+  content: ""; }
+
+.wsk-icon--phone-android:before {
+  content: ""; }
+
+.wsk-icon--phone-iphone:before {
+  content: ""; }
+
+.wsk-icon--phonelink:before {
+  content: ""; }
+
+.wsk-icon--phonelink-off:before {
+  content: ""; }
+
+.wsk-icon--security:before {
+  content: ""; }
+
+.wsk-icon--sim-card:before {
+  content: ""; }
+
+.wsk-icon--smartphone:before {
+  content: ""; }
+
+.wsk-icon--speaker:before {
+  content: ""; }
+
+.wsk-icon--tablet:before {
+  content: ""; }
+
+.wsk-icon--tablet-android:before {
+  content: ""; }
+
+.wsk-icon--tablet-mac:before {
+  content: ""; }
+
+.wsk-icon--tv:before {
+  content: ""; }
+
+.wsk-icon--watch:before {
+  content: ""; }
+
+.wsk-icon--add-to-photos:before {
+  content: ""; }
+
+.wsk-icon--adjust:before {
+  content: ""; }
+
+.wsk-icon--assistant-photo:before {
+  content: ""; }
+
+.wsk-icon--audiotrack:before {
+  content: ""; }
+
+.wsk-icon--blur-circular:before {
+  content: ""; }
+
+.wsk-icon--blur-linear:before {
+  content: ""; }
+
+.wsk-icon--blur-off:before {
+  content: ""; }
+
+.wsk-icon--blur-on:before {
+  content: ""; }
+
+.wsk-icon--brightness-1:before {
+  content: ""; }
+
+.wsk-icon--brightness-2:before {
+  content: ""; }
+
+.wsk-icon--brightness-3:before {
+  content: ""; }
+
+.wsk-icon--brightness-4:before {
+  content: ""; }
+
+.wsk-icon--brightness-5:before {
+  content: ""; }
+
+.wsk-icon--brightness-6:before {
+  content: ""; }
+
+.wsk-icon--brightness-7:before {
+  content: ""; }
+
+.wsk-icon--brush:before {
+  content: ""; }
+
+.wsk-icon--camera:before {
+  content: ""; }
+
+.wsk-icon--camera-alt:before {
+  content: ""; }
+
+.wsk-icon--camera-front:before {
+  content: ""; }
+
+.wsk-icon--camera-rear:before {
+  content: ""; }
+
+.wsk-icon--camera-roll:before {
+  content: ""; }
+
+.wsk-icon--center-focus-strong:before {
+  content: ""; }
+
+.wsk-icon--center-focus-weak:before {
+  content: ""; }
+
+.wsk-icon--collections:before {
+  content: ""; }
+
+.wsk-icon--colorize:before {
+  content: ""; }
+
+.wsk-icon--color-lens:before {
+  content: ""; }
+
+.wsk-icon--compare:before {
+  content: ""; }
+
+.wsk-icon--control-point:before {
+  content: ""; }
+
+.wsk-icon--control-point-duplicate:before {
+  content: ""; }
+
+.wsk-icon--crop:before {
+  content: ""; }
+
+.wsk-icon--crop-3-2:before {
+  content: ""; }
+
+.wsk-icon--crop-5-4:before {
+  content: ""; }
+
+.wsk-icon--crop-7-5:before {
+  content: ""; }
+
+.wsk-icon--crop-16-9:before {
+  content: ""; }
+
+.wsk-icon--crop-din:before {
+  content: ""; }
+
+.wsk-icon--crop-free:before {
+  content: ""; }
+
+.wsk-icon--crop-landscape:before {
+  content: ""; }
+
+.wsk-icon--crop-original:before {
+  content: ""; }
+
+.wsk-icon--crop-portrait:before {
+  content: ""; }
+
+.wsk-icon--crop-square:before {
+  content: ""; }
+
+.wsk-icon--dehaze:before {
+  content: ""; }
+
+.wsk-icon--details:before {
+  content: ""; }
+
+.wsk-icon--edit:before {
+  content: ""; }
+
+.wsk-icon--exposure:before {
+  content: ""; }
+
+.wsk-icon--exposure-minus-1:before {
+  content: ""; }
+
+.wsk-icon--exposure-minus-2:before {
+  content: ""; }
+
+.wsk-icon--exposure-zero:before {
+  content: ""; }
+
+.wsk-icon--exposure-plus-1:before {
+  content: ""; }
+
+.wsk-icon--exposure-plus-2:before {
+  content: ""; }
+
+.wsk-icon--filter:before {
+  content: ""; }
+
+.wsk-icon--filter-1:before {
+  content: ""; }
+
+.wsk-icon--filter-2:before {
+  content: ""; }
+
+.wsk-icon--filter-3:before {
+  content: ""; }
+
+.wsk-icon--filter-4:before {
+  content: ""; }
+
+.wsk-icon--filter-5:before {
+  content: ""; }
+
+.wsk-icon--filter-6:before {
+  content: ""; }
+
+.wsk-icon--filter-7:before {
+  content: ""; }
+
+.wsk-icon--filter-8:before {
+  content: ""; }
+
+.wsk-icon--filter-9:before {
+  content: ""; }
+
+.wsk-icon--filter-9-plus:before {
+  content: ""; }
+
+.wsk-icon--filter-b-and-w:before {
+  content: ""; }
+
+.wsk-icon--filter-center-focus:before {
+  content: ""; }
+
+.wsk-icon--filter-drama:before {
+  content: ""; }
+
+.wsk-icon--filter-frames:before {
+  content: ""; }
+
+.wsk-icon--filter-hdr:before {
+  content: ""; }
+
+.wsk-icon--filter-none:before {
+  content: ""; }
+
+.wsk-icon--filter-tilt-shift:before {
+  content: ""; }
+
+.wsk-icon--filter-vintage:before {
+  content: ""; }
+
+.wsk-icon--flare:before {
+  content: ""; }
+
+.wsk-icon--flash-auto:before {
+  content: ""; }
+
+.wsk-icon--flash-off:before {
+  content: ""; }
+
+.wsk-icon--flash-on:before {
+  content: ""; }
+
+.wsk-icon--flip:before {
+  content: ""; }
+
+.wsk-icon--gradient:before {
+  content: ""; }
+
+.wsk-icon--grain:before {
+  content: ""; }
+
+.wsk-icon--grid-off:before {
+  content: ""; }
+
+.wsk-icon--grid-on:before {
+  content: ""; }
+
+.wsk-icon--hdr-off:before {
+  content: ""; }
+
+.wsk-icon--hdr-on:before {
+  content: ""; }
+
+.wsk-icon--hdr-strong:before {
+  content: ""; }
+
+.wsk-icon--hdr-weak:before {
+  content: ""; }
+
+.wsk-icon--healing:before {
+  content: ""; }
+
+.wsk-icon--image:before {
+  content: ""; }
+
+.wsk-icon--image-aspect-ratio:before {
+  content: ""; }
+
+.wsk-icon--iso:before {
+  content: ""; }
+
+.wsk-icon--landscape:before {
+  content: ""; }
+
+.wsk-icon--leak-add:before {
+  content: ""; }
+
+.wsk-icon--leak-remove:before {
+  content: ""; }
+
+.wsk-icon--lens:before {
+  content: ""; }
+
+.wsk-icon--looks:before {
+  content: ""; }
+
+.wsk-icon--looks-1:before {
+  content: ""; }
+
+.wsk-icon--looks-2:before {
+  content: ""; }
+
+.wsk-icon--looks-3:before {
+  content: ""; }
+
+.wsk-icon--looks-4:before {
+  content: ""; }
+
+.wsk-icon--looks-5:before {
+  content: ""; }
+
+.wsk-icon--looks-6:before {
+  content: ""; }
+
+.wsk-icon--looks-one:before {
+  content: ""; }
+
+.wsk-icon--looks-two:before {
+  content: ""; }
+
+.wsk-icon--loupe:before {
+  content: ""; }
+
+.wsk-icon--movie-creation:before {
+  content: ""; }
+
+.wsk-icon--nature:before {
+  content: ""; }
+
+.wsk-icon--nature-people:before {
+  content: ""; }
+
+.wsk-icon--navigate-before:before {
+  content: ""; }
+
+.wsk-icon--navigate-next:before {
+  content: ""; }
+
+.wsk-icon--palette:before {
+  content: ""; }
+
+.wsk-icon--panorama:before {
+  content: ""; }
+
+.wsk-icon--panorama-fisheye:before {
+  content: ""; }
+
+.wsk-icon--panorama-horizontal:before {
+  content: ""; }
+
+.wsk-icon--panorama-vertical:before {
+  content: ""; }
+
+.wsk-icon--panorama-wide-angle:before {
+  content: ""; }
+
+.wsk-icon--photo:before {
+  content: ""; }
+
+.wsk-icon--photo-album:before {
+  content: ""; }
+
+.wsk-icon--photo-camera:before {
+  content: ""; }
+
+.wsk-icon--photo-library:before {
+  content: ""; }
+
+.wsk-icon--portrait:before {
+  content: ""; }
+
+.wsk-icon--remove-red-eye:before {
+  content: ""; }
+
+.wsk-icon--rotate-left:before {
+  content: ""; }
+
+.wsk-icon--rotate-right:before {
+  content: ""; }
+
+.wsk-icon--slideshow:before {
+  content: ""; }
+
+.wsk-icon--straighten:before {
+  content: ""; }
+
+.wsk-icon--style:before {
+  content: ""; }
+
+.wsk-icon--switch-camera:before {
+  content: ""; }
+
+.wsk-icon--switch-video:before {
+  content: ""; }
+
+.wsk-icon--tag-faces:before {
+  content: ""; }
+
+.wsk-icon--texture:before {
+  content: ""; }
+
+.wsk-icon--timelapse:before {
+  content: ""; }
+
+.wsk-icon--timer:before {
+  content: ""; }
+
+.wsk-icon--timer-3:before {
+  content: ""; }
+
+.wsk-icon--timer-10:before {
+  content: ""; }
+
+.wsk-icon--timer-auto:before {
+  content: ""; }
+
+.wsk-icon--timer-off:before {
+  content: ""; }
+
+.wsk-icon--tonality:before {
+  content: ""; }
+
+.wsk-icon--transform:before {
+  content: ""; }
+
+.wsk-icon--tune:before {
+  content: ""; }
+
+.wsk-icon--wb-auto:before {
+  content: ""; }
+
+.wsk-icon--wb-cloudy:before {
+  content: ""; }
+
+.wsk-icon--wb-incandescent:before {
+  content: ""; }
+
+.wsk-icon--wb-irradescent:before {
+  content: ""; }
+
+.wsk-icon--wb-sunny:before {
+  content: ""; }
+
+.wsk-icon--beenhere:before {
+  content: ""; }
+
+.wsk-icon--directions:before {
+  content: ""; }
+
+.wsk-icon--directions-bike:before {
+  content: ""; }
+
+.wsk-icon--directions-bus:before {
+  content: ""; }
+
+.wsk-icon--directions-car:before {
+  content: ""; }
+
+.wsk-icon--directions-ferry:before {
+  content: ""; }
+
+.wsk-icon--directions-subway:before {
+  content: ""; }
+
+.wsk-icon--directions-train:before {
+  content: ""; }
+
+.wsk-icon--directions-transit:before {
+  content: ""; }
+
+.wsk-icon--directions-walk:before {
+  content: ""; }
+
+.wsk-icon--flight:before {
+  content: ""; }
+
+.wsk-icon--hotel:before {
+  content: ""; }
+
+.wsk-icon--layers:before {
+  content: ""; }
+
+.wsk-icon--layers-clear:before {
+  content: ""; }
+
+.wsk-icon--local-airport:before {
+  content: ""; }
+
+.wsk-icon--local-atm:before {
+  content: ""; }
+
+.wsk-icon--local-attraction:before {
+  content: ""; }
+
+.wsk-icon--local-bar:before {
+  content: ""; }
+
+.wsk-icon--local-cafe:before {
+  content: ""; }
+
+.wsk-icon--local-car-wash:before {
+  content: ""; }
+
+.wsk-icon--local-convenience-store:before {
+  content: ""; }
+
+.wsk-icon--local-drink:before {
+  content: ""; }
+
+.wsk-icon--local-florist:before {
+  content: ""; }
+
+.wsk-icon--local-gas-station:before {
+  content: ""; }
+
+.wsk-icon--local-grocery-store:before {
+  content: ""; }
+
+.wsk-icon--local-hospital:before {
+  content: ""; }
+
+.wsk-icon--local-hotel:before {
+  content: ""; }
+
+.wsk-icon--local-laundry-service:before {
+  content: ""; }
+
+.wsk-icon--local-library:before {
+  content: ""; }
+
+.wsk-icon--local-mall:before {
+  content: ""; }
+
+.wsk-icon--local-movies:before {
+  content: ""; }
+
+.wsk-icon--local-offer:before {
+  content: ""; }
+
+.wsk-icon--local-parking:before {
+  content: ""; }
+
+.wsk-icon--local-pharmacy:before {
+  content: ""; }
+
+.wsk-icon--local-phone:before {
+  content: ""; }
+
+.wsk-icon--local-pizza:before {
+  content: ""; }
+
+.wsk-icon--local-play:before {
+  content: ""; }
+
+.wsk-icon--local-post-office:before {
+  content: ""; }
+
+.wsk-icon--local-print-shop:before {
+  content: ""; }
+
+.wsk-icon--local-restaurant:before {
+  content: ""; }
+
+.wsk-icon--local-see:before {
+  content: ""; }
+
+.wsk-icon--local-shipping:before {
+  content: ""; }
+
+.wsk-icon--local-taxi:before {
+  content: ""; }
+
+.wsk-icon--location-history:before {
+  content: ""; }
+
+.wsk-icon--map:before {
+  content: ""; }
+
+.wsk-icon--my-location:before {
+  content: ""; }
+
+.wsk-icon--navigation:before {
+  content: ""; }
+
+.wsk-icon--pin-drop:before {
+  content: ""; }
+
+.wsk-icon--place:before {
+  content: ""; }
+
+.wsk-icon--rate-review:before {
+  content: ""; }
+
+.wsk-icon--restaurant-menu:before {
+  content: ""; }
+
+.wsk-icon--satellite:before {
+  content: ""; }
+
+.wsk-icon--store-mall-directory:before {
+  content: ""; }
+
+.wsk-icon--terrain:before {
+  content: ""; }
+
+.wsk-icon--traffic:before {
+  content: ""; }
+
+.wsk-icon--apps:before {
+  content: ""; }
+
+.wsk-icon--cancel:before {
+  content: ""; }
+
+.wsk-icon--arrow-drop-down-circle:before {
+  content: ""; }
+
+.wsk-icon--arrow-drop-down:before {
+  content: ""; }
+
+.wsk-icon--arrow-drop-up:before {
+  content: ""; }
+
+.wsk-icon--arrow-back:before {
+  content: ""; }
+
+.wsk-icon--arrow-forward:before {
+  content: ""; }
+
+.wsk-icon--check:before {
+  content: ""; }
+
+.wsk-icon--close:before {
+  content: ""; }
+
+.wsk-icon--chevron-left:before {
+  content: ""; }
+
+.wsk-icon--chevron-right:before {
+  content: ""; }
+
+.wsk-icon--expand-less:before {
+  content: ""; }
+
+.wsk-icon--expand-more:before {
+  content: ""; }
+
+.wsk-icon--fullscreen:before {
+  content: ""; }
+
+.wsk-icon--fullscreen-exit:before {
+  content: ""; }
+
+.wsk-icon--menu:before {
+  content: ""; }
+
+.wsk-icon--more-horiz:before {
+  content: ""; }
+
+.wsk-icon--more-vert:before {
+  content: ""; }
+
+.wsk-icon--refresh:before {
+  content: ""; }
+
+.wsk-icon--unfold-less:before {
+  content: ""; }
+
+.wsk-icon--unfold-more:before {
+  content: ""; }
+
+.wsk-icon--adb:before {
+  content: ""; }
+
+.wsk-icon--bluetooth-audio:before {
+  content: ""; }
+
+.wsk-icon--disc-full:before {
+  content: ""; }
+
+.wsk-icon--dnd-forwardslash:before {
+  content: ""; }
+
+.wsk-icon--do-not-disturb:before {
+  content: ""; }
+
+.wsk-icon--drive-eta:before {
+  content: ""; }
+
+.wsk-icon--event-available:before {
+  content: ""; }
+
+.wsk-icon--event-busy:before {
+  content: ""; }
+
+.wsk-icon--event-note:before {
+  content: ""; }
+
+.wsk-icon--folder-special:before {
+  content: ""; }
+
+.wsk-icon--mms:before {
+  content: ""; }
+
+.wsk-icon--more:before {
+  content: ""; }
+
+.wsk-icon--network-locked:before {
+  content: ""; }
+
+.wsk-icon--phone-bluetooth-speaker:before {
+  content: ""; }
+
+.wsk-icon--phone-forwarded:before {
+  content: ""; }
+
+.wsk-icon--phone-in-talk:before {
+  content: ""; }
+
+.wsk-icon--phone-locked:before {
+  content: ""; }
+
+.wsk-icon--phone-missed:before {
+  content: ""; }
+
+.wsk-icon--phone-paused:before {
+  content: ""; }
+
+.wsk-icon--play-download:before {
+  content: ""; }
+
+.wsk-icon--play-install:before {
+  content: ""; }
+
+.wsk-icon--sd-card:before {
+  content: ""; }
+
+.wsk-icon--sim-card-alert:before {
+  content: ""; }
+
+.wsk-icon--sms:before {
+  content: ""; }
+
+.wsk-icon--sms-failed:before {
+  content: ""; }
+
+.wsk-icon--sync:before {
+  content: ""; }
+
+.wsk-icon--sync-disabled:before {
+  content: ""; }
+
+.wsk-icon--sync-problem:before {
+  content: ""; }
+
+.wsk-icon--system-update:before {
+  content: ""; }
+
+.wsk-icon--tap-and-play:before {
+  content: ""; }
+
+.wsk-icon--time-to-leave:before {
+  content: ""; }
+
+.wsk-icon--vibration:before {
+  content: ""; }
+
+.wsk-icon--voice-chat:before {
+  content: ""; }
+
+.wsk-icon--vpn-lock:before {
+  content: ""; }
+
+.wsk-icon--cake:before {
+  content: ""; }
+
+.wsk-icon--domain:before {
+  content: ""; }
+
+.wsk-icon--location-city:before {
+  content: ""; }
+
+.wsk-icon--mood:before {
+  content: ""; }
+
+.wsk-icon--notifications-none:before {
+  content: ""; }
+
+.wsk-icon--notifications:before {
+  content: ""; }
+
+.wsk-icon--notifications-off:before {
+  content: ""; }
+
+.wsk-icon--notifications-on:before {
+  content: ""; }
+
+.wsk-icon--notifications-paused:before {
+  content: ""; }
+
+.wsk-icon--pages:before {
+  content: ""; }
+
+.wsk-icon--party-mode:before {
+  content: ""; }
+
+.wsk-icon--group:before {
+  content: ""; }
+
+.wsk-icon--group-add:before {
+  content: ""; }
+
+.wsk-icon--people:before {
+  content: ""; }
+
+.wsk-icon--people-outline:before {
+  content: ""; }
+
+.wsk-icon--person:before {
+  content: ""; }
+
+.wsk-icon--person-add:before {
+  content: ""; }
+
+.wsk-icon--person-outline:before {
+  content: ""; }
+
+.wsk-icon--plus-one:before {
+  content: ""; }
+
+.wsk-icon--poll:before {
+  content: ""; }
+
+.wsk-icon--public:before {
+  content: ""; }
+
+.wsk-icon--school:before {
+  content: ""; }
+
+.wsk-icon--share:before {
+  content: ""; }
+
+.wsk-icon--whatshot:before {
+  content: ""; }
+
+.wsk-icon--check-box:before {
+  content: ""; }
+
+.wsk-icon--check-box-outline-blank:before {
+  content: ""; }
+
+.wsk-icon--radio-button-off:before {
+  content: ""; }
+
+.wsk-icon--radio-button-on:before {
+  content: ""; }
+
+.wsk-icon--star:before {
+  content: ""; }
+
+.wsk-icon--star-half:before {
+  content: ""; }
+
+.wsk-icon--star-outline:before {
+  content: ""; }
+
+/**
+*
+* Material design color palettes.
+* @see http://www.google.com/design/spec/style/color.html
+*
+**/
+/* ==========  Color Palettes  ========== */
+/* ==========  Color & Themes  ========== */
+/* ==========  Typography  ========== */
+/* ==========  Components  ========== */
+/* ==========  Standard Buttons  ========== */
+/* ==========  Icon Toggles  ========== */
+/* ==========  Radio Buttons  ========== */
+/* ==========  Ripple effect  ========== */
+/* ==========  Layout  ========== */
+/* ==========  Content Tabs  ========== */
+/* ==========  Checkboxes  ========== */
+/* ==========  Switches  ========== */
+/* ==========  Spinner  ========== */
+/* ==========  Text fields  ========== */
+/* ==========  Card  ========== */
+/* Heading back */
+/* ==========  Sliders ========== */
+/* ==========  List ========== */
+/* ==========  Item ========== */
+/* ==========  Dropdown menu ========== */
+/* ==========  Tooltips  ========== */
+/* ==========  Footer  ========== */
+.wsk-shadow--z1 {
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
+
+.wsk-shadow--z2 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23); }
+
+.wsk-shadow--z3 {
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.19), 0 6px 3px 0 rgba(0, 0, 0, 0.23); }
+
+.wsk-shadow--z4 {
+  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.25), 0 10px 5px 0 rgba(0, 0, 0, 0.22); }
+
+.wsk-shadow--z5 {
+  box-shadow: 0 19px 19px 0 rgba(0, 0, 0, 0.3), 0 15px 6px 0 rgba(0, 0, 0, 0.22); }
+
+/**
+*
+* Material design color palettes.
+* @see http://www.google.com/design/spec/style/color.html
+*
+**/
+/* ==========  Color Palettes  ========== */
+.wsk-ripple {
+  background: #212121;
+  border-radius: 50%;
+  height: 50px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  overflow: hidden; }
+  .wsk-ripple.is-animating {
+    transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1), width 0.6s cubic-bezier(0, 0, 0.2, 1), height 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s cubic-bezier(0, 0, 0.2, 1); }
+
+.wsk-icon-toggle {
+  position: relative;
+  z-index: 1;
+  vertical-align: middle;
+  display: inline-block;
+  height: 32px;
+  margin: 0;
+  padding: 0; }
+
+.wsk-icon-toggle__input {
+  line-height: 32px; }
+  .wsk-icon-toggle.is-upgraded .wsk-icon-toggle__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none; }
+
+.wsk-icon-toggle__label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  min-width: 32px;
+  line-height: 32px;
+  color: #616161;
+  border-radius: 50%;
+  font-size: 24px;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+  background-color: transparent;
+  will-change: background-color;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .wsk-icon-toggle.is-checked .wsk-icon-toggle__label {
+    color: #2196f3; }
+  .wsk-icon-toggle.is-disabled .wsk-icon-toggle__label {
+    color: rgba(0, 0, 0, 0.26);
+    cursor: auto;
+    transition: none; }
+  .wsk-icon-toggle.is-focused .wsk-icon-toggle__label {
+    background-color: rgba(0, 0, 0, 0.12); }
+  .wsk-icon-toggle.is-focused.is-checked .wsk-icon-toggle__label {
+    background-color: rgba(33, 150, 243, 0.26); }
+
+.wsk-icon-toggle__ripple-container {
+  position: absolute;
+  z-index: 2;
+  top: -2px;
+  left: -2px;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white, black); }
+  .wsk-icon-toggle__ripple-container .wsk-ripple {
+    background: #616161; }
+  .wsk-icon-toggle.is-disabled .wsk-icon-toggle__ripple-container {
+    cursor: auto; }
+  .wsk-icon-toggle.is-disabled .wsk-icon-toggle__ripple-container .wsk-ripple {
+    background: transparent; }
+
+.button-block {
+  display: inline-block;
+  margin: 0 20px 20px 0; }
+
+/*# sourceMappingURL=demo.css.map */

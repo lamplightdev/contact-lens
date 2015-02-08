@@ -1,58 +1,207 @@
 @charset "UTF-8";
 /*
- * Web Starter Kit
- *
- * Multi-screen layout styles for your page. Brought to you by the
- * Web Starter Kit team.
- *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
  */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
 /*
- * Visual Style Guide styles
- * Remove if you prefer to use a CSS library, like Bootstrap
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
  */
-/**
-*
-* Material design color palettes.
-* @see http://www.google.com/design/spec/style/color.html
-*
-**/
-/* ==========  Color Palettes  ========== */
-/* ==========  Color & Themes  ========== */
-/* ==========  Typography  ========== */
-/* ==========  Components  ========== */
-/* ==========  Standard Buttons  ========== */
-/* ==========  Icon Toggles  ========== */
-/* ==========  Radio Buttons  ========== */
-/* ==========  Ripple effect  ========== */
-/* ==========  Layout  ========== */
-/* ==========  Content Tabs  ========== */
-/* ==========  Checkboxes  ========== */
-/* ==========  Switches  ========== */
-/* ==========  Spinner  ========== */
-/* ==========  Text fields  ========== */
-/* ==========  Card  ========== */
-/* Heading back */
-/* ==========  Sliders ========== */
-/* ==========  List ========== */
-/* ==========  Item ========== */
-/* ==========  Dropdown menu ========== */
-/* ==========  Tooltips  ========== */
-/* ==========  Footer  ========== */
-.wsk-shadow--z1 {
-  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
 
-.wsk-shadow--z2 {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23); }
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
 
-.wsk-shadow--z3 {
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.19), 0 6px 3px 0 rgba(0, 0, 0, 0.23); }
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
 
-.wsk-shadow--z4 {
-  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.25), 0 10px 5px 0 rgba(0, 0, 0, 0.22); }
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle; }
 
-.wsk-shadow--z5 {
-  box-shadow: 0 19px 19px 0 rgba(0, 0, 0, 0.3), 0 15px 6px 0 rgba(0, 0, 0, 0.22); }
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
 
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical; }
+
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers: h5bp.com/u
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/*
+ * Hide only visually, but have it available for screen readers: h5bp.com/v
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */ }
+@media print, (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */ }
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request: h5bp.com/r
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+
+  a,
+  a:visited {
+    text-decoration: underline; }
+
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
+
+  tr,
+  img {
+    page-break-inside: avoid; }
+
+  img {
+    max-width: 100% !important; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+
+  h2,
+  h3 {
+    page-break-after: avoid; } }
 /* We're splitting fonts into "preferred" and "performance" in order to optimize
    page loading. For important text, such as the body, we want it to load
    immediately and not wait for the web font load, whereas for other sections,
@@ -64,7 +213,7 @@
    widely available.
 */
 html, body {
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px; }
@@ -77,7 +226,7 @@ h1, h2, h3, h4, h5, h6, p {
  * Styles for HTML elements
  */
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
@@ -86,40 +235,40 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-size: 0.6em; }
 
 h1 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em; }
 
 h2 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px; }
 
 h3 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px; }
 
 h4 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
   -moz-osx-font-smoothing: grayscale; }
 
 h5 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.02em; }
 
 h6 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -136,7 +285,7 @@ a {
   font-weight: bold; }
 
 blockquote {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 300;
   font-style: italic;
@@ -159,14 +308,14 @@ dt {
  * Class Name Styles
  */
 .wsk-typography--display-4 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 112px;
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em; }
 
 .wsk-typography--display-4--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 112px;
   font-weight: 300;
   line-height: 1;
@@ -174,14 +323,14 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--display-3 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em; }
 
 .wsk-typography--display-3--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
@@ -189,40 +338,40 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--display-2 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px; }
 
 .wsk-typography--display-2--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px;
   opacity: 0.54; }
 
 .wsk-typography--display-1 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px; }
 
 .wsk-typography--display-1--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px;
   opacity: 0.54; }
 
 .wsk-typography--headline {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
   -moz-osx-font-smoothing: grayscale; }
 
 .wsk-typography--headline--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -230,14 +379,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--title {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.02em; }
 
 .wsk-typography--title--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
@@ -245,14 +394,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--subhead {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--subhead--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -286,14 +435,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--body-2--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--Body-2--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
@@ -301,14 +450,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--body-1--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--body-1--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
@@ -322,7 +471,7 @@ dt {
   letter-spacing: 0.08em; }
 
 .wsk-typography--caption--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
@@ -336,7 +485,7 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--caption--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
@@ -344,14 +493,14 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--menu {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.04em; }
 
 .wsk-typography--menu--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -359,7 +508,7 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--button {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -367,7 +516,7 @@ dt {
   letter-spacing: 0.04em; }
 
 .wsk-typography--button--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -399,1109 +548,1151 @@ dt {
 .wsk-typography--textCapitalize {
   text-transform: capitalize; }
 
-.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td, .wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9; }
 
-.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td, .wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9; }
+
+/**
+*
+* Material design color palettes.
+* @see http://www.google.com/design/spec/style/color.html
+*
+**/
+/* ==========  Color Palettes  ========== */
+html, body {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0; }
+
+body {
+  padding: 24px;
+  box-sizing: border-box;
+  background: #FFF; }
+
+body > h2 {
+  margin-top: 24px;
+  margin-bottom: 12px; }
+
+.PreviewBlock {
+  background: #f5f5f5;
+  padding: 20px; }
+
+.wsk-shadow--z1 {
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
+
+.wsk-shadow--z2 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23); }
+
+.wsk-shadow--z3 {
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.19), 0 6px 3px 0 rgba(0, 0, 0, 0.23); }
+
+.wsk-shadow--z4 {
+  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.25), 0 10px 5px 0 rgba(0, 0, 0, 0.22); }
+
+.wsk-shadow--z5 {
+  box-shadow: 0 19px 19px 0 rgba(0, 0, 0, 0.3), 0 15px 6px 0 rgba(0, 0, 0, 0.22); }
 
 @font-face {
   font-family: 'Material-Design-Iconic-Font';
-  src: url('../../fonts/Material-Design-Iconic-Font.eot?v=1.1.1');
-  src: url('../../fonts/Material-Design-Iconic-Font.eot?#iefix&v=1.1.1') format('embedded-opentype'), url('../../fonts/Material-Design-Iconic-Font.woff?v=1.1.1') format('woff'), url('../../fonts/Material-Design-Iconic-Font.ttf?v=1.1.1') format('truetype');
+  src: url("../../fonts/Material-Design-Iconic-Font.eot?v=1.1.1");
+  src: url("../../fonts/Material-Design-Iconic-Font.eot?#iefix&v=1.1.1") format("embedded-opentype"), url("../../fonts/Material-Design-Iconic-Font.woff?v=1.1.1") format("woff"), url("../../fonts/Material-Design-Iconic-Font.ttf?v=1.1.1") format("truetype");
   font-weight: normal;
   font-style: normal; }
-
 .wsk-icon {
   font-family: 'Material-Design-Iconic-Font';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
 .wsk-icon--3d-rotation:before {
-  content: "\f000"; }
+  content: ""; }
 
 .wsk-icon--accessibility:before {
-  content: "\f001"; }
+  content: ""; }
 
 .wsk-icon--account-balance:before {
-  content: "\f002"; }
+  content: ""; }
 
 .wsk-icon--account-balance-wallet:before {
-  content: "\f003"; }
+  content: ""; }
 
 .wsk-icon--account-box:before {
-  content: "\f004"; }
+  content: ""; }
 
 .wsk-icon--account-child:before {
-  content: "\f005"; }
+  content: ""; }
 
 .wsk-icon--account-circle:before {
-  content: "\f006"; }
+  content: ""; }
 
 .wsk-icon--add-shopping-cart:before {
-  content: "\f007"; }
+  content: ""; }
 
 .wsk-icon--alarm:before {
-  content: "\f008"; }
+  content: ""; }
 
 .wsk-icon--alarm-add:before {
-  content: "\f009"; }
+  content: ""; }
 
 .wsk-icon--alarm-off:before {
-  content: "\f00a"; }
+  content: ""; }
 
 .wsk-icon--alarm-on:before {
-  content: "\f00b"; }
+  content: ""; }
 
 .wsk-icon--android:before {
-  content: "\f00c"; }
+  content: ""; }
 
 .wsk-icon--announcement:before {
-  content: "\f00d"; }
+  content: ""; }
 
 .wsk-icon--aspect-ratio:before {
-  content: "\f00e"; }
+  content: ""; }
 
 .wsk-icon--assessment:before {
-  content: "\f00f"; }
+  content: ""; }
 
 .wsk-icon--assignment:before {
-  content: "\f010"; }
+  content: ""; }
 
 .wsk-icon--assignment-ind:before {
-  content: "\f011"; }
+  content: ""; }
 
 .wsk-icon--assignment-late:before {
-  content: "\f012"; }
+  content: ""; }
 
 .wsk-icon--assignment-return:before {
-  content: "\f013"; }
+  content: ""; }
 
 .wsk-icon--assignment-returned:before {
-  content: "\f014"; }
+  content: ""; }
 
 .wsk-icon--assignment-turned-in:before {
-  content: "\f015"; }
+  content: ""; }
 
 .wsk-icon--autorenew:before {
-  content: "\f016"; }
+  content: ""; }
 
 .wsk-icon--backup:before {
-  content: "\f017"; }
+  content: ""; }
 
 .wsk-icon--book:before {
-  content: "\f018"; }
+  content: ""; }
 
 .wsk-icon--bookmark:before {
-  content: "\f019"; }
+  content: ""; }
 
 .wsk-icon--bookmark-outline:before {
-  content: "\f01a"; }
+  content: ""; }
 
 .wsk-icon--bug-report:before {
-  content: "\f01b"; }
+  content: ""; }
 
 .wsk-icon--cached:before {
-  content: "\f01c"; }
+  content: ""; }
 
 .wsk-icon--class:before {
-  content: "\f01d"; }
+  content: ""; }
 
 .wsk-icon--credit-card:before {
-  content: "\f01e"; }
+  content: ""; }
 
 .wsk-icon--dashboard:before {
-  content: "\f01f"; }
+  content: ""; }
 
 .wsk-icon--delete:before {
-  content: "\f020"; }
+  content: ""; }
 
 .wsk-icon--description:before {
-  content: "\f021"; }
+  content: ""; }
 
 .wsk-icon--dns:before {
-  content: "\f022"; }
+  content: ""; }
 
 .wsk-icon--done:before {
-  content: "\f023"; }
+  content: ""; }
 
 .wsk-icon--done-all:before {
-  content: "\f024"; }
+  content: ""; }
 
 .wsk-icon--event:before {
-  content: "\f025"; }
+  content: ""; }
 
 .wsk-icon--exit-to-app:before {
-  content: "\f026"; }
+  content: ""; }
 
 .wsk-icon--explore:before {
-  content: "\f027"; }
+  content: ""; }
 
 .wsk-icon--extension:before {
-  content: "\f028"; }
+  content: ""; }
 
 .wsk-icon--face-unlock:before {
-  content: "\f029"; }
+  content: ""; }
 
 .wsk-icon--favorite:before {
-  content: "\f02a"; }
+  content: ""; }
 
 .wsk-icon--favorite-outline:before {
-  content: "\f02b"; }
+  content: ""; }
 
 .wsk-icon--find-in-page:before {
-  content: "\f02c"; }
+  content: ""; }
 
 .wsk-icon--find-replace:before {
-  content: "\f02d"; }
+  content: ""; }
 
 .wsk-icon--flip-to-back:before {
-  content: "\f02e"; }
+  content: ""; }
 
 .wsk-icon--flip-to-front:before {
-  content: "\f02f"; }
+  content: ""; }
 
 .wsk-icon--get-app:before {
-  content: "\f030"; }
+  content: ""; }
 
 .wsk-icon--grade:before {
-  content: "\f031"; }
+  content: ""; }
 
 .wsk-icon--group-work:before {
-  content: "\f032"; }
+  content: ""; }
 
 .wsk-icon--help:before {
-  content: "\f033"; }
+  content: ""; }
 
 .wsk-icon--highlight-remove:before {
-  content: "\f034"; }
+  content: ""; }
 
 .wsk-icon--history:before {
-  content: "\f035"; }
+  content: ""; }
 
 .wsk-icon--home:before {
-  content: "\f036"; }
+  content: ""; }
 
 .wsk-icon--https:before {
-  content: "\f037"; }
+  content: ""; }
 
 .wsk-icon--info:before {
-  content: "\f038"; }
+  content: ""; }
 
 .wsk-icon--info-outline:before {
-  content: "\f039"; }
+  content: ""; }
 
 .wsk-icon--input:before {
-  content: "\f03a"; }
+  content: ""; }
 
 .wsk-icon--invert-colors:before {
-  content: "\f03b"; }
+  content: ""; }
 
 .wsk-icon--label:before {
-  content: "\f03c"; }
+  content: ""; }
 
 .wsk-icon--label-outline:before {
-  content: "\f03d"; }
+  content: ""; }
 
 .wsk-icon--language:before {
-  content: "\f03e"; }
+  content: ""; }
 
 .wsk-icon--launch:before {
-  content: "\f03f"; }
+  content: ""; }
 
 .wsk-icon--list:before {
-  content: "\f040"; }
+  content: ""; }
 
 .wsk-icon--lock:before {
-  content: "\f041"; }
+  content: ""; }
 
 .wsk-icon--lock-open:before {
-  content: "\f042"; }
+  content: ""; }
 
 .wsk-icon--lock-outline:before {
-  content: "\f043"; }
+  content: ""; }
 
 .wsk-icon--loyalty:before {
-  content: "\f044"; }
+  content: ""; }
 
 .wsk-icon--markunread-mailbox:before {
-  content: "\f045"; }
+  content: ""; }
 
 .wsk-icon--note-add:before {
-  content: "\f046"; }
+  content: ""; }
 
 .wsk-icon--open-in-browser:before {
-  content: "\f047"; }
+  content: ""; }
 
 .wsk-icon--open-in-new:before {
-  content: "\f048"; }
+  content: ""; }
 
 .wsk-icon--open-with:before {
-  content: "\f049"; }
+  content: ""; }
 
 .wsk-icon--pageview:before {
-  content: "\f04a"; }
+  content: ""; }
 
 .wsk-icon--payment:before {
-  content: "\f04b"; }
+  content: ""; }
 
 .wsk-icon--perm-camera-mic:before {
-  content: "\f04c"; }
+  content: ""; }
 
 .wsk-icon--perm-contact-cal:before {
-  content: "\f04d"; }
+  content: ""; }
 
 .wsk-icon--perm-data-setting:before {
-  content: "\f04e"; }
+  content: ""; }
 
 .wsk-icon--perm-device-info:before {
-  content: "\f04f"; }
+  content: ""; }
 
 .wsk-icon--perm-identity:before {
-  content: "\f050"; }
+  content: ""; }
 
 .wsk-icon--perm-media:before {
-  content: "\f051"; }
+  content: ""; }
 
 .wsk-icon--perm-phone-msg:before {
-  content: "\f052"; }
+  content: ""; }
 
 .wsk-icon--perm-scan-wifi:before {
-  content: "\f053"; }
+  content: ""; }
 
 .wsk-icon--picture-in-picture:before {
-  content: "\f054"; }
+  content: ""; }
 
 .wsk-icon--polymer:before {
-  content: "\f055"; }
+  content: ""; }
 
 .wsk-icon--print:before {
-  content: "\f056"; }
+  content: ""; }
 
 .wsk-icon--query-builder:before {
-  content: "\f057"; }
+  content: ""; }
 
 .wsk-icon--question-answer:before {
-  content: "\f058"; }
+  content: ""; }
 
 .wsk-icon--receipt:before {
-  content: "\f059"; }
+  content: ""; }
 
 .wsk-icon--redeem:before {
-  content: "\f05a"; }
+  content: ""; }
 
 .wsk-icon--reorder:before {
-  content: "\f094"; }
+  content: ""; }
 
 .wsk-icon--report-problem:before {
-  content: "\f05b"; }
+  content: ""; }
 
 .wsk-icon--restore:before {
-  content: "\f05c"; }
+  content: ""; }
 
 .wsk-icon--room:before {
-  content: "\f05d"; }
+  content: ""; }
 
 .wsk-icon--schedule:before {
-  content: "\f05e"; }
+  content: ""; }
 
 .wsk-icon--search:before {
-  content: "\f05f"; }
+  content: ""; }
 
 .wsk-icon--settings:before {
-  content: "\f060"; }
+  content: ""; }
 
 .wsk-icon--settings-applications:before {
-  content: "\f061"; }
+  content: ""; }
 
 .wsk-icon--settings-backup-restore:before {
-  content: "\f062"; }
+  content: ""; }
 
 .wsk-icon--settings-bluetooth:before {
-  content: "\f063"; }
+  content: ""; }
 
 .wsk-icon--settings-cell:before {
-  content: "\f064"; }
+  content: ""; }
 
 .wsk-icon--settings-display:before {
-  content: "\f065"; }
+  content: ""; }
 
 .wsk-icon--settings-ethernet:before {
-  content: "\f066"; }
+  content: ""; }
 
 .wsk-icon--settings-input-antenna:before {
-  content: "\f067"; }
+  content: ""; }
 
 .wsk-icon--settings-input-component:before {
-  content: "\f068"; }
+  content: ""; }
 
 .wsk-icon--settings-input-composite:before {
-  content: "\f069"; }
+  content: ""; }
 
 .wsk-icon--settings-input-hdmi:before {
-  content: "\f06a"; }
+  content: ""; }
 
 .wsk-icon--settings-input-svideo:before {
-  content: "\f06b"; }
+  content: ""; }
 
 .wsk-icon--settings-overscan:before {
-  content: "\f06c"; }
+  content: ""; }
 
 .wsk-icon--settings-phone:before {
-  content: "\f06d"; }
+  content: ""; }
 
 .wsk-icon--settings-power:before {
-  content: "\f06e"; }
+  content: ""; }
 
 .wsk-icon--settings-remote:before {
-  content: "\f06f"; }
+  content: ""; }
 
 .wsk-icon--settings-voice:before {
-  content: "\f070"; }
+  content: ""; }
 
 .wsk-icon--shop:before {
-  content: "\f071"; }
+  content: ""; }
 
 .wsk-icon--shopping-basket:before {
-  content: "\f072"; }
+  content: ""; }
 
 .wsk-icon--shopping-cart:before {
-  content: "\f073"; }
+  content: ""; }
 
 .wsk-icon--shop-two:before {
-  content: "\f074"; }
+  content: ""; }
 
 .wsk-icon--speaker-notes:before {
-  content: "\f075"; }
+  content: ""; }
 
 .wsk-icon--spellcheck:before {
-  content: "\f076"; }
+  content: ""; }
 
 .wsk-icon--star-rate:before {
-  content: "\f077"; }
+  content: ""; }
 
 .wsk-icon--stars:before {
-  content: "\f078"; }
+  content: ""; }
 
 .wsk-icon--store:before {
-  content: "\f079"; }
+  content: ""; }
 
 .wsk-icon--subject:before {
-  content: "\f07a"; }
+  content: ""; }
 
 .wsk-icon--supervisor-account:before {
   content: ""; }
 
 .wsk-icon--swap-horiz:before {
-  content: "\f07b"; }
+  content: ""; }
 
 .wsk-icon--swap-vert:before {
-  content: "\f07c"; }
+  content: ""; }
 
 .wsk-icon--swap-vert-circle:before {
-  content: "\f07d"; }
+  content: ""; }
 
 .wsk-icon--system-update-tv:before {
-  content: "\f07e"; }
+  content: ""; }
 
 .wsk-icon--tab:before {
-  content: "\f07f"; }
+  content: ""; }
 
 .wsk-icon--tab-unselected:before {
-  content: "\f080"; }
+  content: ""; }
 
 .wsk-icon--theaters:before {
-  content: "\f081"; }
+  content: ""; }
 
 .wsk-icon--thumb-down:before {
-  content: "\f082"; }
+  content: ""; }
 
 .wsk-icon--thumbs-up-down:before {
-  content: "\f083"; }
+  content: ""; }
 
 .wsk-icon--thumb-up:before {
-  content: "\f084"; }
+  content: ""; }
 
 .wsk-icon--toc:before {
-  content: "\f085"; }
+  content: ""; }
 
 .wsk-icon--today:before {
-  content: "\f086"; }
+  content: ""; }
 
 .wsk-icon--track-changes:before {
-  content: "\f087"; }
+  content: ""; }
 
 .wsk-icon--translate:before {
-  content: "\f088"; }
+  content: ""; }
 
 .wsk-icon--trending-down:before {
-  content: "\f089"; }
+  content: ""; }
 
 .wsk-icon--trending-neutral:before {
-  content: "\f08a"; }
+  content: ""; }
 
 .wsk-icon--trending-up:before {
-  content: "\f08b"; }
+  content: ""; }
 
 .wsk-icon--turned-in:before {
-  content: "\f08c"; }
+  content: ""; }
 
 .wsk-icon--turned-in-not:before {
-  content: "\f08d"; }
+  content: ""; }
 
 .wsk-icon--verified-user:before {
-  content: "\f08e"; }
+  content: ""; }
 
 .wsk-icon--view-agenda:before {
-  content: "\f08f"; }
+  content: ""; }
 
 .wsk-icon--view-array:before {
-  content: "\f090"; }
+  content: ""; }
 
 .wsk-icon--view-carousel:before {
-  content: "\f091"; }
+  content: ""; }
 
 .wsk-icon--view-column:before {
-  content: "\f092"; }
+  content: ""; }
 
 .wsk-icon--view-day:before {
-  content: "\f093"; }
+  content: ""; }
 
 .wsk-icon--view-headline:before {
-  content: "\f094"; }
+  content: ""; }
 
 .wsk-icon--view-list:before {
-  content: "\f095"; }
+  content: ""; }
 
 .wsk-icon--view-module:before {
-  content: "\f096"; }
+  content: ""; }
 
 .wsk-icon--view-quilt:before {
-  content: "\f097"; }
+  content: ""; }
 
 .wsk-icon--view-stream:before {
-  content: "\f098"; }
+  content: ""; }
 
 .wsk-icon--view-week:before {
-  content: "\f099"; }
+  content: ""; }
 
 .wsk-icon--visibility:before {
-  content: "\f09a"; }
+  content: ""; }
 
 .wsk-icon--visibility-off:before {
-  content: "\f09b"; }
+  content: ""; }
 
 .wsk-icon--wallet-giftcard:before {
-  content: "\f09c"; }
+  content: ""; }
 
 .wsk-icon--wallet-membership:before {
-  content: "\f09d"; }
+  content: ""; }
 
 .wsk-icon--wallet-travel:before {
-  content: "\f09e"; }
+  content: ""; }
 
 .wsk-icon--work:before {
-  content: "\f09f"; }
+  content: ""; }
 
 .wsk-icon--error:before {
-  content: "\f0a0"; }
+  content: ""; }
 
 .wsk-icon--warning:before {
-  content: "\f0a1"; }
+  content: ""; }
 
 .wsk-icon--album:before {
-  content: "\f0a2"; }
+  content: ""; }
 
 .wsk-icon--av-timer:before {
-  content: "\f0a3"; }
+  content: ""; }
 
 .wsk-icon--closed-caption:before {
-  content: "\f0a4"; }
+  content: ""; }
 
 .wsk-icon--equalizer:before {
-  content: "\f0a5"; }
+  content: ""; }
 
 .wsk-icon--explicit:before {
-  content: "\f0a6"; }
+  content: ""; }
 
 .wsk-icon--fast-forward:before {
-  content: "\f0a7"; }
+  content: ""; }
 
 .wsk-icon--fast-rewind:before {
-  content: "\f0a8"; }
+  content: ""; }
 
 .wsk-icon--games:before {
-  content: "\f0a9"; }
+  content: ""; }
 
 .wsk-icon--hearing:before {
-  content: "\f0aa"; }
+  content: ""; }
 
 .wsk-icon--high-quality:before {
-  content: "\f0ab"; }
+  content: ""; }
 
 .wsk-icon--loop:before {
-  content: "\f0ac"; }
+  content: ""; }
 
 .wsk-icon--mic:before {
-  content: "\f0ad"; }
+  content: ""; }
 
 .wsk-icon--mic-none:before {
-  content: "\f0ae"; }
+  content: ""; }
 
 .wsk-icon--mic-off:before {
-  content: "\f0af"; }
+  content: ""; }
 
 .wsk-icon--movie:before {
-  content: "\f0b0"; }
+  content: ""; }
 
 .wsk-icon--my-library-add:before {
-  content: "\f0b1"; }
+  content: ""; }
 
 .wsk-icon--my-library-books:before {
-  content: "\f0b2"; }
+  content: ""; }
 
 .wsk-icon--my-library-music:before {
-  content: "\f0b3"; }
+  content: ""; }
 
 .wsk-icon--new-releases:before {
-  content: "\f0b4"; }
+  content: ""; }
 
 .wsk-icon--not-interested:before {
-  content: "\f0b5"; }
+  content: ""; }
 
 .wsk-icon--pause:before {
-  content: "\f0b6"; }
+  content: ""; }
 
 .wsk-icon--pause-circle-fill:before {
-  content: "\f0b7"; }
+  content: ""; }
 
 .wsk-icon--pause-circle-outline:before {
-  content: "\f0b8"; }
+  content: ""; }
 
 .wsk-icon--play-arrow:before {
-  content: "\f0b9"; }
+  content: ""; }
 
 .wsk-icon--play-circle-fill:before {
-  content: "\f0ba"; }
+  content: ""; }
 
 .wsk-icon--play-circle-outline:before {
-  content: "\f0bb"; }
+  content: ""; }
 
 .wsk-icon--playlist-add:before {
-  content: "\f0bc"; }
+  content: ""; }
 
 .wsk-icon--play-shopping-bag:before {
-  content: "\f0bd"; }
+  content: ""; }
 
 .wsk-icon--queue:before {
-  content: "\f0be"; }
+  content: ""; }
 
 .wsk-icon--queue-music:before {
-  content: "\f0bf"; }
+  content: ""; }
 
 .wsk-icon--radio:before {
-  content: "\f0c0"; }
+  content: ""; }
 
 .wsk-icon--recent-actors:before {
-  content: "\f0c1"; }
+  content: ""; }
 
 .wsk-icon--repeat:before {
-  content: "\f0c2"; }
+  content: ""; }
 
 .wsk-icon--repeat-one:before {
-  content: "\f0c3"; }
+  content: ""; }
 
 .wsk-icon--replay:before {
-  content: "\f0c4"; }
+  content: ""; }
 
 .wsk-icon--shuffle:before {
-  content: "\f0c5"; }
+  content: ""; }
 
 .wsk-icon--skip-next:before {
-  content: "\f0c6"; }
+  content: ""; }
 
 .wsk-icon--skip-previous:before {
-  content: "\f0c7"; }
+  content: ""; }
 
 .wsk-icon--snooze:before {
-  content: "\f0c8"; }
+  content: ""; }
 
 .wsk-icon--stop:before {
-  content: "\f0c9"; }
+  content: ""; }
 
 .wsk-icon--subtitles:before {
-  content: "\f0ca"; }
+  content: ""; }
 
 .wsk-icon--surround-sound:before {
-  content: "\f0cb"; }
+  content: ""; }
 
 .wsk-icon--videocam:before {
-  content: "\f0cc"; }
+  content: ""; }
 
 .wsk-icon--videocam-off:before {
-  content: "\f0cd"; }
+  content: ""; }
 
 .wsk-icon--video-collection:before {
-  content: "\f0ce"; }
+  content: ""; }
 
 .wsk-icon--volume-down:before {
-  content: "\f0cf"; }
+  content: ""; }
 
 .wsk-icon--volume-mute:before {
-  content: "\f0d0"; }
+  content: ""; }
 
 .wsk-icon--volume-off:before {
-  content: "\f0d1"; }
+  content: ""; }
 
 .wsk-icon--volume-up:before {
-  content: "\f0d2"; }
+  content: ""; }
 
 .wsk-icon--web:before {
-  content: "\f0d3"; }
+  content: ""; }
 
 .wsk-icon--business:before {
-  content: "\f0d4"; }
+  content: ""; }
 
 .wsk-icon--call:before {
-  content: "\f0d5"; }
+  content: ""; }
 
 .wsk-icon--call-end:before {
-  content: "\f0d6"; }
+  content: ""; }
 
 .wsk-icon--call-made:before {
-  content: "\f0d7"; }
+  content: ""; }
 
 .wsk-icon--call-merge:before {
-  content: "\f0d8"; }
+  content: ""; }
 
 .wsk-icon--call-missed:before {
-  content: "\f0d9"; }
+  content: ""; }
 
 .wsk-icon--call-received:before {
-  content: "\f0da"; }
+  content: ""; }
 
 .wsk-icon--call-split:before {
-  content: "\f0db"; }
+  content: ""; }
 
 .wsk-icon--chat:before {
-  content: "\f0dc"; }
+  content: ""; }
 
 .wsk-icon--clear-all:before {
-  content: "\f0dd"; }
+  content: ""; }
 
 .wsk-icon--comment:before {
-  content: "\f0de"; }
+  content: ""; }
 
 .wsk-icon--contacts:before {
-  content: "\f0df"; }
+  content: ""; }
 
 .wsk-icon--dialer-sip:before {
-  content: "\f0e0"; }
+  content: ""; }
 
 .wsk-icon--dialpad:before {
-  content: "\f0e1"; }
+  content: ""; }
 
 .wsk-icon--dnd-on:before {
-  content: "\f0e2"; }
+  content: ""; }
 
 .wsk-icon--email:before {
-  content: "\f0e3"; }
+  content: ""; }
 
 .wsk-icon--forum:before {
-  content: "\f0e4"; }
+  content: ""; }
 
 .wsk-icon--import-export:before {
-  content: "\f0e5"; }
+  content: ""; }
 
 .wsk-icon--invert-colors-off:before {
-  content: "\f0e6"; }
+  content: ""; }
 
 .wsk-icon--invert-colors-on:before {
-  content: "\f0e7"; }
+  content: ""; }
 
 .wsk-icon--live-help:before {
-  content: "\f0e8"; }
+  content: ""; }
 
 .wsk-icon--location-off:before {
-  content: "\f0e9"; }
+  content: ""; }
 
 .wsk-icon--location-on:before {
-  content: "\f0ea"; }
+  content: ""; }
 
 .wsk-icon--message:before {
-  content: "\f0eb"; }
+  content: ""; }
 
 .wsk-icon--messenger:before {
-  content: "\f0ec"; }
+  content: ""; }
 
 .wsk-icon--no-sim:before {
-  content: "\f0ed"; }
+  content: ""; }
 
 .wsk-icon--phone:before {
-  content: "\f0ee"; }
+  content: ""; }
 
 .wsk-icon--portable-wifi-off:before {
-  content: "\f0ef"; }
+  content: ""; }
 
 .wsk-icon--quick-contacts-dialer:before {
-  content: "\f0f0"; }
+  content: ""; }
 
 .wsk-icon--quick-contacts-mail:before {
-  content: "\f0f1"; }
+  content: ""; }
 
 .wsk-icon--ring-volume:before {
-  content: "\f0f2"; }
+  content: ""; }
 
 .wsk-icon--stay-current-landscape:before {
-  content: "\f0f3"; }
+  content: ""; }
 
 .wsk-icon--stay-current-portrait:before {
-  content: "\f0f4"; }
+  content: ""; }
 
 .wsk-icon--stay-primary-landscape:before {
-  content: "\f0f5"; }
+  content: ""; }
 
 .wsk-icon--stay-primary-portrait:before {
-  content: "\f0f6"; }
+  content: ""; }
 
 .wsk-icon--swap-calls:before {
-  content: "\f0f7"; }
+  content: ""; }
 
 .wsk-icon--textsms:before {
-  content: "\f0f8"; }
+  content: ""; }
 
 .wsk-icon--voicemail:before {
-  content: "\f0f9"; }
+  content: ""; }
 
 .wsk-icon--vpn-key:before {
-  content: "\f0fa"; }
+  content: ""; }
 
 .wsk-icon--add:before {
-  content: "\f0fb"; }
+  content: ""; }
 
 .wsk-icon--add-box:before {
-  content: "\f0fc"; }
+  content: ""; }
 
 .wsk-icon--add-circle:before {
-  content: "\f0fd"; }
+  content: ""; }
 
 .wsk-icon--add-circle-outline:before {
-  content: "\f0fe"; }
+  content: ""; }
 
 .wsk-icon--archive:before {
-  content: "\f0ff"; }
+  content: ""; }
 
 .wsk-icon--backspace:before {
-  content: "\f100"; }
+  content: ""; }
 
 .wsk-icon--block:before {
-  content: "\f101"; }
+  content: ""; }
 
 .wsk-icon--clear:before {
-  content: "\f102"; }
+  content: ""; }
 
 .wsk-icon--content-copy:before {
-  content: "\f103"; }
+  content: ""; }
 
 .wsk-icon--content-cut:before {
-  content: "\f104"; }
+  content: ""; }
 
 .wsk-icon--content-paste:before {
-  content: "\f105"; }
+  content: ""; }
 
 .wsk-icon--create:before {
-  content: "\f106"; }
+  content: ""; }
 
 .wsk-icon--drafts:before {
-  content: "\f107"; }
+  content: ""; }
 
 .wsk-icon--filter-list:before {
-  content: "\f108"; }
+  content: ""; }
 
 .wsk-icon--flag:before {
-  content: "\f109"; }
+  content: ""; }
 
 .wsk-icon--forward:before {
-  content: "\f10a"; }
+  content: ""; }
 
 .wsk-icon--gesture:before {
-  content: "\f10b"; }
+  content: ""; }
 
 .wsk-icon--inbox:before {
-  content: "\f10c"; }
+  content: ""; }
 
 .wsk-icon--link:before {
-  content: "\f10d"; }
+  content: ""; }
 
 .wsk-icon--mail:before {
-  content: "\f10e"; }
+  content: ""; }
 
 .wsk-icon--markunread:before {
-  content: "\f10f"; }
+  content: ""; }
 
 .wsk-icon--redo:before {
-  content: "\f110"; }
+  content: ""; }
 
 .wsk-icon--remove:before {
-  content: "\f111"; }
+  content: ""; }
 
 .wsk-icon--remove-circle:before {
-  content: "\f112"; }
+  content: ""; }
 
 .wsk-icon--remove-circle-outline:before {
-  content: "\f113"; }
+  content: ""; }
 
 .wsk-icon--reply:before {
-  content: "\f114"; }
+  content: ""; }
 
 .wsk-icon--reply-all:before {
-  content: "\f115"; }
+  content: ""; }
 
 .wsk-icon--report:before {
-  content: "\f116"; }
+  content: ""; }
 
 .wsk-icon--save:before {
-  content: "\f117"; }
+  content: ""; }
 
 .wsk-icon--select-all:before {
-  content: "\f118"; }
+  content: ""; }
 
 .wsk-icon--send:before {
-  content: "\f119"; }
+  content: ""; }
 
 .wsk-icon--sort:before {
-  content: "\f11a"; }
+  content: ""; }
 
 .wsk-icon--text-format:before {
-  content: "\f11b"; }
+  content: ""; }
 
 .wsk-icon--undo:before {
-  content: "\f11c"; }
+  content: ""; }
 
 .wsk-icon--access-alarm:before {
-  content: "\f11d"; }
+  content: ""; }
 
 .wsk-icon--access-alarms:before {
-  content: "\f11e"; }
+  content: ""; }
 
 .wsk-icon--access-time:before {
-  content: "\f11f"; }
+  content: ""; }
 
 .wsk-icon--add-alarm:before {
-  content: "\f120"; }
+  content: ""; }
 
 .wsk-icon--airplanemode-off:before {
-  content: "\f121"; }
+  content: ""; }
 
 .wsk-icon--airplanemode-on:before {
-  content: "\f122"; }
+  content: ""; }
 
 .wsk-icon--battery-20:before {
-  content: "\f123"; }
+  content: ""; }
 
 .wsk-icon--battery-30:before {
-  content: "\f124"; }
+  content: ""; }
 
 .wsk-icon--battery-50:before {
-  content: "\f125"; }
+  content: ""; }
 
 .wsk-icon--battery-60:before {
-  content: "\f126"; }
+  content: ""; }
 
 .wsk-icon--battery-80:before {
-  content: "\f127"; }
+  content: ""; }
 
 .wsk-icon--battery-90:before {
-  content: "\f128"; }
+  content: ""; }
 
 .wsk-icon--battery-alert:before {
-  content: "\f129"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-20:before {
-  content: "\f12a"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-30:before {
-  content: "\f12b"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-50:before {
-  content: "\f12c"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-60:before {
-  content: "\f12d"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-80:before {
-  content: "\f12e"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-90:before {
-  content: "\f12f"; }
+  content: ""; }
 
 .wsk-icon--battery-charging-full:before {
-  content: "\f130"; }
+  content: ""; }
 
 .wsk-icon--battery-full:before {
-  content: "\f131"; }
+  content: ""; }
 
 .wsk-icon--battery-std:before {
-  content: "\f132"; }
+  content: ""; }
 
 .wsk-icon--battery-unknown:before {
-  content: "\f133"; }
+  content: ""; }
 
 .wsk-icon--bluetooth:before {
-  content: "\f134"; }
+  content: ""; }
 
 .wsk-icon--bluetooth-connected:before {
-  content: "\f135"; }
+  content: ""; }
 
 .wsk-icon--bluetooth-disabled:before {
-  content: "\f136"; }
+  content: ""; }
 
 .wsk-icon--bluetooth-searching:before {
-  content: "\f137"; }
+  content: ""; }
 
 .wsk-icon--brightness-auto:before {
-  content: "\f138"; }
+  content: ""; }
 
 .wsk-icon--brightness-high:before {
-  content: "\f139"; }
+  content: ""; }
 
 .wsk-icon--brightness-low:before {
-  content: "\f13a"; }
+  content: ""; }
 
 .wsk-icon--brightness-medium:before {
-  content: "\f13b"; }
+  content: ""; }
 
 .wsk-icon--data-usage:before {
-  content: "\f13c"; }
+  content: ""; }
 
 .wsk-icon--developer-mode:before {
-  content: "\f13d"; }
+  content: ""; }
 
 .wsk-icon--devices:before {
-  content: "\f13e"; }
+  content: ""; }
 
 .wsk-icon--dvr:before {
-  content: "\f13f"; }
+  content: ""; }
 
 .wsk-icon--gps-fixed:before {
-  content: "\f140"; }
+  content: ""; }
 
 .wsk-icon--gps-not-fixed:before {
-  content: "\f141"; }
+  content: ""; }
 
 .wsk-icon--gps-off:before {
-  content: "\f142"; }
+  content: ""; }
 
 .wsk-icon--location-disabled:before {
-  content: "\f143"; }
+  content: ""; }
 
 .wsk-icon--location-searching:before {
-  content: "\f144"; }
+  content: ""; }
 
 .wsk-icon--multitrack-audio:before {
-  content: "\f145"; }
+  content: ""; }
 
 .wsk-icon--network-cell:before {
-  content: "\f146"; }
+  content: ""; }
 
 .wsk-icon--network-wifi:before {
-  content: "\f147"; }
+  content: ""; }
 
 .wsk-icon--nfc:before {
-  content: "\f148"; }
+  content: ""; }
 
 .wsk-icon--now-wallpaper:before {
-  content: "\f149"; }
+  content: ""; }
 
 .wsk-icon--now-widgets:before {
-  content: "\f14a"; }
+  content: ""; }
 
 .wsk-icon--screen-lock-landscape:before {
-  content: "\f14b"; }
+  content: ""; }
 
 .wsk-icon--screen-lock-portrait:before {
-  content: "\f14c"; }
+  content: ""; }
 
 .wsk-icon--screen-lock-rotation:before {
-  content: "\f14d"; }
+  content: ""; }
 
 .wsk-icon--screen-rotation:before {
-  content: "\f14e"; }
+  content: ""; }
 
 .wsk-icon--sd-storage:before {
-  content: "\f14f"; }
+  content: ""; }
 
 .wsk-icon--settings-system-daydream:before {
-  content: "\f150"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-0-bar:before {
-  content: "\f151"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-1-bar:before {
-  content: "\f152"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-2-bar:before {
-  content: "\f153"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-3-bar:before {
-  content: "\f154"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-4-bar:before {
-  content: "\f155"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-connected-no-internet-0-bar:before {
-  content: "\f156"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-connected-no-internet-1-bar:before {
-  content: "\f157"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-connected-no-internet-2-bar:before {
-  content: "\f158"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-connected-no-internet-3-bar:before {
-  content: "\f159"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-connected-no-internet-4-bar:before {
-  content: "\f15a"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-no-sim:before {
-  content: "\f15b"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-null:before {
-  content: "\f15c"; }
+  content: ""; }
 
 .wsk-icon--signal-cellular-off:before {
-  content: "\f15d"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-0-bar:before {
-  content: "\f15e"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-1-bar:before {
-  content: "\f15f"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-2-bar:before {
-  content: "\f160"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-3-bar:before {
-  content: "\f161"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-4-bar:before {
-  content: "\f162"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-off:before {
-  content: "\f163"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-statusbar-1-bar:before {
-  content: "\f15f"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-statusbar-2-bar:before {
-  content: "\f160"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-statusbar-3-bar:before {
-  content: "\f161"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-statusbar-4-bar:before {
-  content: "\f162"; }
+  content: ""; }
 
 .wsk-icon--signal-wifi-statusbar-connected-no-internet:before {
   content: ""; }
@@ -1525,1621 +1716,1174 @@ dt {
   content: ""; }
 
 .wsk-icon--storage:before {
-  content: "\f164"; }
+  content: ""; }
 
 .wsk-icon--usb:before {
-  content: "\f165"; }
+  content: ""; }
 
 .wsk-icon--wifi-lock:before {
-  content: "\f166"; }
+  content: ""; }
 
 .wsk-icon--wifi-tethering:before {
-  content: "\f167"; }
+  content: ""; }
 
 .wsk-icon--attach-file:before {
-  content: "\f168"; }
+  content: ""; }
 
 .wsk-icon--attach-money:before {
-  content: "\f169"; }
+  content: ""; }
 
 .wsk-icon--border-all:before {
-  content: "\f16a"; }
+  content: ""; }
 
 .wsk-icon--border-bottom:before {
-  content: "\f16b"; }
+  content: ""; }
 
 .wsk-icon--border-clear:before {
-  content: "\f16c"; }
+  content: ""; }
 
 .wsk-icon--border-color:before {
-  content: "\f16d"; }
+  content: ""; }
 
 .wsk-icon--border-horizontal:before {
-  content: "\f16e"; }
+  content: ""; }
 
 .wsk-icon--border-inner:before {
-  content: "\f16f"; }
+  content: ""; }
 
 .wsk-icon--border-left:before {
-  content: "\f170"; }
+  content: ""; }
 
 .wsk-icon--border-outer:before {
-  content: "\f171"; }
+  content: ""; }
 
 .wsk-icon--border-right:before {
-  content: "\f172"; }
+  content: ""; }
 
 .wsk-icon--border-style:before {
-  content: "\f173"; }
+  content: ""; }
 
 .wsk-icon--border-top:before {
-  content: "\f174"; }
+  content: ""; }
 
 .wsk-icon--border-vertical:before {
-  content: "\f175"; }
+  content: ""; }
 
 .wsk-icon--format-align-center:before {
-  content: "\f176"; }
+  content: ""; }
 
 .wsk-icon--format-align-justify:before {
-  content: "\f177"; }
+  content: ""; }
 
 .wsk-icon--format-align-left:before {
-  content: "\f178"; }
+  content: ""; }
 
 .wsk-icon--format-align-right:before {
-  content: "\f179"; }
+  content: ""; }
 
 .wsk-icon--format-bold:before {
-  content: "\f17a"; }
+  content: ""; }
 
 .wsk-icon--format-clear:before {
-  content: "\f17b"; }
+  content: ""; }
 
 .wsk-icon--format-color-fill:before {
-  content: "\f17c"; }
+  content: ""; }
 
 .wsk-icon--format-color-reset:before {
-  content: "\f17d"; }
+  content: ""; }
 
 .wsk-icon--format-color-text:before {
-  content: "\f17e"; }
+  content: ""; }
 
 .wsk-icon--format-indent-decrease:before {
-  content: "\f17f"; }
+  content: ""; }
 
 .wsk-icon--format-indent-increase:before {
-  content: "\f180"; }
+  content: ""; }
 
 .wsk-icon--format-italic:before {
-  content: "\f181"; }
+  content: ""; }
 
 .wsk-icon--format-line-spacing:before {
-  content: "\f182"; }
+  content: ""; }
 
 .wsk-icon--format-list-bulleted:before {
-  content: "\f183"; }
+  content: ""; }
 
 .wsk-icon--format-list-numbered:before {
-  content: "\f184"; }
+  content: ""; }
 
 .wsk-icon--format-paint:before {
-  content: "\f185"; }
+  content: ""; }
 
 .wsk-icon--format-quote:before {
-  content: "\f186"; }
+  content: ""; }
 
 .wsk-icon--format-size:before {
-  content: "\f187"; }
+  content: ""; }
 
 .wsk-icon--format-strikethrough:before {
-  content: "\f188"; }
+  content: ""; }
 
 .wsk-icon--format-textdirection-l-to-r:before {
-  content: "\f189"; }
+  content: ""; }
 
 .wsk-icon--format-textdirection-r-to-l:before {
-  content: "\f18a"; }
+  content: ""; }
 
 .wsk-icon--format-underline:before {
-  content: "\f18b"; }
+  content: ""; }
 
 .wsk-icon--functions:before {
-  content: "\f18c"; }
+  content: ""; }
 
 .wsk-icon--insert-chart:before {
-  content: "\f18d"; }
+  content: ""; }
 
 .wsk-icon--insert-comment:before {
-  content: "\f18e"; }
+  content: ""; }
 
 .wsk-icon--insert-drive-file:before {
-  content: "\f18f"; }
+  content: ""; }
 
 .wsk-icon--insert-emoticon:before {
-  content: "\f190"; }
+  content: ""; }
 
 .wsk-icon--insert-invitation:before {
-  content: "\f191"; }
+  content: ""; }
 
 .wsk-icon--insert-link:before {
-  content: "\f192"; }
+  content: ""; }
 
 .wsk-icon--insert-photo:before {
-  content: "\f193"; }
+  content: ""; }
 
 .wsk-icon--merge-type:before {
-  content: "\f194"; }
+  content: ""; }
 
 .wsk-icon--mode-comment:before {
-  content: "\f195"; }
+  content: ""; }
 
 .wsk-icon--mode-edit:before {
-  content: "\f196"; }
+  content: ""; }
 
 .wsk-icon--publish:before {
-  content: "\f197"; }
+  content: ""; }
 
 .wsk-icon--vertical-align-bottom:before {
-  content: "\f198"; }
+  content: ""; }
 
 .wsk-icon--vertical-align-center:before {
-  content: "\f199"; }
+  content: ""; }
 
 .wsk-icon--vertical-align-top:before {
-  content: "\f19a"; }
+  content: ""; }
 
 .wsk-icon--wrap-text:before {
-  content: "\f19b"; }
+  content: ""; }
 
 .wsk-icon--attachment:before {
-  content: "\f19c"; }
+  content: ""; }
 
 .wsk-icon--cloud:before {
-  content: "\f19d"; }
+  content: ""; }
 
 .wsk-icon--cloud-circle:before {
-  content: "\f19e"; }
+  content: ""; }
 
 .wsk-icon--cloud-done:before {
-  content: "\f19f"; }
+  content: ""; }
 
 .wsk-icon--cloud-download:before {
-  content: "\f1a0"; }
+  content: ""; }
 
 .wsk-icon--cloud-off:before {
-  content: "\f1a1"; }
+  content: ""; }
 
 .wsk-icon--cloud-queue:before {
-  content: "\f1a2"; }
+  content: ""; }
 
 .wsk-icon--cloud-upload:before {
-  content: "\f1a3"; }
+  content: ""; }
 
 .wsk-icon--file-download:before {
-  content: "\f1a4"; }
+  content: ""; }
 
 .wsk-icon--file-upload:before {
-  content: "\f1a5"; }
+  content: ""; }
 
 .wsk-icon--folder:before {
-  content: "\f1a6"; }
+  content: ""; }
 
 .wsk-icon--folder-open:before {
-  content: "\f1a7"; }
+  content: ""; }
 
 .wsk-icon--folder-shared:before {
-  content: "\f1a8"; }
+  content: ""; }
 
 .wsk-icon--cast:before {
-  content: "\f1a9"; }
+  content: ""; }
 
 .wsk-icon--cast-connected:before {
-  content: "\f1aa"; }
+  content: ""; }
 
 .wsk-icon--computer:before {
-  content: "\f1ab"; }
+  content: ""; }
 
 .wsk-icon--desktop-mac:before {
-  content: "\f1ac"; }
+  content: ""; }
 
 .wsk-icon--desktop-windows:before {
-  content: "\f1ad"; }
+  content: ""; }
 
 .wsk-icon--dock:before {
-  content: "\f1ae"; }
+  content: ""; }
 
 .wsk-icon--gamepad:before {
-  content: "\f1af"; }
+  content: ""; }
 
 .wsk-icon--headset:before {
-  content: "\f1b0"; }
+  content: ""; }
 
 .wsk-icon--headset-mic:before {
-  content: "\f1b1"; }
+  content: ""; }
 
 .wsk-icon--keyboard:before {
-  content: "\f1b2"; }
+  content: ""; }
 
 .wsk-icon--keyboard-alt:before {
-  content: "\f1b3"; }
+  content: ""; }
 
 .wsk-icon--keyboard-arrow-down:before {
-  content: "\f1b4"; }
+  content: ""; }
 
 .wsk-icon--keyboard-arrow-left:before {
-  content: "\f1b5"; }
+  content: ""; }
 
 .wsk-icon--keyboard-arrow-right:before {
-  content: "\f1b6"; }
+  content: ""; }
 
 .wsk-icon--keyboard-arrow-up:before {
-  content: "\f1b7"; }
+  content: ""; }
 
 .wsk-icon--keyboard-backspace:before {
-  content: "\f1b8"; }
+  content: ""; }
 
 .wsk-icon--keyboard-capslock:before {
-  content: "\f1b9"; }
+  content: ""; }
 
 .wsk-icon--keyboard-control:before {
-  content: "\f1ba"; }
+  content: ""; }
 
 .wsk-icon--keyboard-hide:before {
-  content: "\f1bb"; }
+  content: ""; }
 
 .wsk-icon--keyboard-return:before {
-  content: "\f1bc"; }
+  content: ""; }
 
 .wsk-icon--keyboard-tab:before {
-  content: "\f1bd"; }
+  content: ""; }
 
 .wsk-icon--keyboard-voice:before {
-  content: "\f1be"; }
+  content: ""; }
 
 .wsk-icon--laptop:before {
-  content: "\f1bf"; }
+  content: ""; }
 
 .wsk-icon--laptop-chromebook:before {
-  content: "\f1c0"; }
+  content: ""; }
 
 .wsk-icon--laptop-mac:before {
-  content: "\f1c1"; }
+  content: ""; }
 
 .wsk-icon--laptop-windows:before {
-  content: "\f1c2"; }
+  content: ""; }
 
 .wsk-icon--memory:before {
-  content: "\f1c3"; }
+  content: ""; }
 
 .wsk-icon--mouse:before {
-  content: "\f1c4"; }
+  content: ""; }
 
 .wsk-icon--phone-android:before {
-  content: "\f1c5"; }
+  content: ""; }
 
 .wsk-icon--phone-iphone:before {
-  content: "\f1c6"; }
+  content: ""; }
 
 .wsk-icon--phonelink:before {
-  content: "\f1c7"; }
+  content: ""; }
 
 .wsk-icon--phonelink-off:before {
-  content: "\f1c8"; }
+  content: ""; }
 
 .wsk-icon--security:before {
-  content: "\f1c9"; }
+  content: ""; }
 
 .wsk-icon--sim-card:before {
-  content: "\f1ca"; }
+  content: ""; }
 
 .wsk-icon--smartphone:before {
-  content: "\f1cb"; }
+  content: ""; }
 
 .wsk-icon--speaker:before {
-  content: "\f1cc"; }
+  content: ""; }
 
 .wsk-icon--tablet:before {
-  content: "\f1cd"; }
+  content: ""; }
 
 .wsk-icon--tablet-android:before {
-  content: "\f1ce"; }
+  content: ""; }
 
 .wsk-icon--tablet-mac:before {
-  content: "\f1cf"; }
+  content: ""; }
 
 .wsk-icon--tv:before {
-  content: "\f1d0"; }
+  content: ""; }
 
 .wsk-icon--watch:before {
-  content: "\f1d1"; }
+  content: ""; }
 
 .wsk-icon--add-to-photos:before {
-  content: "\f1d2"; }
+  content: ""; }
 
 .wsk-icon--adjust:before {
-  content: "\f1d3"; }
+  content: ""; }
 
 .wsk-icon--assistant-photo:before {
-  content: "\f1d4"; }
+  content: ""; }
 
 .wsk-icon--audiotrack:before {
-  content: "\f1d5"; }
+  content: ""; }
 
 .wsk-icon--blur-circular:before {
-  content: "\f1d6"; }
+  content: ""; }
 
 .wsk-icon--blur-linear:before {
-  content: "\f1d7"; }
+  content: ""; }
 
 .wsk-icon--blur-off:before {
-  content: "\f1d8"; }
+  content: ""; }
 
 .wsk-icon--blur-on:before {
-  content: "\f1d9"; }
+  content: ""; }
 
 .wsk-icon--brightness-1:before {
-  content: "\f1da"; }
+  content: ""; }
 
 .wsk-icon--brightness-2:before {
-  content: "\f1db"; }
+  content: ""; }
 
 .wsk-icon--brightness-3:before {
-  content: "\f1dc"; }
+  content: ""; }
 
 .wsk-icon--brightness-4:before {
-  content: "\f1dd"; }
+  content: ""; }
 
 .wsk-icon--brightness-5:before {
-  content: "\f1de"; }
+  content: ""; }
 
 .wsk-icon--brightness-6:before {
-  content: "\f1df"; }
+  content: ""; }
 
 .wsk-icon--brightness-7:before {
-  content: "\f1e0"; }
+  content: ""; }
 
 .wsk-icon--brush:before {
-  content: "\f1e1"; }
+  content: ""; }
 
 .wsk-icon--camera:before {
-  content: "\f1e2"; }
+  content: ""; }
 
 .wsk-icon--camera-alt:before {
-  content: "\f1e3"; }
+  content: ""; }
 
 .wsk-icon--camera-front:before {
-  content: "\f1e4"; }
+  content: ""; }
 
 .wsk-icon--camera-rear:before {
-  content: "\f1e5"; }
+  content: ""; }
 
 .wsk-icon--camera-roll:before {
-  content: "\f1e6"; }
+  content: ""; }
 
 .wsk-icon--center-focus-strong:before {
-  content: "\f1e7"; }
+  content: ""; }
 
 .wsk-icon--center-focus-weak:before {
-  content: "\f1e8"; }
+  content: ""; }
 
 .wsk-icon--collections:before {
-  content: "\f1e9"; }
+  content: ""; }
 
 .wsk-icon--colorize:before {
-  content: "\f1ea"; }
+  content: ""; }
 
 .wsk-icon--color-lens:before {
-  content: "\f1eb"; }
+  content: ""; }
 
 .wsk-icon--compare:before {
-  content: "\f1ec"; }
+  content: ""; }
 
 .wsk-icon--control-point:before {
-  content: "\f1ed"; }
+  content: ""; }
 
 .wsk-icon--control-point-duplicate:before {
-  content: "\f1ee"; }
+  content: ""; }
 
 .wsk-icon--crop:before {
-  content: "\f1ef"; }
+  content: ""; }
 
 .wsk-icon--crop-3-2:before {
-  content: "\f1f0"; }
+  content: ""; }
 
 .wsk-icon--crop-5-4:before {
-  content: "\f1f1"; }
+  content: ""; }
 
 .wsk-icon--crop-7-5:before {
-  content: "\f1f2"; }
+  content: ""; }
 
 .wsk-icon--crop-16-9:before {
-  content: "\f1f3"; }
+  content: ""; }
 
 .wsk-icon--crop-din:before {
-  content: "\f1f4"; }
+  content: ""; }
 
 .wsk-icon--crop-free:before {
-  content: "\f1f5"; }
+  content: ""; }
 
 .wsk-icon--crop-landscape:before {
-  content: "\f1f6"; }
+  content: ""; }
 
 .wsk-icon--crop-original:before {
-  content: "\f1f7"; }
+  content: ""; }
 
 .wsk-icon--crop-portrait:before {
-  content: "\f1f8"; }
+  content: ""; }
 
 .wsk-icon--crop-square:before {
-  content: "\f1f9"; }
+  content: ""; }
 
 .wsk-icon--dehaze:before {
-  content: "\f1fa"; }
+  content: ""; }
 
 .wsk-icon--details:before {
-  content: "\f1fb"; }
+  content: ""; }
 
 .wsk-icon--edit:before {
-  content: "\f1fc"; }
+  content: ""; }
 
 .wsk-icon--exposure:before {
-  content: "\f1fd"; }
+  content: ""; }
 
 .wsk-icon--exposure-minus-1:before {
-  content: "\f1fe"; }
+  content: ""; }
 
 .wsk-icon--exposure-minus-2:before {
-  content: "\f1ff"; }
+  content: ""; }
 
 .wsk-icon--exposure-zero:before {
-  content: "\f200"; }
+  content: ""; }
 
 .wsk-icon--exposure-plus-1:before {
-  content: "\f201"; }
+  content: ""; }
 
 .wsk-icon--exposure-plus-2:before {
-  content: "\f202"; }
+  content: ""; }
 
 .wsk-icon--filter:before {
-  content: "\f203"; }
+  content: ""; }
 
 .wsk-icon--filter-1:before {
-  content: "\f204"; }
+  content: ""; }
 
 .wsk-icon--filter-2:before {
-  content: "\f205"; }
+  content: ""; }
 
 .wsk-icon--filter-3:before {
-  content: "\f206"; }
+  content: ""; }
 
 .wsk-icon--filter-4:before {
-  content: "\f207"; }
+  content: ""; }
 
 .wsk-icon--filter-5:before {
-  content: "\f208"; }
+  content: ""; }
 
 .wsk-icon--filter-6:before {
-  content: "\f209"; }
+  content: ""; }
 
 .wsk-icon--filter-7:before {
-  content: "\f20a"; }
+  content: ""; }
 
 .wsk-icon--filter-8:before {
-  content: "\f20b"; }
+  content: ""; }
 
 .wsk-icon--filter-9:before {
-  content: "\f20c"; }
+  content: ""; }
 
 .wsk-icon--filter-9-plus:before {
-  content: "\f20d"; }
+  content: ""; }
 
 .wsk-icon--filter-b-and-w:before {
-  content: "\f20e"; }
+  content: ""; }
 
 .wsk-icon--filter-center-focus:before {
-  content: "\f20f"; }
+  content: ""; }
 
 .wsk-icon--filter-drama:before {
-  content: "\f210"; }
+  content: ""; }
 
 .wsk-icon--filter-frames:before {
-  content: "\f211"; }
+  content: ""; }
 
 .wsk-icon--filter-hdr:before {
-  content: "\f212"; }
+  content: ""; }
 
 .wsk-icon--filter-none:before {
-  content: "\f213"; }
+  content: ""; }
 
 .wsk-icon--filter-tilt-shift:before {
-  content: "\f214"; }
+  content: ""; }
 
 .wsk-icon--filter-vintage:before {
-  content: "\f215"; }
+  content: ""; }
 
 .wsk-icon--flare:before {
-  content: "\f216"; }
+  content: ""; }
 
 .wsk-icon--flash-auto:before {
-  content: "\f217"; }
+  content: ""; }
 
 .wsk-icon--flash-off:before {
-  content: "\f218"; }
+  content: ""; }
 
 .wsk-icon--flash-on:before {
-  content: "\f219"; }
+  content: ""; }
 
 .wsk-icon--flip:before {
-  content: "\f21a"; }
+  content: ""; }
 
 .wsk-icon--gradient:before {
-  content: "\f21b"; }
+  content: ""; }
 
 .wsk-icon--grain:before {
-  content: "\f21c"; }
+  content: ""; }
 
 .wsk-icon--grid-off:before {
-  content: "\f21d"; }
+  content: ""; }
 
 .wsk-icon--grid-on:before {
-  content: "\f21e"; }
+  content: ""; }
 
 .wsk-icon--hdr-off:before {
-  content: "\f21f"; }
+  content: ""; }
 
 .wsk-icon--hdr-on:before {
-  content: "\f220"; }
+  content: ""; }
 
 .wsk-icon--hdr-strong:before {
-  content: "\f221"; }
+  content: ""; }
 
 .wsk-icon--hdr-weak:before {
-  content: "\f222"; }
+  content: ""; }
 
 .wsk-icon--healing:before {
-  content: "\f223"; }
+  content: ""; }
 
 .wsk-icon--image:before {
-  content: "\f224"; }
+  content: ""; }
 
 .wsk-icon--image-aspect-ratio:before {
-  content: "\f225"; }
+  content: ""; }
 
 .wsk-icon--iso:before {
-  content: "\f226"; }
+  content: ""; }
 
 .wsk-icon--landscape:before {
-  content: "\f227"; }
+  content: ""; }
 
 .wsk-icon--leak-add:before {
-  content: "\f228"; }
+  content: ""; }
 
 .wsk-icon--leak-remove:before {
-  content: "\f229"; }
+  content: ""; }
 
 .wsk-icon--lens:before {
-  content: "\f22a"; }
+  content: ""; }
 
 .wsk-icon--looks:before {
-  content: "\f22b"; }
+  content: ""; }
 
 .wsk-icon--looks-1:before {
-  content: "\f22c"; }
+  content: ""; }
 
 .wsk-icon--looks-2:before {
-  content: "\f22d"; }
+  content: ""; }
 
 .wsk-icon--looks-3:before {
-  content: "\f22e"; }
+  content: ""; }
 
 .wsk-icon--looks-4:before {
-  content: "\f22f"; }
+  content: ""; }
 
 .wsk-icon--looks-5:before {
-  content: "\f230"; }
+  content: ""; }
 
 .wsk-icon--looks-6:before {
-  content: "\f231"; }
+  content: ""; }
 
 .wsk-icon--looks-one:before {
-  content: "\f22c"; }
+  content: ""; }
 
 .wsk-icon--looks-two:before {
-  content: "\f22d"; }
+  content: ""; }
 
 .wsk-icon--loupe:before {
-  content: "\f232"; }
+  content: ""; }
 
 .wsk-icon--movie-creation:before {
-  content: "\f233"; }
+  content: ""; }
 
 .wsk-icon--nature:before {
-  content: "\f234"; }
+  content: ""; }
 
 .wsk-icon--nature-people:before {
-  content: "\f235"; }
+  content: ""; }
 
 .wsk-icon--navigate-before:before {
-  content: "\f236"; }
+  content: ""; }
 
 .wsk-icon--navigate-next:before {
-  content: "\f237"; }
+  content: ""; }
 
 .wsk-icon--palette:before {
-  content: "\f238"; }
+  content: ""; }
 
 .wsk-icon--panorama:before {
-  content: "\f239"; }
+  content: ""; }
 
 .wsk-icon--panorama-fisheye:before {
-  content: "\f23a"; }
+  content: ""; }
 
 .wsk-icon--panorama-horizontal:before {
-  content: "\f23b"; }
+  content: ""; }
 
 .wsk-icon--panorama-vertical:before {
-  content: "\f23c"; }
+  content: ""; }
 
 .wsk-icon--panorama-wide-angle:before {
-  content: "\f23d"; }
+  content: ""; }
 
 .wsk-icon--photo:before {
-  content: "\f23e"; }
+  content: ""; }
 
 .wsk-icon--photo-album:before {
-  content: "\f23f"; }
+  content: ""; }
 
 .wsk-icon--photo-camera:before {
-  content: "\f240"; }
+  content: ""; }
 
 .wsk-icon--photo-library:before {
-  content: "\f241"; }
+  content: ""; }
 
 .wsk-icon--portrait:before {
-  content: "\f242"; }
+  content: ""; }
 
 .wsk-icon--remove-red-eye:before {
-  content: "\f243"; }
+  content: ""; }
 
 .wsk-icon--rotate-left:before {
-  content: "\f244"; }
+  content: ""; }
 
 .wsk-icon--rotate-right:before {
-  content: "\f245"; }
+  content: ""; }
 
 .wsk-icon--slideshow:before {
-  content: "\f246"; }
+  content: ""; }
 
 .wsk-icon--straighten:before {
-  content: "\f247"; }
+  content: ""; }
 
 .wsk-icon--style:before {
-  content: "\f248"; }
+  content: ""; }
 
 .wsk-icon--switch-camera:before {
-  content: "\f249"; }
+  content: ""; }
 
 .wsk-icon--switch-video:before {
-  content: "\f24a"; }
+  content: ""; }
 
 .wsk-icon--tag-faces:before {
-  content: "\f24b"; }
+  content: ""; }
 
 .wsk-icon--texture:before {
-  content: "\f24c"; }
+  content: ""; }
 
 .wsk-icon--timelapse:before {
-  content: "\f24d"; }
+  content: ""; }
 
 .wsk-icon--timer:before {
-  content: "\f24e"; }
+  content: ""; }
 
 .wsk-icon--timer-3:before {
-  content: "\f24f"; }
+  content: ""; }
 
 .wsk-icon--timer-10:before {
-  content: "\f250"; }
+  content: ""; }
 
 .wsk-icon--timer-auto:before {
-  content: "\f251"; }
+  content: ""; }
 
 .wsk-icon--timer-off:before {
-  content: "\f252"; }
+  content: ""; }
 
 .wsk-icon--tonality:before {
-  content: "\f253"; }
+  content: ""; }
 
 .wsk-icon--transform:before {
-  content: "\f254"; }
+  content: ""; }
 
 .wsk-icon--tune:before {
-  content: "\f255"; }
+  content: ""; }
 
 .wsk-icon--wb-auto:before {
-  content: "\f256"; }
+  content: ""; }
 
 .wsk-icon--wb-cloudy:before {
-  content: "\f257"; }
+  content: ""; }
 
 .wsk-icon--wb-incandescent:before {
-  content: "\f258"; }
+  content: ""; }
 
 .wsk-icon--wb-irradescent:before {
-  content: "\f259"; }
+  content: ""; }
 
 .wsk-icon--wb-sunny:before {
-  content: "\f25a"; }
+  content: ""; }
 
 .wsk-icon--beenhere:before {
-  content: "\f25b"; }
+  content: ""; }
 
 .wsk-icon--directions:before {
-  content: "\f25c"; }
+  content: ""; }
 
 .wsk-icon--directions-bike:before {
-  content: "\f25d"; }
+  content: ""; }
 
 .wsk-icon--directions-bus:before {
-  content: "\f25e"; }
+  content: ""; }
 
 .wsk-icon--directions-car:before {
-  content: "\f25f"; }
+  content: ""; }
 
 .wsk-icon--directions-ferry:before {
-  content: "\f260"; }
+  content: ""; }
 
 .wsk-icon--directions-subway:before {
-  content: "\f261"; }
+  content: ""; }
 
 .wsk-icon--directions-train:before {
-  content: "\f262"; }
+  content: ""; }
 
 .wsk-icon--directions-transit:before {
-  content: "\f263"; }
+  content: ""; }
 
 .wsk-icon--directions-walk:before {
-  content: "\f264"; }
+  content: ""; }
 
 .wsk-icon--flight:before {
-  content: "\f265"; }
+  content: ""; }
 
 .wsk-icon--hotel:before {
-  content: "\f266"; }
+  content: ""; }
 
 .wsk-icon--layers:before {
-  content: "\f267"; }
+  content: ""; }
 
 .wsk-icon--layers-clear:before {
-  content: "\f268"; }
+  content: ""; }
 
 .wsk-icon--local-airport:before {
-  content: "\f269"; }
+  content: ""; }
 
 .wsk-icon--local-atm:before {
-  content: "\f26a"; }
+  content: ""; }
 
 .wsk-icon--local-attraction:before {
-  content: "\f26b"; }
+  content: ""; }
 
 .wsk-icon--local-bar:before {
-  content: "\f26c"; }
+  content: ""; }
 
 .wsk-icon--local-cafe:before {
-  content: "\f26d"; }
+  content: ""; }
 
 .wsk-icon--local-car-wash:before {
-  content: "\f26e"; }
+  content: ""; }
 
 .wsk-icon--local-convenience-store:before {
-  content: "\f26f"; }
+  content: ""; }
 
 .wsk-icon--local-drink:before {
-  content: "\f270"; }
+  content: ""; }
 
 .wsk-icon--local-florist:before {
-  content: "\f271"; }
+  content: ""; }
 
 .wsk-icon--local-gas-station:before {
-  content: "\f272"; }
+  content: ""; }
 
 .wsk-icon--local-grocery-store:before {
-  content: "\f273"; }
+  content: ""; }
 
 .wsk-icon--local-hospital:before {
-  content: "\f274"; }
+  content: ""; }
 
 .wsk-icon--local-hotel:before {
-  content: "\f275"; }
+  content: ""; }
 
 .wsk-icon--local-laundry-service:before {
-  content: "\f276"; }
+  content: ""; }
 
 .wsk-icon--local-library:before {
-  content: "\f277"; }
+  content: ""; }
 
 .wsk-icon--local-mall:before {
-  content: "\f278"; }
+  content: ""; }
 
 .wsk-icon--local-movies:before {
-  content: "\f279"; }
+  content: ""; }
 
 .wsk-icon--local-offer:before {
-  content: "\f27a"; }
+  content: ""; }
 
 .wsk-icon--local-parking:before {
-  content: "\f27b"; }
+  content: ""; }
 
 .wsk-icon--local-pharmacy:before {
-  content: "\f27c"; }
+  content: ""; }
 
 .wsk-icon--local-phone:before {
-  content: "\f27d"; }
+  content: ""; }
 
 .wsk-icon--local-pizza:before {
-  content: "\f27e"; }
+  content: ""; }
 
 .wsk-icon--local-play:before {
-  content: "\f27f"; }
+  content: ""; }
 
 .wsk-icon--local-post-office:before {
-  content: "\f280"; }
+  content: ""; }
 
 .wsk-icon--local-print-shop:before {
-  content: "\f281"; }
+  content: ""; }
 
 .wsk-icon--local-restaurant:before {
-  content: "\f282"; }
+  content: ""; }
 
 .wsk-icon--local-see:before {
-  content: "\f283"; }
+  content: ""; }
 
 .wsk-icon--local-shipping:before {
-  content: "\f284"; }
+  content: ""; }
 
 .wsk-icon--local-taxi:before {
-  content: "\f285"; }
+  content: ""; }
 
 .wsk-icon--location-history:before {
-  content: "\f286"; }
+  content: ""; }
 
 .wsk-icon--map:before {
-  content: "\f287"; }
+  content: ""; }
 
 .wsk-icon--my-location:before {
-  content: "\f288"; }
+  content: ""; }
 
 .wsk-icon--navigation:before {
-  content: "\f289"; }
+  content: ""; }
 
 .wsk-icon--pin-drop:before {
-  content: "\f28a"; }
+  content: ""; }
 
 .wsk-icon--place:before {
-  content: "\f28b"; }
+  content: ""; }
 
 .wsk-icon--rate-review:before {
-  content: "\f28c"; }
+  content: ""; }
 
 .wsk-icon--restaurant-menu:before {
-  content: "\f28d"; }
+  content: ""; }
 
 .wsk-icon--satellite:before {
-  content: "\f28e"; }
+  content: ""; }
 
 .wsk-icon--store-mall-directory:before {
-  content: "\f28f"; }
+  content: ""; }
 
 .wsk-icon--terrain:before {
-  content: "\f290"; }
+  content: ""; }
 
 .wsk-icon--traffic:before {
-  content: "\f291"; }
+  content: ""; }
 
 .wsk-icon--apps:before {
-  content: "\f292"; }
+  content: ""; }
 
 .wsk-icon--cancel:before {
-  content: "\f293"; }
+  content: ""; }
 
 .wsk-icon--arrow-drop-down-circle:before {
-  content: "\f294"; }
+  content: ""; }
 
 .wsk-icon--arrow-drop-down:before {
-  content: "\f295"; }
+  content: ""; }
 
 .wsk-icon--arrow-drop-up:before {
-  content: "\f296"; }
+  content: ""; }
 
 .wsk-icon--arrow-back:before {
-  content: "\f297"; }
+  content: ""; }
 
 .wsk-icon--arrow-forward:before {
-  content: "\f298"; }
+  content: ""; }
 
 .wsk-icon--check:before {
-  content: "\f299"; }
+  content: ""; }
 
 .wsk-icon--close:before {
-  content: "\f29a"; }
+  content: ""; }
 
 .wsk-icon--chevron-left:before {
-  content: "\f29b"; }
+  content: ""; }
 
 .wsk-icon--chevron-right:before {
-  content: "\f29c"; }
+  content: ""; }
 
 .wsk-icon--expand-less:before {
-  content: "\f29d"; }
+  content: ""; }
 
 .wsk-icon--expand-more:before {
-  content: "\f29e"; }
+  content: ""; }
 
 .wsk-icon--fullscreen:before {
-  content: "\f29f"; }
+  content: ""; }
 
 .wsk-icon--fullscreen-exit:before {
-  content: "\f2a0"; }
+  content: ""; }
 
 .wsk-icon--menu:before {
-  content: "\f2a1"; }
+  content: ""; }
 
 .wsk-icon--more-horiz:before {
-  content: "\f2a2"; }
+  content: ""; }
 
 .wsk-icon--more-vert:before {
-  content: "\f2a3"; }
+  content: ""; }
 
 .wsk-icon--refresh:before {
-  content: "\f2a4"; }
+  content: ""; }
 
 .wsk-icon--unfold-less:before {
-  content: "\f2a5"; }
+  content: ""; }
 
 .wsk-icon--unfold-more:before {
-  content: "\f2a6"; }
+  content: ""; }
 
 .wsk-icon--adb:before {
-  content: "\f2a7"; }
+  content: ""; }
 
 .wsk-icon--bluetooth-audio:before {
-  content: "\f2a8"; }
+  content: ""; }
 
 .wsk-icon--disc-full:before {
-  content: "\f2a9"; }
+  content: ""; }
 
 .wsk-icon--dnd-forwardslash:before {
-  content: "\f2aa"; }
+  content: ""; }
 
 .wsk-icon--do-not-disturb:before {
-  content: "\f2ab"; }
+  content: ""; }
 
 .wsk-icon--drive-eta:before {
-  content: "\f2ac"; }
+  content: ""; }
 
 .wsk-icon--event-available:before {
-  content: "\f2ad"; }
+  content: ""; }
 
 .wsk-icon--event-busy:before {
-  content: "\f2ae"; }
+  content: ""; }
 
 .wsk-icon--event-note:before {
-  content: "\f2af"; }
+  content: ""; }
 
 .wsk-icon--folder-special:before {
-  content: "\f2b0"; }
+  content: ""; }
 
 .wsk-icon--mms:before {
-  content: "\f2b1"; }
+  content: ""; }
 
 .wsk-icon--more:before {
-  content: "\f2b2"; }
+  content: ""; }
 
 .wsk-icon--network-locked:before {
-  content: "\f2b3"; }
+  content: ""; }
 
 .wsk-icon--phone-bluetooth-speaker:before {
-  content: "\f2b4"; }
+  content: ""; }
 
 .wsk-icon--phone-forwarded:before {
-  content: "\f2b5"; }
+  content: ""; }
 
 .wsk-icon--phone-in-talk:before {
-  content: "\f2b6"; }
+  content: ""; }
 
 .wsk-icon--phone-locked:before {
-  content: "\f2b7"; }
+  content: ""; }
 
 .wsk-icon--phone-missed:before {
-  content: "\f2b8"; }
+  content: ""; }
 
 .wsk-icon--phone-paused:before {
-  content: "\f2b9"; }
+  content: ""; }
 
 .wsk-icon--play-download:before {
-  content: "\f2ba"; }
+  content: ""; }
 
 .wsk-icon--play-install:before {
-  content: "\f2bb"; }
+  content: ""; }
 
 .wsk-icon--sd-card:before {
-  content: "\f2bc"; }
+  content: ""; }
 
 .wsk-icon--sim-card-alert:before {
-  content: "\f2bd"; }
+  content: ""; }
 
 .wsk-icon--sms:before {
-  content: "\f2be"; }
+  content: ""; }
 
 .wsk-icon--sms-failed:before {
-  content: "\f2bf"; }
+  content: ""; }
 
 .wsk-icon--sync:before {
-  content: "\f2c0"; }
+  content: ""; }
 
 .wsk-icon--sync-disabled:before {
-  content: "\f2c1"; }
+  content: ""; }
 
 .wsk-icon--sync-problem:before {
-  content: "\f2c2"; }
+  content: ""; }
 
 .wsk-icon--system-update:before {
-  content: "\f2c3"; }
+  content: ""; }
 
 .wsk-icon--tap-and-play:before {
-  content: "\f2c4"; }
+  content: ""; }
 
 .wsk-icon--time-to-leave:before {
-  content: "\f2c5"; }
+  content: ""; }
 
 .wsk-icon--vibration:before {
-  content: "\f2c6"; }
+  content: ""; }
 
 .wsk-icon--voice-chat:before {
-  content: "\f2c7"; }
+  content: ""; }
 
 .wsk-icon--vpn-lock:before {
-  content: "\f2c8"; }
+  content: ""; }
 
 .wsk-icon--cake:before {
-  content: "\f2c9"; }
+  content: ""; }
 
 .wsk-icon--domain:before {
-  content: "\f2ca"; }
+  content: ""; }
 
 .wsk-icon--location-city:before {
-  content: "\f2cb"; }
+  content: ""; }
 
 .wsk-icon--mood:before {
-  content: "\f2cc"; }
+  content: ""; }
 
 .wsk-icon--notifications-none:before {
-  content: "\f2cd"; }
+  content: ""; }
 
 .wsk-icon--notifications:before {
-  content: "\f2ce"; }
+  content: ""; }
 
 .wsk-icon--notifications-off:before {
-  content: "\f2cf"; }
+  content: ""; }
 
 .wsk-icon--notifications-on:before {
-  content: "\f2d0"; }
+  content: ""; }
 
 .wsk-icon--notifications-paused:before {
-  content: "\f2d1"; }
+  content: ""; }
 
 .wsk-icon--pages:before {
-  content: "\f2d2"; }
+  content: ""; }
 
 .wsk-icon--party-mode:before {
-  content: "\f2d3"; }
+  content: ""; }
 
 .wsk-icon--group:before {
-  content: "\f2d4"; }
+  content: ""; }
 
 .wsk-icon--group-add:before {
-  content: "\f2d5"; }
+  content: ""; }
 
 .wsk-icon--people:before {
-  content: "\f2d6"; }
+  content: ""; }
 
 .wsk-icon--people-outline:before {
-  content: "\f2d7"; }
+  content: ""; }
 
 .wsk-icon--person:before {
-  content: "\f2d8"; }
+  content: ""; }
 
 .wsk-icon--person-add:before {
-  content: "\f2d9"; }
+  content: ""; }
 
 .wsk-icon--person-outline:before {
-  content: "\f2da"; }
+  content: ""; }
 
 .wsk-icon--plus-one:before {
-  content: "\f2db"; }
+  content: ""; }
 
 .wsk-icon--poll:before {
-  content: "\f2dc"; }
+  content: ""; }
 
 .wsk-icon--public:before {
-  content: "\f2dd"; }
+  content: ""; }
 
 .wsk-icon--school:before {
-  content: "\f2de"; }
+  content: ""; }
 
 .wsk-icon--share:before {
-  content: "\f2df"; }
+  content: ""; }
 
 .wsk-icon--whatshot:before {
-  content: "\f2e0"; }
+  content: ""; }
 
 .wsk-icon--check-box:before {
-  content: "\f2e1"; }
+  content: ""; }
 
 .wsk-icon--check-box-outline-blank:before {
-  content: "\f2e2"; }
+  content: ""; }
 
 .wsk-icon--radio-button-off:before {
-  content: "\f2e3"; }
+  content: ""; }
 
 .wsk-icon--radio-button-on:before {
-  content: "\f2e4"; }
+  content: ""; }
 
 .wsk-icon--star:before {
-  content: "\f2e5"; }
+  content: ""; }
 
 .wsk-icon--star-half:before {
-  content: "\f2e6"; }
+  content: ""; }
 
 .wsk-icon--star-outline:before {
-  content: "\f2e7"; }
-
-.wsk-navigation {
-  display: flex;
-  flex-wrap: nowrap; }
-
-.wsk-navigation__link {
-  color: #424242;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-  margin: 0; }
-
-.wsk-navigation__link:hover {
-  background-color: #e0e0e0; }
-
-.wsk-layout {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative; }
-
-.wsk-layout__container {
-  position: absolute;
-  width: 100%;
-  height: 100%; }
-
-.wsk-layout-title {
-  display: block;
-  position: relative;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  box-sizing: border-box; }
-
-.wsk-layout-spacer {
-  flex-grow: 1; }
-
-.wsk-layout__drawer {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  width: 240px;
-  height: 100%;
-  max-height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-  box-sizing: border-box;
-  border-right: 1px solid #e0e0e0;
-  background: #fafafa;
-  transform: translateX(-250px);
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-property: transform;
-  color: #424242;
-  overflow-x: hidden;
-  overflow-y: auto;
-  z-index: 5; }
-  .wsk-layout__drawer.is-visible {
-    transform: translateX(0); }
-  .wsk-layout__drawer > * {
-    flex-shrink: 0; }
-  .wsk-layout__drawer > .wsk-layout-title {
-    line-height: 64px;
-    padding-left: 24px;
-    border-bottom: 1px solid #e0e0e0; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__drawer > .wsk-layout-title {
-        line-height: 56px;
-        padding-left: 16px; } }
-  .wsk-layout__drawer .wsk-navigation {
-    width: 100%;
-    flex-direction: column; }
-  .wsk-layout__drawer .wsk-navigation__link {
-    padding: 16px 24px;
-    margin: 0; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__drawer .wsk-navigation__link {
-        padding: 16px 16px; } }
-  @media screen and (min-width: 851px) {
-    .wsk-layout--fixed-drawer > .wsk-layout__drawer {
-      transform: translateX(0);
-      z-index: 2; } }
-
-.wsk-layout__drawer-button {
-  display: block;
-  position: relative;
-  height: 32px;
-  width: 32px;
-  border: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  font-size: 26px;
-  line-height: 32px;
-  font-family: Helvetica, Arial, sans-serif;
-  margin: 8px;
-  color: rgba(0, 0, 0, 0.5);
-  z-index: 3; }
-  .wsk-layout__drawer-button::after {
-    font-family: 'Material-Design-Iconic-Font';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    content: "\f2a1"; }
-  .wsk-layout--overlay-drawer-button > .wsk-layout__drawer-button {
-    position: absolute;
-    top: 0;
-    left: 0; }
-  .wsk-layout__header .wsk-layout__drawer-button {
-    position: absolute;
-    left: 24px;
-    top: 16px;
-    height: 32px;
-    margin: 0;
-    width: 32px;
-    color: #eeeeee;
-    background-color: #2196f3;
-    z-index: 5; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header .wsk-layout__drawer-button {
-        left: 16px;
-        top: 12px; } }
-  @media screen and (min-width: 851px) {
-    .wsk-layout__drawer-button {
-      display: none; } }
-
-.wsk-layout__header {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin: 0;
-  border: none;
-  height: 64px;
-  min-height: 64px;
-  background-color: #2196f3;
-  color: #eeeeee;
-  z-index: 3;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-  transition-property: min-height, box-shadow;
-  padding-left: 80px;
-  overflow: hidden; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__header {
-      height: 56px;
-      min-height: 56px;
-      padding-left: 72px; } }
-  .wsk-layout--fixed-drawer:not(.is-small-screen) > .wsk-layout__header {
-    padding-left: 24px; }
-  .wsk-layout__header > .wsk-layout-icon {
-    position: absolute;
-    left: 24px;
-    top: 16px;
-    height: 32px;
-    width: 32px;
-    overflow: hidden;
-    z-index: 3; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header > .wsk-layout-icon {
-        left: 16px;
-        top: 12px; } }
-  .wsk-layout__header.is-compact {
-    min-height: 64px; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header.is-compact {
-        min-height: 56px; } }
-  .wsk-layout__header > * {
-    flex-shrink: 0; }
-  .wsk-layout__header > *:last-child {
-    margin-right: 24px; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header > *:last-child {
-        margin-right: 16px; } }
-  .wsk-layout__header > .wsk-navigation:last-child {
-    margin-right: 0; }
-  .wsk-layout__header .wsk-layout-title {
-    display: block; }
-  .wsk-layout__header .wsk-navigation {
-    margin: 0;
-    padding: 0;
-    height: 64px;
-    flex-direction: row;
-    align-items: center; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header .wsk-navigation {
-        height: 56px; } }
-  .wsk-layout__header .wsk-navigation__link {
-    color: #eeeeee;
-    line-height: 64px;
-    padding: 0 24px; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header .wsk-navigation__link {
-        line-height: 56px;
-        padding: 0 16px; } }
-  .wsk-layout__header .wsk-navigation__link:hover {
-    background-color: rgba(97, 97, 97, 0.6); }
-  @media screen and (min-width: 851px) {
-    .wsk-layout--fixed-drawer > .wsk-layout__header {
-      margin-left: 240px; } }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__header {
-      display: none; }
-    .wsk-layout--fixed-header > .wsk-layout__header {
-      display: flex; } }
-
-.wsk-layout__header--multi-row {
-  flex-direction: column; }
-
-.wsk-layout__header--medium-tall {
-  min-height: 128px; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__header--medium-tall {
-      min-height: 112px; } }
-
-.wsk-layout__header--tall {
-  min-height: 192px; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__header--tall {
-      min-height: 168px; } }
-
-.wsk-layout__header--transparent.wsk-layout__header--transparent {
-  background-color: transparent;
-  box-shadow: none; }
-
-.wsk-layout__header--seamed {
-  box-shadow: none; }
-
-.wsk-layout__header--scroll {
-  box-shadow: none; }
-
-.wsk-layout__header--waterfall {
-  box-shadow: none; }
-  .wsk-layout__header--waterfall.is-casting-shadow {
-    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
-
-.wsk-layout__header-row.wsk-layout__header-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  min-height: 64px;
-  width: 100%;
-  margin-right: 0; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__header-row.wsk-layout__header-row {
-      min-height: 56px; } }
-  .wsk-layout__header-row.wsk-layout__header-row > .wsk-layout-icon {
-    position: absolute;
-    left: 24px;
-    top: 16px;
-    height: 32px;
-    width: 32px;
-    overflow: hidden;
-    z-index: 3; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header-row.wsk-layout__header-row > .wsk-layout-icon {
-        left: 16px;
-        top: 12px; } }
-  .wsk-layout__header-row.wsk-layout__header-row > * {
-    flex-shrink: 0; }
-  .wsk-layout__header-row.wsk-layout__header-row > *:last-child {
-    margin-right: 24px; }
-    @media screen and (max-width: 850px) {
-      .wsk-layout__header-row.wsk-layout__header-row > *:last-child {
-        margin-right: 16px; } }
-  .wsk-layout__header-row.wsk-layout__header-row > .wsk-navigation:last-child {
-    margin-right: 0; }
-
-@media screen and (max-width: 850px) {
-  .wsk-layout__obfuscator {
-    background-color: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 4;
-    visibility: hidden;
-    transition-property: background-color;
-    transition-duration: 0.2s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-    .wsk-layout__drawer.is-visible ~ .wsk-layout__obfuscator {
-      background-color: rgba(0, 0, 0, 0.5);
-      visibility: visible; } }
-
-.wsk-layout__content {
-  -ms-flex: 0 1 auto;
-  display: inline-block;
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex-grow: 1;
-  z-index: 1; }
-  .wsk-layout--fixed-drawer > .wsk-layout__content {
-    margin-left: 240px; }
-  .wsk-layout__header--scroll ~ .wsk-layout__content {
-    overflow: visible; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout--fixed-drawer > .wsk-layout__content {
-      margin-left: 0; }
-    .wsk-layout__header--scroll ~ .wsk-layout__content {
-      overflow-y: auto;
-      overflow-x: hidden; } }
-
-.wsk-layout__tab-bar {
-  position: absolute;
-  top: 0;
-  height: 96px;
-  width: calc(100% -
-        112px);
-  padding: 0 0 0 56px;
-  display: flex;
-  background-color: #2196f3;
-  overflow-y: hidden;
-  overflow-x: scroll; }
-  .wsk-layout__tab-bar::-webkit-scrollbar {
-    display: none; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__tab-bar {
-      width: calc(100% -
-          60px);
-      padding: 0 0 0 60px; } }
-  .wsk-layout--fixed-tabs .wsk-layout__tab-bar {
-    padding: 0;
-    overflow: hidden;
-    width: 100%; }
-  .wsk-layout__tab-bar.is-casting-shadow {
-    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
-
-.wsk-layout__tab-bar-container {
-  position: relative;
-  overflow: hidden;
-  height: 48px;
-  width: 100%;
-  border: none;
-  margin: 0;
-  z-index: 3;
-  flex-grow: 0;
-  flex-shrink: 0;
-  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24); }
-  .wsk-layout__container > .wsk-layout__tab-bar-container {
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.wsk-layout__tab-bar-button {
-  display: inline-block;
-  position: absolute;
-  height: 48px;
-  line-height: 48px;
-  width: 56px;
-  z-index: 4;
-  text-align: center;
-  background-color: #2196f3;
-  color: transparent;
-  cursor: pointer; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__tab-bar-button {
-      display: none;
-      width: 60px; } }
-  .wsk-layout--fixed-tabs .wsk-layout__tab-bar-button {
-    display: none; }
-  .wsk-layout__tab-bar-button.is-active {
-    color: #eeeeee; }
-
-.wsk-layout__tab-bar-left-button {
-  left: 0; }
-  .wsk-layout__tab-bar-left-button::after {
-    font-size: 26px;
-    font-family: 'Material-Design-Iconic-Font';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    content: "\f29b"; }
-
-.wsk-layout__tab-bar-right-button {
-  right: 0; }
-  .wsk-layout__tab-bar-right-button::after {
-    font-size: 26px;
-    font-family: 'Material-Design-Iconic-Font';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    content: "\f29c"; }
-
-.wsk-layout__tab {
-  margin: 0;
-  border: none;
-  padding: 0 24px 0 24px;
-  float: left;
-  position: relative;
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  text-decoration: none;
-  height: 48px;
-  line-height: 48px;
-  text-align: center;
-  font-weight: 500;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: rgba(238, 238, 238, 0.6);
-  overflow: hidden; }
-  @media screen and (max-width: 850px) {
-    .wsk-layout__tab {
-      padding: 0 12px 0 12px; } }
-  .wsk-layout--fixed-tabs .wsk-layout__tab {
-    float: none;
-    flex-grow: 1;
-    padding: 0; }
-  .wsk-layout.is-upgraded .wsk-layout__tab.is-active {
-    color: #eeeeee; }
-  .wsk-layout.is-upgraded .wsk-layout__tab.is-active::after {
-    height: 2px;
-    width: 100%;
-    display: block;
-    content: " ";
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    background: #e0e0e0;
-    -webkit-animation: border-expand 0.2s cubic-bezier(0.4, 0, 0.4, 1) 0s alternate forwards;
-    -moz-animation: border-expand 0.2s cubic-bezier(0.4, 0, 0.4, 1) 0s alternate forwards;
-    transition: all 1s cubic-bezier(0.4, 0, 1, 1); }
-  .wsk-layout__tab .wsk-layout__tab-ripple-container {
-    display: block;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    overflow: hidden; }
-
-.wsk-layout__tab-panel {
-  display: block; }
-  .wsk-layout.is-upgraded .wsk-layout__tab-panel {
-    display: none; }
-  .wsk-layout.is-upgraded .wsk-layout__tab-panel.is-active {
-    display: block; }
+  content: ""; }
 
 /* We're splitting fonts into "preferred" and "performance" in order to optimize
    page loading. For important text, such as the body, we want it to load
@@ -3152,7 +2896,7 @@ dt {
    widely available.
 */
 html, body {
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px; }
@@ -3165,7 +2909,7 @@ h1, h2, h3, h4, h5, h6, p {
  * Styles for HTML elements
  */
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
@@ -3174,40 +2918,40 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-size: 0.6em; }
 
 h1 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em; }
 
 h2 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px; }
 
 h3 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px; }
 
 h4 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
   -moz-osx-font-smoothing: grayscale; }
 
 h5 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.02em; }
 
 h6 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -3224,7 +2968,7 @@ a {
   font-weight: bold; }
 
 blockquote {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 300;
   font-style: italic;
@@ -3247,14 +2991,14 @@ dt {
  * Class Name Styles
  */
 .wsk-typography--display-4 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 112px;
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em; }
 
 .wsk-typography--display-4--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 112px;
   font-weight: 300;
   line-height: 1;
@@ -3262,14 +3006,14 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--display-3 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em; }
 
 .wsk-typography--display-3--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
   line-height: 1;
@@ -3277,40 +3021,40 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--display-2 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px; }
 
 .wsk-typography--display-2--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
   line-height: 48px;
   opacity: 0.54; }
 
 .wsk-typography--display-1 {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px; }
 
 .wsk-typography--display-1--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 40px;
   opacity: 0.54; }
 
 .wsk-typography--headline {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
   -moz-osx-font-smoothing: grayscale; }
 
 .wsk-typography--headline--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -3318,14 +3062,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--title {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.02em; }
 
 .wsk-typography--title--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
@@ -3333,14 +3077,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--subhead {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--subhead--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -3374,14 +3118,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--body-2--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--Body-2--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
@@ -3389,14 +3133,14 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--body-1--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.04em; }
 
 .wsk-typography--body-1--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
@@ -3410,7 +3154,7 @@ dt {
   letter-spacing: 0.08em; }
 
 .wsk-typography--caption--forcePreferredFont {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
@@ -3424,7 +3168,7 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--caption--forcePreferredFont--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
@@ -3432,14 +3176,14 @@ dt {
   opacity: 0.54; }
 
 .wsk-typography--menu {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.04em; }
 
 .wsk-typography--menu--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -3447,7 +3191,7 @@ dt {
   opacity: 0.87; }
 
 .wsk-typography--button {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -3455,7 +3199,7 @@ dt {
   letter-spacing: 0.04em; }
 
 .wsk-typography--button--colorContrast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -3487,10 +3231,12 @@ dt {
 .wsk-typography--textCapitalize {
   text-transform: capitalize; }
 
-.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td, .wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9; }
 
-.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td, .wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > td,
+.wsk-typography--tableStriped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9; }
 
 /**
@@ -3575,7 +3321,7 @@ dt {
   padding: 0 8px;
   margin: 0 4px;
   display: inline-block;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -3713,237 +3459,8 @@ dt {
   .wsk-button[disabled] .wsk-button__ripple-container .wsk-ripple {
     background-color: transparent; }
 
-/**
-*
-* Material design color palettes.
-* @see http://www.google.com/design/spec/style/color.html
-*
-**/
-/* ==========  Color Palettes  ========== */
-/* ==========  Color & Themes  ========== */
-/* ==========  Typography  ========== */
-/* ==========  Components  ========== */
-/* ==========  Standard Buttons  ========== */
-/* ==========  Icon Toggles  ========== */
-/* ==========  Radio Buttons  ========== */
-/* ==========  Ripple effect  ========== */
-/* ==========  Layout  ========== */
-/* ==========  Content Tabs  ========== */
-/* ==========  Checkboxes  ========== */
-/* ==========  Switches  ========== */
-/* ==========  Spinner  ========== */
-/* ==========  Text fields  ========== */
-/* ==========  Card  ========== */
-/* Heading back */
-/* ==========  Sliders ========== */
-/* ==========  List ========== */
-/* ==========  Item ========== */
-/* ==========  Dropdown menu ========== */
-/* ==========  Tooltips  ========== */
-/* ==========  Footer  ========== */
-/**
-*
-* Material design color palettes.
-* @see http://www.google.com/design/spec/style/color.html
-*
-**/
-/* ==========  Color Palettes  ========== */
-.wsk-ripple {
-  background: #212121;
-  border-radius: 50%;
-  height: 50px;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  overflow: hidden; }
-  .wsk-ripple.is-animating {
-    transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1), width 0.6s cubic-bezier(0, 0, 0.2, 1), height 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s cubic-bezier(0, 0, 0.2, 1); }
-
-.wsk-input {
-  margin: 20px 0;
-  position: relative;
-  width: 300px; }
-
-.wsk-input--right {
-  text-align: right; }
-
-.wsk-input--large {
-  width: 100%; }
-
-.wsk-textfield {
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  display: block;
-  font-size: 16px;
-  margin: 0;
-  padding: 4px 0;
-  width: 100%;
-  background: 16px;
-  text-align: left; }
-
-.wsk-textfield ~ .wsk-label {
-  bottom: 0;
-  color: rgba(0, 0, 0, 0.26);
-  font-size: 16px;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 4px;
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-align: left; }
-
-/** The after label is the colored underline for the TextField **/
-.wsk-textfield ~ .wsk-label:after {
-  background-color: #2196f3;
-  bottom: 0;
-  content: '';
-  height: 2px;
-  left: 45%;
-  position: absolute;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  visibility: hidden;
-  width: 10px; }
-
-/** TextField Focus Styles **/
-.wsk-textfield:focus {
-  outline: none; }
-
-.wsk-textfield:focus ~ .wsk-label:after {
-  left: 0;
-  visibility: visible;
-  width: 100%; }
-
-/** TextField Invalid Styles **/
-.wsk-textfield:invalid {
-  border-color: #e53935;
-  box-shadow: none; }
-
-.wsk-textfield:invalid ~ .wsk-label:after {
-  background-color: #e53935; }
-
-/** TextField Error **/
-.wsk-textfield ~ .wsk-input__error {
-  color: #e53935;
-  position: absolute;
-  font-size: 12px;
-  margin-top: 3px;
-  visibility: hidden; }
-
-.wsk-textfield:invalid ~ .wsk-input__error {
-  visibility: visible; }
-
-.wsk-textfield.is-dirty ~ .wsk-label {
-  visibility: hidden; }
-
-/** Floating Label */
-.wsk-textfield--floating-label ~ .wsk-label {
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-
-.wsk-textfield--floating-label:focus ~ .wsk-label, .wsk-textfield--floating-label.is-dirty ~ .wsk-label {
-  color: #2196f3;
-  font-size: 12px;
-  top: -16px;
-  visibility: visible; }
-
-.wsk-textfield--floating-label:invalid ~ .wsk-label {
-  color: #e53935;
-  font-size: 12px; }
-
-/** Expandable Icon/Holder */
-.wsk-input__expandable-holder {
+.button-block {
   display: inline-block;
-  position: relative; }
+  margin: 20px 20px 20px 0; }
 
-.wsk-input__expandable-holder .wsk-textfield {
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-block;
-  max-width: 0.1px; }
-
-.wsk-input__expandable-holder .wsk-textfield:focus, .wsk-input__expandable-holder .wsk-textfield .is-dirty {
-  max-width: 600px; }
-
-.wsk-textfield-expandable-icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  border-color: rgba(0, 0, 0, 0.45);
-  position: relative; }
-
-.wsk-textfield-expandable-icon:hover {
-  border-color: #2196f3;
-  cursor: pointer; }
-
-.wsk-textfield-expandable-icon .wsk-textfield-expandable-icon-search {
-  border: 2px solid #000;
-  border-color: inherit;
-  border-radius: 100px;
-  position: relative;
-  box-sizing: border-box;
-  width: 10px;
-  height: 10px;
-  display: inline-block;
-  margin: 1px 4px 4px 1px;
-  vertical-align: middle; }
-
-.wsk-textfield-expandable-icon .wsk-textfield-expandable-icon-search::after {
-  content: '';
-  transform: rotate(-45deg);
-  width: 0;
-  border-left: 2px solid #000;
-  border-color: inherit;
-  height: 5px;
-  position: absolute;
-  display: inline-block;
-  bottom: -5px;
-  right: -3px; }
-
-.wsk-textfield-expandable-icon__ripple__container {
-  position: absolute;
-  z-index: 2;
-  top: -4px;
-  left: -4px;
-  box-sizing: border-box;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  -webkit-mask-image: -webkit-radial-gradient(circle, white, black); }
-
-.wsk-textfield-expandable-icon__ripple__container .wsk-ripple {
-  background: #2196f3; }
-
-/** Disabled Styling **/
-.wsk-textfield[disabled] {
-  background-color: transparent;
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.12); }
-
-body {
-  margin: 0px; }
-
-* {
-  box-sizing: border-box; }
-
-main {
-  padding: 20px; }
-
-html, body {
-  color: #9e9e9e; }
-
-h1, h2, h3, h4, h5 {
-  color: #424242; }
-
-.wsk-button {
-  text-decoration: none;
-  text-align: center;
-  line-height: 36px; }
+/*# sourceMappingURL=demo.css.map */
