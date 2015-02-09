@@ -10,5 +10,9 @@
     <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.email}}is-dirty{{/if}}" type="email" name="email" value="{{editContact.email}}" />
     <label class="wsk-label" for="email">Email</label>
   </div>
+  <div class="wsk-input">
+    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.address}}is-dirty{{/if}}" type="text" name="address" value="{{editContact.address}}" />
+    <label class="wsk-label" for="address">Address</label>
+  </div>
   <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
 </form>

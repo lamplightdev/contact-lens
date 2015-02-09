@@ -128,6 +128,7 @@ function setupServer () {
         var modelToAdd = new ModelContact({
             name: req.body.name,
             email: req.body.email,
+            address: req.body.address,
         });
 
         modelToAdd.sync().then(function () {
@@ -146,7 +147,8 @@ function setupServer () {
         var modelToEdit = new ModelContact({
             _id: req.params.id,
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            address: req.body.address,
         });
         modelToEdit.sync().then(function () {
             ctrlr.update(modelToEdit);
@@ -206,6 +208,7 @@ function setupServer () {
                 var modelToAdd = new ModelContact({
                     name: req.body.name,
                     email: req.body.email,
+                    address: req.body.address,
                 });
                 modelToAdd.sync().then(function () {
                     ctrlr.add(modelToAdd);
@@ -218,7 +221,8 @@ function setupServer () {
                 var modelToEdit = new ModelContact({
                     _id: req.body.id,
                     name: req.body.name,
-                    email: req.body.email
+                    email: req.body.email,
+                    address: req.body.address,
                 });
                 modelToEdit.sync().then(function () {
                     ctrlr.update(modelToEdit);
