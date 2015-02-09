@@ -1,7 +1,7 @@
-<form id='contact-add' action='/contacts' method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact.id}}{{/if}}'>
+<form id='contact-add' action='/contacts' method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact._id}}{{/if}}'>
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
   <input type="hidden" name="type" value="{{#if editContact}}edit{{else}}add{{/if}}">
-  <input type="hidden" name="id" value="{{editContact.id}}">
+  <input type="hidden" name="id" value="{{editContact._id}}">
   <div class="wsk-input">
     <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.name}}is-dirty{{/if}}" type="text" name="name" value="{{editContact.name}}" />
     <label class="wsk-label" for="name">Name</label>

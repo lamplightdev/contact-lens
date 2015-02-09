@@ -1,7 +1,7 @@
 {{#if model}}
   {{#each model}}
-    <div class='contact' data-id='{{this.id}}'>
-      <a class='' href='/contacts/{{this.id}}' data-nav>{{this.name}}</a>
+    <div class='contact' data-id='{{this._id}}'>
+      <a class='' href='/contacts/{{this._id}}' data-nav>{{this.name}}</a>
     </div>
   {{/each}}
 {{else}}

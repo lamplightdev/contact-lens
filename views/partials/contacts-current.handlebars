@@ -1,9 +1,9 @@
 {{#if currentContact}}
-Name: {{currentContact.name}} ({{currentContact.email}}) -  <a class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' href='/contacts/edit/{{currentContact.id}}' data-nav>edit</a>
-<form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact.id}}'>
+Name: {{currentContact.name}} ({{currentContact.email}}) -  <a class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' href='/contacts/edit/{{currentContact._id}}' data-nav>edit</a>
+<form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact._id}}'>
   <input type='hidden' name='_csrf' value='{{extra._csrf}}'>
   <input type="hidden" name="type" value="remove">
-  <input type='hidden' name='id' value='{{currentContact.id}}'>
+  <input type='hidden' name='id' value='{{currentContact._id}}'>
   <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>remove</button>
 </form>
 {{else}}
