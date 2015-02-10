@@ -8,15 +8,19 @@ var ModelContact = require("../../lib/models/contact");
 var Collection  = require("../../lib/models/collection");
 
 var Handlebars = require("../../node_modules/handlebars/dist/handlebars.runtime");
+var helpers = require("../../lib/helpers");
 var urlparse = require('url').parse;
 
 
-for(var key in App.templates) {
+for (let key in App.templates) {
   if(App.templates.hasOwnProperty(key)) {
     Handlebars.registerPartial(key, Handlebars.template(App.templates[key]));
   }
 }
 
+for (let helper in helpers) {
+  Handlebars.registerHelper(helper, helpers[helper]);
+}
 
 var router = new RouterMain({
   templates: App.templates,

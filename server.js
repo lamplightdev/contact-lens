@@ -80,34 +80,14 @@ function setupServer () {
         var token = req.csrfToken();
         res.cookie('XSRF-TOKEN', token);
         res.locals._csrf = token;
+        app.expose(token, 'Data._csrf');
 
         next();
-    });
-
-    app.use(function (req, res, next) {
-      ModelContact.load().then(function (collection) {
-        req.session.contacts = collection;
-        app.expose({
-          contacts: collection.toJSON(),
-          _csrf: res.locals._csrf
-        }, 'Data');
-
-        next();
-      }, function (error) {
-        console.log('init load error: ', error);
-      });
-      /*
-      if (!contacts) {
-        req.session.contacts = new Collection();
-        req.session.count = 1;
-      } else {
-        req.session.contacts = new Collection(ModelContact.fromJSON(req.session.contacts));
-      }
-      */
     });
 
 
     app.use(middleware.exposeTemplates());
+    app.use(middleware.exposeContacts());
 
     // Use the router.
     app.use(router);
@@ -121,7 +101,7 @@ function setupServer () {
 
 
     router.post('/api/contacts', function (req, res) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
@@ -134,13 +114,12 @@ function setupServer () {
         modelToAdd.sync().then(function () {
            ctrlr.add(modelToAdd);
            res.statusCode = 201;
-           req.session.contacts = ctrlr.getCollection();
            res.json(modelToAdd.toJSON());
         });
     });
 
     router.put('/api/contacts/:id', function (req, res) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
@@ -154,25 +133,27 @@ function setupServer () {
             ctrlr.update(modelToEdit);
 
             res.statusCode = 200;
-            req.session.contacts = ctrlr.getCollection();
             res.json(modelToEdit.toJSON());
         });
     });
 
     router.delete('/api/contacts/:id', function (req, res) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        ctrlr.removeByID(req.params.id);
+        new ModelContact().deleteByID(req.params.id).then(function () {
+            ctrlr.removeByID(req.params.id);
 
-        res.statusCode = 204;
-        req.session.contacts = ctrlr.getCollection();
-        res.end();
+            res.statusCode = 204;
+            res.end();
+        }).catch(function(err) {
+            console.log('remove error', err);
+        });
     });
 
     router.get('/contacts/edit/:id', function (req, res, next) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
@@ -185,7 +166,7 @@ function setupServer () {
     });
 
     router.get('/contacts/:id?', function (req, res, next) {
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
@@ -197,9 +178,24 @@ function setupServer () {
         }
     });
 
+    router.get('/contacts/search', function (req, res) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        if (req.query.q) {
+            ctrlr.search(req.query.q).then(function(found) {
+                res.render("view-contacts", ctrlr._getViewData());
+            });
+        } else {
+            res.render("view-contacts", ctrlr._getViewData());
+        }
+
+    });
+
     router.post('/contacts', function (req, res, next) {
 
-        var ctrlr = new ControllerContacts(req.session.contacts, [], null, {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
@@ -212,7 +208,6 @@ function setupServer () {
                 });
                 modelToAdd.sync().then(function () {
                     ctrlr.add(modelToAdd);
-                    req.session.contacts = ctrlr.getCollection();
                     res.redirect('/contacts/' + modelToAdd.getID());
                 });
 
@@ -226,7 +221,6 @@ function setupServer () {
                 });
                 modelToEdit.sync().then(function () {
                     ctrlr.update(modelToEdit);
-                    req.session.contacts = ctrlr.getCollection();
                     res.redirect('/contacts/' + modelToEdit.getID());
                 }, function (err) {
                     console.log('update error', err);
@@ -234,10 +228,14 @@ function setupServer () {
                 });
             break;
             case 'remove':
-                ctrlr.removeByID(req.body.id, 10);
+                new ModelContact().deleteByID(req.body.id).then(function () {
+                    ctrlr.removeByID(req.body.id);
 
-                req.session.contacts = ctrlr.getCollection();
-                res.redirect('/contacts/');
+                    res.redirect('/contacts/');
+                }).catch(function(err) {
+                    console.log('remove error', err);
+                    next();
+                });
             break;
             default:
                 next();
