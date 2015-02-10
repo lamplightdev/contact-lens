@@ -152,6 +152,23 @@ function setupServer () {
         });
     });
 
+    router.get('/api/contacts/search', function (req, res) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        console.log(req.query);
+        if (req.query.q) {
+            ctrlr.search(req.query.q).then(function(founds) {
+                res.statusCode = 200;
+                res.json(founds.toJSON());
+            });
+        } else {
+            res.statusCode = 200;
+            res.json([]);
+        }
+    });
+
     router.get('/contacts/edit/:id', function (req, res, next) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
@@ -184,7 +201,7 @@ function setupServer () {
         });
 
         if (req.query.q) {
-            ctrlr.search(req.query.q).then(function(found) {
+            ctrlr.search(req.query.q).then(function() {
                 res.render("view-contacts", ctrlr._getViewData());
             });
         } else {

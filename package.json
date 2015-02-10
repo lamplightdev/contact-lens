@@ -30,6 +30,7 @@
     "should": "*",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "vows": "0.5.x"
+    "vows": "0.5.x",
+    "watchify": "^2.3.0"
   }
 }

@@ -3,11 +3,19 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
+var watchify = require('watchify');
 //var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var to5ify = require("6to5ify");
 var nodemon = require("gulp-nodemon");
 var sass = require('gulp-sass');
+
+
+gulp.task('sass', function () {
+  gulp.src('./public/styles/main.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./public/css'));
+});
 
 
 var getBundleName = function () {
@@ -16,35 +24,26 @@ var getBundleName = function () {
   return version + '.' + name + '.' + 'min';
 };
 
-gulp.task('sass', function () {
-  gulp.src('./public/styles/main.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./public/css'));
-});
+var bundler = watchify(browserify('./public/js/index.js', {
+  debug: true
+}));
+bundler.ignore(require.resolve('./lib/models/storage/contact'));
+bundler.transform(to5ify);
 
-gulp.task('scripts', function() {
+function bundle() {
+  return bundler.
+    bundle()
+    .pipe(source(getBundleName() + '.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+      // Add transformation tasks to the pipeline here.
+      //.pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./public/js/dist/'));
+}
 
-  var bundler = browserify({
-    entries: ['./public/js/index.js'],
-    debug: true
-  });
-
-  bundler.transform(to5ify);
-
-  var bundle = function () {
-    return bundler.
-      bundle()
-      .pipe(source(getBundleName() + '.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        //.pipe(uglify())
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./public/js/dist/'));
-  };
-
-  return bundle();
-});
+gulp.task('scripts', bundle);
+bundler.on('update', bundle);
 
 
 gulp.task('dev', function () {
@@ -55,5 +54,5 @@ gulp.task('dev', function () {
         ignore: ["public/js/dist/*"],
     })
       .on('start', ['scripts', 'sass'])
-      .on('restart', ['scripts', 'sass']);
+      .on('restart', ['sass']); //let watchify handle scripts restarting
 });
