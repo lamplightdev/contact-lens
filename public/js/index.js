@@ -26,7 +26,8 @@ var router = new RouterMain({
   templates: App.templates,
   container: document.getElementById('view'),
   contacts: new Collection(ModelContact.fromJSON(App.Data.contacts)),
-  _csrf: App.Data._csrf
+  _csrf: App.Data._csrf,
+  user: App.Data.user
 });
 
 if (!App.Data.status404) {

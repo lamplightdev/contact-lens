@@ -7,10 +7,7 @@ module.exports = function exposeContacts() {
   return function (req, res, next) {
     ModelContact.load().then(function (collection) {
       res.locals.contacts = collection;
-      res.expose({
-        contacts: collection.toJSON(),
-        _csrf: res.locals._csrf
-      }, 'Data');
+      res.expose(collection.toJSON(), 'Data.contacts');
 
       next();
     }, function (error) {

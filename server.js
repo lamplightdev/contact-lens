@@ -9,6 +9,7 @@ var express  = require('express'),
     csrf         = require('csurf'),
     session      = require('express-session'),
     state        = require('express-state'),
+    request      = require('request'),
 
     mongoose     = require('mongoose'),
 
@@ -22,6 +23,7 @@ var express  = require('express'),
 
     ModelContact       = require('./lib/models/contact'),
     ControllerContacts = require('./lib/controllers/contacts'),
+    ControllerAccount = require('./lib/controllers/account'),
 
     port         = (process.env.PORT || 8000);
 
@@ -58,6 +60,9 @@ function setupServer () {
     // Set default views directory.
     app.set('views', config.dirs.views);
 
+    // Specify the public directory.
+    app.use(express.static(config.dirs.pub));
+
     router = express.Router({
         caseSensitive: app.get('case sensitive routing'),
         strict       : app.get('strict routing')
@@ -84,19 +89,23 @@ function setupServer () {
         callbackURL: "http://localhost:8000/auth/twitter/callback"
       },
       function(token, tokenSecret, profile, done) {
-        console.log(token, tokenSecret, profile);
-          done(null, {id: 1});
+        done(null, {
+            _id: 1,
+            token: token,
+            tokenSecret: tokenSecret,
+            provider: profile.provider,
+            providerID: profile.id,
+            name: profile.displayName,
+            username: profile.username
+        });
       }
     ));
     passport.serializeUser(function(user, done) {
-      done(null, user);
+        done(null, user);
     });
     passport.deserializeUser(function(user, done) {
       done(null, user);
     });
-
-    // Specify the public directory.
-    app.use(express.static(config.dirs.pub));
 
     app.use(csrf());
     app.use(function (req, res, next) {
@@ -104,7 +113,7 @@ function setupServer () {
         res.cookie('XSRF-TOKEN', token);
         res.locals._csrf = token;
         app.expose(token, 'Data._csrf');
-
+        app.expose(req.user, 'Data.user');
         next();
     });
 
@@ -126,7 +135,7 @@ function setupServer () {
 
     router.get('/auth/twitter/callback',
       passport.authenticate('twitter', { successRedirect: '/contacts',
-                                         failureRedirect: '/login' }));
+                                         failureRedirect: '/account' }));
 
 
     router.post('/api/contacts', function (req, res) {
@@ -186,7 +195,6 @@ function setupServer () {
             _csrf: res.locals._csrf
         });
 
-        console.log(req.query);
         if (req.query.q) {
             ctrlr.search(req.query.q).then(function(founds) {
                 res.statusCode = 200;
@@ -225,7 +233,6 @@ function setupServer () {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
-
         var selected = ctrlr.select(req.params.id);
         if (req.params.id && !selected) {
             next();
@@ -298,7 +305,57 @@ function setupServer () {
     });
 
     router.get('/account', function (req, res) {
-        res.render("view-account");
+        var ctrlr = new ControllerAccount(res.locals.contacts, [], null, {
+            user: req.user
+        });
+
+        res.render("view-account", ctrlr._getViewData());
+    });
+
+    router.get('/account/import', function (req, res) {
+        var ctrlr = new ControllerAccount(res.locals.contacts, [], null, {
+            user: req.user
+        });
+
+        if (req.user) {
+            var oauth = {
+                consumer_key    : privateData.twitter.key,
+                consumer_secret : privateData.twitter.secret,
+                token           : req.user.token,
+                token_secret    : req.user.tokenSecret
+            };
+
+            var url = 'https://api.twitter.com/1.1/friends/list.json';
+
+            var params = {
+                user_id: req.user.providerID
+            };
+
+            request.get({
+                url: url,
+                qs: params,
+                oauth: oauth,
+                json: true
+            }, function (e, r, result) {
+                var raw = [];
+                result.users.forEach(function(user) {
+                    raw.push({
+                        name: user.name,
+                        address: user.location
+                    });
+                });
+                ModelContact.insert(raw).then(function(models) {
+                    ctrlr.add(models);
+                    res.expose(ctrlr.getCollection().toJSON(), 'Data.contacts');
+                    res.render("view-account", ctrlr._getViewData());
+                }, function(error) {
+                    console.log('insert error', error);
+                });
+            });
+        } else {
+            res.render("view-account", ctrlr._getViewData());
+        }
+
     });
 
     // Error handling middleware
