@@ -1,15 +1,15 @@
 
 
-{{#if addContact}}
+{{#if editContact}}
 
 <div class='overlay'></div>
 
-<form class="contact-add wsk-card wsk-shadow--z3" method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact._id}}{{/if}}'>
+<form class="contact-add wsk-card wsk-shadow--z3" method='post' data-api-method='{{#if editContact._id}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact._id}}/{{editContact._id}}{{/if}}'>
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
-  <input type="hidden" name="type" value="{{#if editContact}}edit{{else}}add{{/if}}">
+  <input type="hidden" name="type" value="{{#if editContact._id}}edit{{else}}add{{/if}}">
   <input type="hidden" name="id" value="{{editContact._id}}">
   <div class="wsk-card--heading">
-     <h2 class="wsk-card--heading-text">{{#if editContact}}Edit{{else}}New{{/if}} contact</h2>
+     <h2 class="wsk-card--heading-text">{{#if editContact._id}}Edit{{else}}New{{/if}} contact</h2>
   </div>
   <div class="wsk-card--lower">
     <div class="wsk-input">
@@ -26,8 +26,8 @@
     </div>
   </div>
   <div class="wsk-card--bottom">
-      <button type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
-      <a href="/contacts/{{#if editContact}}{{editContact._id}}{{/if}}" data-nav>Cancel</a>
+      <button type='submit'>{{#if editContact._id}}Save{{else}}Add{{/if}}</button>
+      <a href="/contacts/{{#if editContact._id}}{{editContact._id}}{{/if}}" data-nav>Cancel</a>
   </div>
 </form>
 

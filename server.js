@@ -169,6 +169,16 @@ function setupServer () {
         }
     });
 
+    router.get('/contacts/add', function (req, res) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        ctrlr.addContact(true);
+
+        res.render("view-contacts", ctrlr._getViewData());
+    });
+
     router.get('/contacts/edit/:id', function (req, res, next) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
