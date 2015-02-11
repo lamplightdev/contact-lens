@@ -1,18 +1,34 @@
-<form id='contact-add' action='/contacts' method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact._id}}{{/if}}'>
+
+
+{{#if addContact}}
+
+<div class='overlay'></div>
+
+<form class="contact-add wsk-card wsk-shadow--z3" method='post' data-api-method='{{#if editContact}}put{{else}}post{{/if}}' data-api-action='/api/contacts{{#if editContact}}/{{editContact._id}}{{/if}}'>
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
   <input type="hidden" name="type" value="{{#if editContact}}edit{{else}}add{{/if}}">
   <input type="hidden" name="id" value="{{editContact._id}}">
-  <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.name}}is-dirty{{/if}}" type="text" name="name" value="{{editContact.name}}" />
-    <label class="wsk-label" for="name">Name</label>
+  <div class="wsk-card--heading">
+     <h2 class="wsk-card--heading-text">{{#if editContact}}Edit{{else}}New{{/if}} contact</h2>
   </div>
-  <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.email}}is-dirty{{/if}}" type="email" name="email" value="{{editContact.email}}" />
-    <label class="wsk-label" for="email">Email</label>
+  <div class="wsk-card--lower">
+    <div class="wsk-input">
+      <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.name}}is-dirty{{/if}}" type="text" name="name" value="{{editContact.name}}" />
+      <label class="wsk-label" for="name">Name</label>
+    </div>
+    <div class="wsk-input">
+      <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.email}}is-dirty{{/if}}" type="email" name="email" value="{{editContact.email}}" />
+      <label class="wsk-label" for="email">Email</label>
+    </div>
+    <div class="wsk-input">
+      <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.address}}is-dirty{{/if}}" type="text" name="address" value="{{editContact.address}}" />
+      <label class="wsk-label" for="address">Address</label>
+    </div>
   </div>
-  <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if editContact.address}}is-dirty{{/if}}" type="text" name="address" value="{{editContact.address}}" />
-    <label class="wsk-label" for="address">Address</label>
+  <div class="wsk-card--bottom">
+      <button type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
+      <a href="/contacts/{{#if editContact}}{{editContact._id}}{{/if}}" data-nav>Cancel</a>
   </div>
-  <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>{{#if editContact}}Save{{else}}Add{{/if}}</button>
 </form>
+
+{{/if}}

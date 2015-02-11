@@ -154,7 +154,7 @@ $background-image-url: '' !default;
   width      : 100%;
 }
 
-.wsk-card--bottom a {
+.wsk-card--bottom a, .wsk-card--bottom button {
   // TODO: Does this need to be anything other than none?
   border-bottom     : 0 none rgb(48, 63, 159);
   // TODO: Does this need to be anything other than none?

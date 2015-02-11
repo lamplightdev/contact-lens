@@ -1,15 +1,27 @@
+
 {{#if currentContact}}
-Name: {{currentContact.name}} ({{currentContact.email}}) -  <a class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' href='/contacts/edit/{{currentContact._id}}' data-nav>edit</a>
-{{#if currentContact.address}}
-<div>{{currentContact.address}}</div>
-<a class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' href='http://maps.google.com/maps?saddr={{currentContact.address}}' target='_blank'>map</a>
-{{/if}}
-<form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact._id}}'>
-  <input type='hidden' name='_csrf' value='{{extra._csrf}}'>
-  <input type="hidden" name="type" value="remove">
-  <input type='hidden' name='id' value='{{currentContact._id}}'>
-  <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>remove</button>
-</form>
-{{else}}
-None selected
+<div class='overlay'></div>
+<div class="contact-open wsk-card wsk-shadow--z3">
+  <div class="wsk-card--heading">
+     <h2 class="wsk-card--heading-text">{{currentContact.name}}</h2>
+  </div>
+  <div class="wsk-card--caption">
+    {{currentContact.email}}
+  </div>
+  {{#if currentContact.address}}
+  <div class="wsk-card--lower">
+    {{currentContact.address}}
+  </div>
+  {{/if}}
+  <div class="wsk-card--bottom">
+    <form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact._id}}'>
+      <input type='hidden' name='_csrf' value='{{extra._csrf}}'>
+      <input type="hidden" name="type" value="remove">
+      <input type='hidden' name='id' value='{{currentContact._id}}'>
+      <button type='submit'>remove</button>
+    </form>
+    <a href="/contacts/edit/{{currentContact._id}}" data-nav>Edit</a>
+    <a href="/contacts" data-nav>Close</a>
+  </div>
+</div>
 {{/if}}

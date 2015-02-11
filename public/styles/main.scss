@@ -11,9 +11,22 @@
  * Remove if you prefer to use a CSS library, like Bootstrap
  */
 
- @import "../styleguide/layout/layout";
- @import "../styleguide/button/button";
- @import "../styleguide/textfield/textfield";
+@import "../styleguide/layout/layout";
+
+$button-height: 36px !default;
+@import "../styleguide/button/button";
+
+$card-width: auto !default;
+$card-height: auto !default;
+$card-heading-height: auto !default;
+$card-caption-height: auto !default;
+$card-lower-height: auto !default;
+$card-bottom-height: auto !default;
+$card-bottom-anchor-height: auto !default;
+@import "../styleguide/card/card";
+
+
+@import "../styleguide/textfield/textfield";
 
 body {
   margin: 0px;
@@ -26,6 +39,10 @@ main {
   padding: 20px;
 }
 
+.container {
+  position: relative;
+}
+
 html, body {
   color: $text-color-secondary;
 }
@@ -34,9 +51,36 @@ h1, h2, h3, h4, h5 {
   color: $text-color-primary;
 }
 
-$button-height: 36px !default;
+
 .wsk-button {
   text-decoration: none;
   text-align: center;
   line-height: $button-height;
+}
+
+.wsk-card--bottom button {
+  background-color: transparent;
+  text-align: left;
+}
+
+.overlay {
+  z-index: 10;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.contact-open, .contact-add {
+  z-index: 20;
+
+  position: fixed;
+  max-width: 300px;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
