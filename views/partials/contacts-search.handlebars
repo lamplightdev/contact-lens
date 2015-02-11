@@ -1,26 +1,9 @@
 <form id='contact-search' action='/contacts/search' method='get' data-api-action='/api/contacts/search'>
   <div class="wsk-input">
-    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if search.query}}is-dirty{{/if}}" type="text" name="q" value="{{search.query}}" />
+    <input class="wsk-textfield wsk-js-textfield wsk-textfield--floating-label {{#if search.query}}is-dirty{{/if}}" type="search" name="q" value="{{search.query}}" />
     <label class="wsk-label" for="q">Search name</label>
   </div>
   <button class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' type='submit'>Go</button>
 </form>
-
-{{#if search.active}}
-<div class='contact-search-results'>
-  {{#if search.results.length}}
-  <div>
-  {{search.results.length}} results
-  </div>
-  {{#each search.results}}
-    <div>
-      <a class='' href='/contacts/{{this._id}}' data-nav>{{this.name}}</a>
-    </div>
-  {{/each}}
-  {{else}}
-  No results
-  {{/if}}
-</div>
-{{/if}}
 
 <a class='wsk-button wsk-js-button wsk-button--raised wsk-js-ripple-effect' href='/contacts/add' data-nav>Add</a>

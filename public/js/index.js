@@ -42,6 +42,9 @@ document.body.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
     router.router.navigate(urlparse(event.target.parentNode.href).pathname);
+  } else if (event.target.classList.contains('overlay')) {
+    console.log('overlay click');
+    router.router.navigate('/contacts');
   }
 });
 

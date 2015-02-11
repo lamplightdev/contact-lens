@@ -15,6 +15,10 @@ var express  = require('express'),
     hbs          = require('./lib/exphbs'),
     middleware   = require('./middleware'),
     config       = require('./config'),
+    privateData  = require('./config/private'),
+
+    passport     = require('passport'),
+    TwitterStrategy = require('passport-twitter').Strategy,
 
     ModelContact       = require('./lib/models/contact'),
     ControllerContacts = require('./lib/controllers/contacts'),
@@ -71,6 +75,25 @@ function setupServer () {
     // Session Handling
     app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
 
+    // Passport authentication
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use(new TwitterStrategy({
+        consumerKey: privateData.twitter.key,
+        consumerSecret: privateData.twitter.secret,
+        callbackURL: "http://localhost:8000/auth/twitter/callback"
+      },
+      function(token, tokenSecret, profile, done) {
+        console.log(token, tokenSecret, profile);
+          done(null, {id: 1});
+      }
+    ));
+    passport.serializeUser(function(user, done) {
+      done(null, user);
+    });
+    passport.deserializeUser(function(user, done) {
+      done(null, user);
+    });
 
     // Specify the public directory.
     app.use(express.static(config.dirs.pub));
@@ -98,6 +121,12 @@ function setupServer () {
     ///////////////////////////////////////////
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
+
+    router.get('/auth/twitter', passport.authenticate('twitter'));
+
+    router.get('/auth/twitter/callback',
+      passport.authenticate('twitter', { successRedirect: '/contacts',
+                                         failureRedirect: '/login' }));
 
 
     router.post('/api/contacts', function (req, res) {
@@ -211,12 +240,10 @@ function setupServer () {
         });
 
         if (req.query.q) {
-            ctrlr.search(req.query.q).then(function() {
-                res.render("view-contacts", ctrlr._getViewData());
-            });
-        } else {
-            res.render("view-contacts", ctrlr._getViewData());
+            ctrlr.search(req.query.q);
         }
+
+        res.render("view-contacts", ctrlr._getViewData());
 
     });
 

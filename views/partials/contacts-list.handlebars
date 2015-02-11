@@ -1,9 +1,27 @@
-{{#if model}}
-  {{#each model}}
-    <div class='contact' data-id='{{this._id}}'>
+<div class="wsk-column-layout">
+{{#if search.active}}
+
+{{#if search.results}}
+  {{#each search.results}}
+    <div class='wsk-column-layout__child contact' data-id='{{this._id}}'>
       <a class='' href='/contacts/{{this._id}}' data-nav>{{this.name}}</a>
     </div>
   {{/each}}
 {{else}}
-  No contacts
+  <div class='wsk-column-layout__child'>No results</div>
 {{/if}}
+
+{{else}}
+
+{{#if model}}
+  {{#each model}}
+    <div class='wsk-column-layout__child contact' data-id='{{this._id}}'>
+      <a class='' href='/contacts/{{this._id}}' data-nav>{{this.name}}</a>
+    </div>
+  {{/each}}
+{{else}}
+  <div class='wsk-column-layout__child'>No contacts</div>
+{{/if}}
+
+{{/if}}
+</div>

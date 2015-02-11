@@ -25,7 +25,7 @@ $card-bottom-height: auto !default;
 $card-bottom-anchor-height: auto !default;
 @import "../styleguide/card/card";
 
-
+@import "../styleguide/column-layout/column-layout";
 @import "../styleguide/textfield/textfield";
 
 body {
@@ -51,11 +51,18 @@ h1, h2, h3, h4, h5 {
   color: $text-color-primary;
 }
 
+.wsk-column-layout__child {
+  background-color: whitesmoke;
+}
 
 .wsk-button {
   text-decoration: none;
   text-align: center;
   line-height: $button-height;
+}
+
+.wsk-card--heading {
+  padding: 16px 20px;
 }
 
 .wsk-card--bottom button {
@@ -72,6 +79,11 @@ h1, h2, h3, h4, h5 {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.contact a {
+  display: block;
+  padding: 16px;
 }
 
 .contact-open, .contact-add {
