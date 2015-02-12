@@ -12,6 +12,7 @@
   >
   <input type="hidden" name="_csrf" value="{{extra._csrf}}">
   <input type="hidden" name="id" value="{{editContact._id}}">
+  <input type="hidden" name="type" value="{{#if editContact._id}}edit{{else}}add{{/if}}">
   <div class="wsk-card--heading">
      <h2 class="wsk-card--heading-text">{{#if editContact._id}}Edit{{else}}New{{/if}} contact</h2>
   </div>

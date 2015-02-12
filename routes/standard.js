@@ -4,15 +4,14 @@ module.exports = (function() {
         ModelContact       = require('../lib/models/contact'),
         ControllerContacts = require('../lib/controllers/contacts'),
         ControllerAccount = require('../lib/controllers/account'),
-        RouterContacts = require('../lib/routers/contacts'),
+        RouterSharedContacts = require('../lib/routers/shared-contacts'),
         request = require('request');
 
     router.get(/contacts(?:$|\/(.*))/i, (req, res, next) => {
-        new RouterContacts().match(req.params[0], {
+        new RouterSharedContacts({
             contacts: res.locals.contacts,
             _csrf: res.locals._csrf,
-            query: req.query,
-        }, (ctrlr) => {
+        }).match(req.params[0], req.query, (ctrlr) => {
             res.render("view-contacts", ctrlr._getViewData());
         }, (err) => {
             console.log('contacts route error: ', err);
