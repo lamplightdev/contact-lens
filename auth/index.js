@@ -1,6 +1,6 @@
 'use strict';
 
-var passport = require('passport'),
+var express = require('express'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     privateData  = require('../config/private');
 
@@ -16,8 +16,8 @@ function serialization() {
 
 function Google() {
   passport.use(new GoogleStrategy({
-      clientID: privateData.google.id,
-      clientSecret: privateData.google.secret,
+      clientID: process.env.CONTACTLENS_GOOGLE_ID, //privateData.google.id,
+      clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
       callbackURL: "http://localhost:8000/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
