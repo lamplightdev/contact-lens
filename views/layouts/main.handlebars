@@ -17,15 +17,32 @@
 
 <body lang="en">
 
-    <main class="">
-
-      <div class="container">
-          <div><a href='/contacts' data-nav>Contacts</a></div>
-          <div><a href='/account' data-nav>Account</a></div>
+      <div class="wsk-layout wsk-js-layout wsk-layout--fixed-header">
+        <div class="wsk-layout__header">
+          <!-- Icon -->
+          <img class="wsk-layout-icon" src="images/app-icon-reverse.png"/>
+          <!-- Title -->
+          <span class="wsk-layout-title">Contact Lens</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="wsk-layout-spacer"></div>
+          <!-- Navigation. We use CSS to hide it in small screens. -->
+          <nav class="wsk-navigation" id="fixed_header_nav">
+            <a class="wsk-navigation__link" href="/contacts" data-nav>Contacts</a>
+            <a class="wsk-navigation__link" href="/account" data-nav>Account</a>
+          </nav>
+        </div>
+        <div class="wsk-layout__drawer">
+          <span class="wsk-layout-title">Contact Lens</span>
+          <nav class="wsk-navigation">
+            <a class="wsk-navigation__link" href="/contacts" data-nav>Contacts</a>
+            <a class="wsk-navigation__link" href="/account" data-nav>Account</a>
+          </nav>
+        </div>
+        <div class="wsk-layout__content">
           {{{body}}}
+        </div>
       </div>
 
-    </main>
   </div>
 
     <script>

@@ -4494,9 +4494,6 @@ body {
 * {
   box-sizing: border-box; }
 
-main {
-  padding: 20px; }
-
 .container {
   position: relative; }
 
@@ -4505,6 +4502,12 @@ html, body {
 
 h1, h2, h3, h4, h5 {
   color: #424242; }
+
+.wsk-layout__content {
+  padding: 20px; }
+
+.wsk-layout.is-small-screen #fixed_header_nav {
+  visibility: hidden; }
 
 .wsk-column-layout__child {
   background-color: whitesmoke; }
@@ -4521,6 +4524,14 @@ h1, h2, h3, h4, h5 {
   background-color: transparent;
   text-align: left; }
 
+a.wsk-button--fab .wsk-icon {
+  top: 11px; }
+
+#contact-add-button {
+  position: fixed;
+  right: 30px;
+  bottom: 30px; }
+
 .overlay {
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.8);
@@ -4530,6 +4541,13 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0; }
 
+#contact-search {
+  width: 250px;
+  margin: 0 auto; }
+  #contact-search .wsk-input {
+    width: 50%;
+    display: inline-block; }
+
 .contact a {
   display: block;
   padding: 16px; }
@@ -4538,7 +4556,7 @@ h1, h2, h3, h4, h5 {
   z-index: 20;
   position: fixed;
   max-width: 300px;
-  top: 50px;
+  top: 80px;
   left: 0;
   right: 0;
   margin: 0 auto; }

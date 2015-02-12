@@ -9,6 +9,7 @@ var express  = require('express'),
     csrf         = require('csurf'),
     session      = require('express-session'),
     state        = require('express-state'),
+    compression  = require('compression'),
     request      = require('request'),
 
     mongoose     = require('mongoose'),
@@ -19,7 +20,7 @@ var express  = require('express'),
     privateData  = require('./config/private'),
 
     passport     = require('passport'),
-    TwitterStrategy = require('passport-twitter').Strategy,
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
 
     ModelContact       = require('./lib/models/contact'),
     ControllerContacts = require('./lib/controllers/contacts'),
@@ -60,6 +61,9 @@ function setupServer () {
     // Set default views directory.
     app.set('views', config.dirs.views);
 
+    //GZip Support
+    app.use(compression());
+
     // Specify the public directory.
     app.use(express.static(config.dirs.pub));
 
@@ -83,6 +87,7 @@ function setupServer () {
     // Passport authentication
     app.use(passport.initialize());
     app.use(passport.session());
+    /*
     passport.use(new TwitterStrategy({
         consumerKey: privateData.twitter.key,
         consumerSecret: privateData.twitter.secret,
@@ -93,6 +98,24 @@ function setupServer () {
             _id: 1,
             token: token,
             tokenSecret: tokenSecret,
+            provider: profile.provider,
+            providerID: profile.id,
+            name: profile.displayName,
+            username: profile.username
+        });
+      }
+    ));
+*/
+    passport.use(new GoogleStrategy({
+        clientID: privateData.google.id,
+        clientSecret: privateData.google.secret,
+        callbackURL: "http://localhost:8000/auth/google/callback",
+      },
+      function(accessToken, refreshToken, profile, done) {
+        done(null, {
+            _id: 1,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
             provider: profile.provider,
             providerID: profile.id,
             name: profile.displayName,
@@ -131,11 +154,20 @@ function setupServer () {
 
     /////// ADD ALL YOUR ROUTES HERE  /////////
 
-    router.get('/auth/twitter', passport.authenticate('twitter'));
+    router.get('/auth/google', passport.authenticate('google', {
+        scope: [
+            'https://www.googleapis.com/auth/contacts.readonly',
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/userinfo.profile',
+        ]
+    }));
 
-    router.get('/auth/twitter/callback',
-      passport.authenticate('twitter', { successRedirect: '/contacts',
-                                         failureRedirect: '/account' }));
+    router.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/contacts',
+            failureRedirect: '/account',
+        })
+    );
 
 
     router.post('/api/contacts', function (req, res) {
@@ -318,31 +350,34 @@ function setupServer () {
         });
 
         if (req.user) {
-            var oauth = {
-                consumer_key    : privateData.twitter.key,
-                consumer_secret : privateData.twitter.secret,
-                token           : req.user.token,
-                token_secret    : req.user.tokenSecret
-            };
-
-            var url = 'https://api.twitter.com/1.1/friends/list.json';
+            var url = 'https://www.google.com/m8/feeds/contacts/default/full';
 
             var params = {
-                user_id: req.user.providerID
+                alt: 'json',
+                'max-results': 1000,
+                orderby: 'lastmodified',
+            };
+
+            var headers = {
+                'Authorization': 'Bearer ' + req.user.accessToken,
             };
 
             request.get({
                 url: url,
                 qs: params,
-                oauth: oauth,
-                json: true
+                headers: headers,
+                json: true,
             }, function (e, r, result) {
                 var raw = [];
-                result.users.forEach(function(user) {
-                    raw.push({
-                        name: user.name,
-                        address: user.location
-                    });
+                result.feed.entry.forEach(function(contact) {
+                    if (contact.title.$t) {
+                        raw.push({
+                            name: contact.title.$t,
+                            email: contact.gd$email && contact.gd$email[0] ? contact.gd$email[0].address : null,
+                            phone: contact.gd$phoneNumber && contact.gd$phoneNumber[0] ? contact.gd$phoneNumber[0].$t : null,
+                            address: contact.gd$postalAddress && contact.gd$postalAddress[0] ? contact.gd$postalAddress[0].$t : null,
+                        });
+                    }
                 });
                 ModelContact.insert(raw).then(function(models) {
                     ctrlr.add(models);
