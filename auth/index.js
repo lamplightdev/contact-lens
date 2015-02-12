@@ -1,8 +1,8 @@
 'use strict';
 
 var express = require('express'),
-    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    privateData  = require('../config/private');
+    passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 function serialization() {
