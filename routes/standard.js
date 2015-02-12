@@ -7,72 +7,17 @@ module.exports = (function() {
         RouterContacts = require('../lib/routers/contacts'),
         request = require('request');
 
-    router.get(/contacts(?:$|\/(.+))/i, (req, res, next) => {
+    router.get(/contacts(?:$|\/(.*))/i, (req, res, next) => {
         new RouterContacts().match(req.params[0], {
             contacts: res.locals.contacts,
-            _csrf: res.locals._csrf
+            _csrf: res.locals._csrf,
+            query: req.query,
         }, (ctrlr) => {
             res.render("view-contacts", ctrlr._getViewData());
         }, (err) => {
             console.log('contacts route error: ', err);
             next();
         });
-    });
-
-    router.get(/^\/?contacts\/?$/, function (req, res) {
-        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
-            _csrf: res.locals._csrf
-        });
-
-        res.render("view-contacts", ctrlr._getViewData());
-    });
-
-    router.get('/contacts/search', function (req, res) {
-        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
-            _csrf: res.locals._csrf
-        });
-
-        if (req.query.q) {
-            ctrlr.search(req.query.q);
-        }
-
-        res.render("view-contacts", ctrlr._getViewData());
-    });
-
-    router.get('/contacts/add', function (req, res) {
-        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
-            _csrf: res.locals._csrf
-        });
-
-        ctrlr.addContact(true);
-
-        res.render("view-contacts", ctrlr._getViewData());
-    });
-
-    router.get('/contacts/edit/:id', function (req, res, next) {
-        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
-            _csrf: res.locals._csrf
-        });
-
-        var edited = ctrlr.edit(req.params.id);
-        if (req.params.id && !edited) {
-            next();
-        } else {
-            res.render("view-contacts", ctrlr._getViewData());
-        }
-    });
-
-    router.get('/contacts/:id', function (req, res, next) {
-        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
-            _csrf: res.locals._csrf
-        });
-
-        var selected = ctrlr.select(req.params.id);
-        if (!selected) {
-            next();
-        } else {
-            res.render("view-contacts", ctrlr._getViewData());
-        }
     });
 
     router.post('/contacts/add', function (req, res) {
