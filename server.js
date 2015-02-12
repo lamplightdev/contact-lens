@@ -27,7 +27,7 @@ var express  = require('express'),
 
 
 //mongoose.connect('mongodb://localhost/contact-lens');
-mongoose.connect('mongodb://heroku_app33940674:$5&#6~1/z6YnOuG"@ds043971.mongolab.com:43971/heroku_app33940674');
+mongoose.connect('mongodb://chris:ku281dm@ds043971.mongolab.com:43971/heroku_app33940674');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'db connection error:'));
 db.once('open', setupServer);
