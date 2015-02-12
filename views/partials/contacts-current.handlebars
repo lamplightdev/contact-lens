@@ -14,9 +14,13 @@
   </div>
   {{/if}}
   <div class="wsk-card--bottom">
-    <form action='/contacts' method='post' data-action='remove' data-api-action='/api/contacts/{{currentContact._id}}'>
+    <form
+      method='post'
+      data-api-method='delete'
+      action='/contacts/remove'
+      data-api-action='/api/contacts/{{currentContact._id}}'
+      >
       <input type='hidden' name='_csrf' value='{{extra._csrf}}'>
-      <input type="hidden" name="type" value="remove">
       <input type='hidden' name='id' value='{{currentContact._id}}'>
       <button type='submit'>remove</button>
     </form>

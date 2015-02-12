@@ -85,19 +85,6 @@ function setupServer () {
     app.use('/auth', routesAuth);
     app.use('/api', routesAPI);
 
-    console.log(require('util').inspect(app._router.stack
-        .filter( function(route) {
-            return route.name === 'router';
-        })
-        .map( function(route) {
-            return {
-                regexp: route.regexp,
-                keys: route.keys,
-                stack: route.handle.stack
-            };
-        }),
-    true, 10));
-
 
     // Error handling middleware
     app.use(function (req, res) {

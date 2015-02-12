@@ -39,10 +39,12 @@ document.body.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
     router.router.navigate(urlparse(event.target.href).pathname);
+    document.querySelector('.wsk-layout__drawer').classList.remove('is-visible');
   } else if (typeof event.target.parentNode.dataset.nav !== 'undefined') {
     event.preventDefault();
     event.stopPropagation();
     router.router.navigate(urlparse(event.target.parentNode.href).pathname);
+    document.querySelector('.wsk-layout__drawer').classList.remove('is-visible');
   } else if (event.target.classList.contains('overlay')) {
     console.log('overlay click');
     router.router.navigate('/contacts');

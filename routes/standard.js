@@ -4,8 +4,40 @@ module.exports = (function() {
         ModelContact       = require('../lib/models/contact'),
         ControllerContacts = require('../lib/controllers/contacts'),
         ControllerAccount = require('../lib/controllers/account'),
-
+        RouterContacts = require('../lib/routers/contacts'),
         request = require('request');
+
+    router.get(/contacts(?:$|\/(.+))/i, (req, res, next) => {
+        new RouterContacts().match(req.params[0], {
+            contacts: res.locals.contacts,
+            _csrf: res.locals._csrf
+        }, (ctrlr) => {
+            res.render("view-contacts", ctrlr._getViewData());
+        }, (err) => {
+            console.log('contacts route error: ', err);
+            next();
+        });
+    });
+
+    router.get(/^\/?contacts\/?$/, function (req, res) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        res.render("view-contacts", ctrlr._getViewData());
+    });
+
+    router.get('/contacts/search', function (req, res) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        if (req.query.q) {
+            ctrlr.search(req.query.q);
+        }
+
+        res.render("view-contacts", ctrlr._getViewData());
+    });
 
     router.get('/contacts/add', function (req, res) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
@@ -30,79 +62,68 @@ module.exports = (function() {
         }
     });
 
-    router.get('/contacts/:id?', function (req, res, next) {
+    router.get('/contacts/:id', function (req, res, next) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
+
         var selected = ctrlr.select(req.params.id);
-        if (req.params.id && !selected) {
+        if (!selected) {
             next();
         } else {
             res.render("view-contacts", ctrlr._getViewData());
         }
     });
 
-    router.get('/contacts/search', function (req, res) {
+    router.post('/contacts/add', function (req, res) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        if (req.query.q) {
-            ctrlr.search(req.query.q);
-        }
-
-        res.render("view-contacts", ctrlr._getViewData());
-
+        var modelToAdd = new ModelContact({
+            name: req.body.name,
+            email: req.body.email,
+            address: req.body.address,
+        });
+        modelToAdd.sync().then(function () {
+            ctrlr.add(modelToAdd);
+            res.redirect('/contacts/' + modelToAdd.getID());
+        });
     });
 
-    router.post('/contacts', function (req, res, next) {
-
+    router.post('/contacts/edit', function (req, res, next) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        switch (req.body.type) {
-            case 'add':
-                var modelToAdd = new ModelContact({
-                    name: req.body.name,
-                    email: req.body.email,
-                    address: req.body.address,
-                });
-                modelToAdd.sync().then(function () {
-                    ctrlr.add(modelToAdd);
-                    res.redirect('/contacts/' + modelToAdd.getID());
-                });
+        var modelToEdit = new ModelContact({
+            _id: req.body.id,
+            name: req.body.name,
+            email: req.body.email,
+            address: req.body.address,
+        });
+        modelToEdit.sync().then(function () {
+            ctrlr.update(modelToEdit);
+            res.redirect('/contacts/' + modelToEdit.getID());
+        }, function (err) {
+            console.log('update error', err);
+            next();
+        });
+    });
 
-            break;
-            case 'edit':
-                var modelToEdit = new ModelContact({
-                    _id: req.body.id,
-                    name: req.body.name,
-                    email: req.body.email,
-                    address: req.body.address,
-                });
-                modelToEdit.sync().then(function () {
-                    ctrlr.update(modelToEdit);
-                    res.redirect('/contacts/' + modelToEdit.getID());
-                }, function (err) {
-                    console.log('update error', err);
-                    next();
-                });
-            break;
-            case 'remove':
-                new ModelContact().deleteByID(req.body.id).then(function () {
-                    ctrlr.removeByID(req.body.id);
+    router.post('/contacts/remove', function (req, res, next) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
 
-                    res.redirect('/contacts/');
-                }).catch(function(err) {
-                    console.log('remove error', err);
-                    next();
-                });
-            break;
-            default:
-                next();
-            break;
-        }
+        new ModelContact().deleteByID(req.body.id).then(function () {
+            ctrlr.removeByID(req.body.id);
+
+            res.redirect('/contacts/');
+        }).catch(function(err) {
+            console.log('remove error', err);
+            next();
+        });
     });
 
     router.get('/account', function (req, res) {
