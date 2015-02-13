@@ -20,7 +20,7 @@ function Google() {
       clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
       callbackURL: process.env.CONTACTLENS_HOST_PROTOCOL
        + "://"
-       + process.env.CONTACTLENS_GOOGLE_HOST_NAME
+       + process.env.CONTACTLENS_HOST_NAME
        + "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
