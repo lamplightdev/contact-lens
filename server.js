@@ -75,7 +75,7 @@ function setupServer () {
     app.use(passport.initialize());
     app.use(passport.session());
     auth.serialization();
-    auth.Google();
+    app.use(auth.Google);
 
     app.use(csrf());
     app.use(function (req, res, next) {

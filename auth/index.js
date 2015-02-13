@@ -14,11 +14,11 @@ function serialization() {
   });
 }
 
-function Google() {
+function Google(req, res, next) {
   passport.use(new GoogleStrategy({
-      clientID: process.env.CONTACTLENS_GOOGLE_ID, //privateData.google.id,
-      clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
-      callbackURL: "http://localhost:8000/auth/google/callback",
+      clientID: process.env.CONTACTLENS_GOOGLE_ID,
+      clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET,
+      callbackURL: req.protocol + "://" + req.get('host') + "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
       done(null, {
@@ -32,6 +32,8 @@ function Google() {
       });
     }
   ));
+
+  next();
 }
 
 module.exports.serialization = serialization;
