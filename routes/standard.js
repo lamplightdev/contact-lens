@@ -2,6 +2,7 @@ module.exports = (function() {
     'use strict';
     var router = require('express').Router(),
         ModelContact       = require('../lib/models/contact'),
+        ModelUser       = require('../lib/models/user'),
         ControllerContacts = require('../lib/controllers/contacts'),
         ControllerAccount = require('../lib/controllers/account'),
         RouterSharedContacts = require('../lib/routers/shared-contacts'),
@@ -81,21 +82,13 @@ module.exports = (function() {
     // catch all for /account/...
     router.get(/account(?:$|\/(.*))/i, (req, res, next) => {
         new RouterSharedAccount({
-            user: req.user
+            user: new ModelUser(req.user)
         }).match(req.params[0], req.query, (ctrlr) => {
             res.render("view-account", ctrlr._getViewData());
         }, (err) => {
             console.log('account route error: ', err);
             next();
         });
-    });
-
-    router.get('/account', function (req, res) {
-        var ctrlr = new ControllerAccount(res.locals.contacts, [], null, {
-            user: req.user
-        });
-
-        res.render("view-account", ctrlr._getViewData());
     });
 
     router.get('/account/import', function (req, res) {

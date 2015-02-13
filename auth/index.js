@@ -8,10 +8,7 @@ var passport = require('passport'),
 
 function serialization() {
   passport.serializeUser(function(user, done) {
-      done(null, {
-        provider: user.provider,
-        providerID: user.providerID
-      });
+    done(null, user);
   });
   passport.deserializeUser(function(user, done) {
     done(null, user);
@@ -20,14 +17,15 @@ function serialization() {
 
 function Google() {
   passport.use(new GoogleStrategy({
-      clientID: process.env.CONTACTLENS_GOOGLE_ID, //privateData.google.id,
-      clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
+      clientID: process.env.CONTACTLENS_GOOGLE_ID,
+      clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET,
       callbackURL: process.env.CONTACTLENS_HOST_PROTOCOL +
        "://" +
        process.env.CONTACTLENS_HOST_NAME +
        "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
+      console.log(arguments);
       ModelUser.findByProvider(profile.provider, profile.id).then((user) => {
         if (user) {
           return user;
