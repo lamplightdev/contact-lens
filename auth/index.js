@@ -1,13 +1,17 @@
 'use strict';
 
-var express = require('express'),
-    passport = require('passport'),
-    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+
+    ModelUser = require('../lib/models/user');
 
 
 function serialization() {
   passport.serializeUser(function(user, done) {
-      done(null, user);
+      done(null, {
+        provider: user.provider,
+        providerID: user.providerID
+      });
   });
   passport.deserializeUser(function(user, done) {
     done(null, user);
@@ -18,20 +22,30 @@ function Google() {
   passport.use(new GoogleStrategy({
       clientID: process.env.CONTACTLENS_GOOGLE_ID, //privateData.google.id,
       clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
-      callbackURL: process.env.CONTACTLENS_HOST_PROTOCOL
-       + "://"
-       + process.env.CONTACTLENS_HOST_NAME
-       + "/auth/google/callback",
+      callbackURL: process.env.CONTACTLENS_HOST_PROTOCOL +
+       "://" +
+       process.env.CONTACTLENS_HOST_NAME +
+       "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
-      done(null, {
-          _id: 1,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          provider: profile.provider,
-          providerID: profile.id,
-          name: profile.displayName,
-          username: profile.username
+      ModelUser.findByProvider(profile.provider, profile.id).then((user) => {
+        if (user) {
+          return user;
+        } else {
+          user = new ModelUser({
+            name: profile.displayName,
+            email: '',
+            provider: profile.provider,
+            providerID: profile.id,
+            token: accessToken,
+            refreshToken: refreshToken,
+          });
+          return user.save();
+        }
+      }).then((user) => {
+        done(null, user.toJSON());
+      }, (err) => {
+        console.log('google auth model error', err);
       });
     }
   ));

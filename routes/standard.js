@@ -5,8 +5,10 @@ module.exports = (function() {
         ControllerContacts = require('../lib/controllers/contacts'),
         ControllerAccount = require('../lib/controllers/account'),
         RouterSharedContacts = require('../lib/routers/shared-contacts'),
+        RouterSharedAccount = require('../lib/routers/shared-account'),
         request = require('request');
 
+    // catch all for /contacts/...
     router.get(/contacts(?:$|\/(.*))/i, (req, res, next) => {
         new RouterSharedContacts({
             contacts: res.locals.contacts,
@@ -18,6 +20,9 @@ module.exports = (function() {
             next();
         });
     });
+
+
+    // forms that post/put/delete //
 
     router.post('/contacts/add', function (req, res) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
@@ -70,6 +75,21 @@ module.exports = (function() {
         });
     });
 
+    // -- //
+
+
+    // catch all for /account/...
+    router.get(/account(?:$|\/(.*))/i, (req, res, next) => {
+        new RouterSharedAccount({
+            user: req.user
+        }).match(req.params[0], req.query, (ctrlr) => {
+            res.render("view-account", ctrlr._getViewData());
+        }, (err) => {
+            console.log('account route error: ', err);
+            next();
+        });
+    });
+
     router.get('/account', function (req, res) {
         var ctrlr = new ControllerAccount(res.locals.contacts, [], null, {
             user: req.user
@@ -88,7 +108,7 @@ module.exports = (function() {
 
             var params = {
                 alt: 'json',
-                'max-results': 1000,
+                'max-results': 100,
                 orderby: 'lastmodified',
             };
 

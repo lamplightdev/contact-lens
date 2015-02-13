@@ -26,16 +26,16 @@ var express  = require('express'),
     port         = (process.env.PORT || 8000);
 
 
-mongoose.connect('mongodb://'
-    + process.env.CONTACTLENS_MONGODB_USER
-    + ':'
-    + process.env.CONTACTLENS_MONGODB_PASSWORD
-    + '@'
-    + process.env.CONTACTLENS_MONGODB_HOST
-    + ':'
-    + process.env.CONTACTLENS_MONGODB_PORT
-    + '/'
-    + process.env.CONTACTLENS_MONGODB_DB
+mongoose.connect('mongodb://' +
+    process.env.CONTACTLENS_MONGODB_USER +
+    ':' +
+    process.env.CONTACTLENS_MONGODB_PASSWORD +
+    '@' +
+    process.env.CONTACTLENS_MONGODB_HOST +
+    ':' +
+    process.env.CONTACTLENS_MONGODB_PORT +
+    '/' +
+    process.env.CONTACTLENS_MONGODB_DB
 );
 
 var db = mongoose.connection;

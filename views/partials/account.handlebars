@@ -1,6 +1,7 @@
 <div id='view-account'>
   <h1>Account</h1>
-  {{#if extra.user}}
+  {{#if model.user}}
+  <h1>{{model.user.name}}</h1>
   <a href='/account/import'>import</a>
   {{else}}
   <a href='/auth/google'>sign in with google</a>

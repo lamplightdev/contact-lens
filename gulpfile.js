@@ -4,18 +4,32 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
-//var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify');
+var usemin = require('gulp-usemin');
 var sourcemaps = require('gulp-sourcemaps');
 var to5ify = require("6to5ify");
 var nodemon = require("gulp-nodemon");
 var sass = require('gulp-sass');
 
 
-gulp.task('sass', function () {
-  gulp.src('./public/styles/main.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./public/css'));
-});
+function sassTask() {
+    return gulp.src('./public/styles/main.scss')
+      .pipe(sass())
+      .pipe(gulp.dest('./public/css'));
+}
+gulp.task('sass', sassTask);
+
+function useminTask() {
+  return gulp.src('./views/layouts/*.handlebars')
+    .pipe(usemin({
+      //css: [minifyCss(), 'concat'],
+      //html: [minifyHtml({empty: true})],
+      js: [uglify()]
+    }))
+    .pipe(gulp.dest('views/layouts/build/'));
+  }
+
+gulp.task('usemin', useminTask);
 
 
 var getBundleName = function () {
@@ -45,7 +59,6 @@ function bundle() {
 gulp.task('scripts', bundle);
 bundler.on('update', bundle);
 
-
 gulp.task('dev', function () {
     nodemon({
         script: 'server.js',
@@ -55,4 +68,9 @@ gulp.task('dev', function () {
     })
       .on('start', ['scripts', 'sass'])
       .on('restart', ['sass']); //let watchify handle scripts restarting
+});
+
+
+gulp.task('build', function() {
+  sassTask().pipe(bundle()).pipe(useminTask());
 });
