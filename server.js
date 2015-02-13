@@ -26,8 +26,18 @@ var express  = require('express'),
     port         = (process.env.PORT || 8000);
 
 
-//mongoose.connect('mongodb://localhost/contact-lens');
-mongoose.connect('mongodb://chris:ku281dm@ds043971.mongolab.com:43971/heroku_app33940674');
+mongoose.connect('mongodb://'
+    + process.env.CONTACTLENS_MONGODB_HOST
+    + ':'
+    + process.env.CONTACTLENS_MONGODB_PORT
+    + '/'
+    + process.env.CONTACTLENS_MONGODB_DB,
+    {
+        user: process.env.CONTACTLENS_MONGODB_USER,
+        password: process.env.CONTACTLENS_MONGODB_PASSWORD,
+    }
+);
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'db connection error:'));
 db.once('open', setupServer);
