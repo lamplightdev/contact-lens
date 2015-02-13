@@ -15,7 +15,6 @@ function serialization() {
 }
 
 function Google(protocol, host) {
-  console.log(serverAddress);
   passport.use(new GoogleStrategy({
       clientID: process.env.CONTACTLENS_GOOGLE_ID, //privateData.google.id,
       clientSecret: process.env.CONTACTLENS_GOOGLE_SECRET, //privateData.google.secret,
