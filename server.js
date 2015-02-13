@@ -27,15 +27,15 @@ var express  = require('express'),
 
 
 mongoose.connect('mongodb://'
+    + process.env.CONTACTLENS_MONGODB_USER
+    + ':'
+    + process.env.CONTACTLENS_MONGODB_PASSWORD
+    + '@'
     + process.env.CONTACTLENS_MONGODB_HOST
     + ':'
     + process.env.CONTACTLENS_MONGODB_PORT
     + '/'
-    + process.env.CONTACTLENS_MONGODB_DB,
-    {
-        user: process.env.CONTACTLENS_MONGODB_USER,
-        password: process.env.CONTACTLENS_MONGODB_PASSWORD,
-    }
+    + process.env.CONTACTLENS_MONGODB_DB
 );
 
 var db = mongoose.connection;
