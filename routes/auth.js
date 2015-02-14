@@ -18,5 +18,11 @@ module.exports = (function() {
         })
     );
 
+    router.get('/signout', function (req, res) {
+        req.logout();
+        res.redirect('/account');
+    });
+
+
     return router;
 })();

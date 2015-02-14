@@ -66,7 +66,7 @@ module.exports = (function() {
             _csrf: res.locals._csrf
         });
 
-        new ModelContact().deleteByID(req.body.id).then(function () {
+        new ModelContact().deleteByID(req.body.id).then(() => {
             ctrlr.removeByID(req.body.id);
 
             res.redirect('/contacts/');

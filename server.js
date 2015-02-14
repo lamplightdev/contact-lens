@@ -77,12 +77,12 @@ function setupServer () {
     auth.serialization();
     auth.Google();
 
-    app.use(csrf());
+    //app.use(csrf());
     app.use(function (req, res, next) {
-        var token = req.csrfToken();
-        res.cookie('XSRF-TOKEN', token);
-        res.locals._csrf = token;
-        app.expose(token, 'Data._csrf');
+        //var token = req.csrfToken();
+        //res.cookie('XSRF-TOKEN', token);
+        //res.locals._csrf = token;
+        // app.expose(token, 'Data._csrf');
         app.expose(req.user, 'Data.user');
         next();
     });
@@ -102,7 +102,6 @@ function setupServer () {
         res.status(404);
 
         app.expose(true, 'Data.status404');
-
 
         if (req.accepts('html')) {
             res.render('404', { url: req.url });
