@@ -1,10 +1,11 @@
 <div id='view-account'>
   <h1>Account</h1>
   {{#if model._id}}
-  <h1>{{model.name}}</h1>
+  <h3>{{model.name}}</h3>
+  <h4>{{model.email}}</h4>
   <a href='/account/import'>import</a>
   <a href='/auth/signout'>sign out</a>
   {{else}}
-  <a href='/auth/google'>sign in with google</a>
+  <a href='/auth/signin/google'>sign in with google</a>
   {{/if}}
 </div>

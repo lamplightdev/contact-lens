@@ -90,9 +90,10 @@ module.exports = (function() {
         }, (err) => {
             console.log('account route error: ', err);
             next();
-        });
+        }, res);
     });
 
+    /*
     router.get('/account/import', function (req, res) {
         var ctrlr = new ControllerAccount(res.locals.contacts, [], null, {
             user: req.user
@@ -141,6 +142,7 @@ module.exports = (function() {
         }
 
     });
+    */
 
     return router;
 })();

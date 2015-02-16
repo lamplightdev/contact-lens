@@ -25,13 +25,15 @@ function Google() {
        "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
+      console.log(profile);
       ModelUser.findByProvider(profile.provider, profile.id).then((user) => {
         if (user) {
+          //TODO: update?? (yes)
           return user;
         } else {
           user = new ModelUser({
             name: profile.displayName,
-            email: '',
+            email: profile.emails[0].value,
             provider: profile.provider,
             providerID: profile.id,
             token: accessToken,
