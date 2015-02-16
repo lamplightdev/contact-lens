@@ -52,6 +52,8 @@ module.exports = (function() {
             email: req.body.email,
             address: req.body.address,
         });
+
+        console.log(req.body);
         modelToEdit.sync().then(function () {
             ctrlr.update(modelToEdit);
             res.redirect('/contacts/' + modelToEdit.getID());

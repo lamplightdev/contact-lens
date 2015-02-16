@@ -17,30 +17,30 @@ var config = {
 // this is helpful when you would like to change behavior when testing
 process.env.NODE_ENV = 'test';
 
-var setup = function (done) {
+function clearDB(done) {
+  for (var i in mongoose.connection.collections) {
+    mongoose.connection.collections[i].remove(function() {});
+  }
 
- function clearDB() {
-   for (var i in mongoose.connection.collections) {
-     mongoose.connection.collections[i].remove(function() {});
-   }
-   return done();
- }
+  return done();
+}
+
+var setup = function (done) {
 
  if (mongoose.connection.readyState === 0) {
    mongoose.connect(config.db.test, function (err) {
      if (err) {
        throw err;
      }
-     return clearDB();
+     return clearDB(done);
    });
  } else {
-   return clearDB();
+   return clearDB(done);
  }
 };
 
 var teardown = function (done) {
- mongoose.disconnect();
- return done();
+  return clearDB(done);
 };
 
 

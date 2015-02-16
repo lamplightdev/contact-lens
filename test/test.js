@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 var mongooseHelpers = require("./helpers/mongoose");
 
 
-var Storage = require('../lib/models/storage/storage');
+var Storage = require('../lib/models/storage/model');
 var Model = require('../lib/models/model');
 
 describe('Base Model', function () {
@@ -19,7 +19,7 @@ describe('Base Model', function () {
       var m = new Model();
 
       assert.deepEqual(m._members, {});
-      assert.deepEqual(m._publicKeys, []);
+      assert.deepEqual(m._publicKeys, ['_id']);
     });
   });
 
@@ -28,7 +28,7 @@ describe('Base Model', function () {
     var m;
 
     beforeEach(function (){
-      m = new Model('model', Storage, {
+      m = new Model({
         _id: 1,
         privateMember: 'private',
         name: 'nameTest',
@@ -77,7 +77,7 @@ describe('Base Model', function () {
       };
 
       var m1 = Model.fromJSON(data, 'model', Storage);
-      var m2 = new Model('model', Storage, data);
+      var m2 = new Model(data);
 
       //remove storage for these tests as _ids will differ
       [m1, m2].map(function (m) {
@@ -97,8 +97,8 @@ describe('Base Model', function () {
         name: 'test2',
       }];
 
-      var m1 = Model.fromJSON(data, 'model', Storage);
-      var m2 = [new Model('model', Storage, data[0]), new Model('model', Storage, data[1])];
+      var m1 = Model.fromJSON(data);
+      var m2 = [new Model(data[0]), new Model(data[1])];
 
       //remove storage for these tests as _ids will differ
       [m1[0], m1[1], m2[0], m2[1]].map(function (m) {
@@ -118,8 +118,9 @@ describe('Base Model', function () {
 
     it('should be able save new model to db and get valid ID back', function (done) {
 
-      m = new Model('model', Storage, {
-        name: 'testname'
+      m = new Model({
+        name: 'testname',
+        address: 'testaddress',
       });
 
       assert.notEqual(mongoose.Types.ObjectId.isValid(m.getID()), true);
@@ -137,6 +138,86 @@ describe('Base Model', function () {
         done();
       }).catch(done);
     });
+
+    it('should be able to update existing model', function (done) {
+
+      m = new Model({
+        name: 'testname',
+        address: 'testaddress',
+      });
+
+      m.save().then(function () {
+        m._members.name = 'testnamechanged';
+        m.sync().then(function () {
+          assert.equal(m._members.name, 'testnamechanged');
+          assert.equal(m._storage.name, 'testnamechanged');
+          done();
+        }, done);
+      }).catch(done);
+
+    });
+
+    it('should be able to save new model when syncing', function (done) {
+
+      m = new Model({
+        name: 'testnamenewsync',
+        address: 'testaddress',
+      });
+
+      m.sync().then(function () {
+        assert.equal(mongoose.Types.ObjectId.isValid(m.getID()), true);
+        assert.equal(m._members.name, 'testnamenewsync');
+        assert.equal(m._storage.name, 'testnamenewsync');
+        done();
+      }, done);
+
+    });
+  });
+
+  describe('db static methods', function () {
+    before(mongooseHelpers.setup);
+    after(mongooseHelpers.teardown);
+
+    it('should be to insert models into db in batch from JSON', function (done) {
+
+      var data = [{
+        name: 'name1',
+        address: 'address1'
+      }, {
+        name: 'name2',
+        address: 'address2'
+      }];
+
+      Model.insert(data).then(function (models) {
+        assert.equal(models.length, 2);
+        assert.equal(mongoose.Types.ObjectId.isValid(models[0].getID()), true);
+        assert.equal(mongoose.Types.ObjectId.isValid(models[1].getID()), true);
+
+        done();
+      }, done);
+    });
+
+    it('should be able to load a collection of models from db', function (done) {
+
+      Model.load().then(function (collection) {
+        assert.equal(collection._models.length, 2);
+        assert.equal(collection._models[0]._members.name, 'name1');
+        assert.equal(collection._models[1]._members.name, 'name2');
+
+        done();
+      }, done);
+    });
+
+    it('should be able to search db by field for matching models', function (done) {
+
+      Model.search('name', 'name2').then(function (collection) {
+        assert.equal(collection._models.length, 1);
+        assert.equal(collection._models[0]._members.name, 'name2');
+
+        done();
+      }, done);
+    });
+
   });
 
 });

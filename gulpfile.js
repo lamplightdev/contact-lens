@@ -41,6 +41,7 @@ var getBundleName = function () {
 var bundler = watchify(browserify('./public/js/index.js', {
   debug: true,
 }));
+bundler.ignore(require.resolve('./lib/models/storage/model'));
 bundler.ignore(require.resolve('./lib/models/storage/contact'));
 bundler.ignore(require.resolve('./lib/models/storage/user'));
 bundler.transform(to5ify);
