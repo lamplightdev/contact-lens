@@ -25,11 +25,15 @@ function Google() {
        "/auth/google/callback",
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
       ModelUser.findByProvider(profile.provider, profile.id).then((user) => {
         if (user) {
           //TODO: update?? (yes)
-          return user;
+          console.log(user);
+          user = new ModelUser(user);
+          user._members.token = accessToken;
+          return user.sync().then(() => {
+            return user;
+          });
         } else {
           user = new ModelUser({
             name: profile.displayName,
@@ -37,7 +41,6 @@ function Google() {
             provider: profile.provider,
             providerID: profile.id,
             token: accessToken,
-            refreshToken: refreshToken,
           });
           return user.save();
         }
@@ -45,6 +48,7 @@ function Google() {
         done(null, user.toJSON());
       }, (err) => {
         console.log('google auth model error', err);
+        done(err);
       });
     }
   ));

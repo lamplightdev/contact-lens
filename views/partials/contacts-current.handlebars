@@ -8,6 +8,11 @@
   <div class="wsk-card--caption">
     {{currentContact.email}}
   </div>
+  {{#if currentContact.phone}}
+  <div class="wsk-card--caption">
+    {{currentContact.phone}}
+  </div>
+  {{/if}}
   {{#if currentContact.address}}
   <div class="wsk-card--lower">
     {{currentContact.address}}

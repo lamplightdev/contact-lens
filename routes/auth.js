@@ -12,7 +12,7 @@ module.exports = (function() {
                 'https://www.googleapis.com/auth/userinfo.profile',
             ],
             state: req.params.state,
-            loginHint: req.user ? req.user.providerID : null
+            loginHint: req.user ? req.user.email : null
         })(req, res, next);
     });
 
@@ -24,7 +24,7 @@ module.exports = (function() {
           if (err) { return next(err); }
           switch(req.query.state) {
               case 'import':
-                  return res.redirect('/account/importtest');
+                  return res.redirect('/account/importgo');
               default:
                   return res.redirect('/account');
           }
