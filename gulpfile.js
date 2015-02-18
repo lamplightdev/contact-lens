@@ -39,6 +39,9 @@ var getBundleName = function () {
 };
 
 var bundler = watchify(browserify('./public/js/index.js', {
+  cache: {},
+  packageCache: {},
+  fullPaths: true,
   debug: true,
 }));
 bundler.ignore('request');
