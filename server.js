@@ -70,7 +70,14 @@ function setupServer () {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(cookieParser());
-    app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
+    app.use(session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 60000,
+        }
+    }));
 
     app.use(passport.initialize());
     app.use(passport.session());

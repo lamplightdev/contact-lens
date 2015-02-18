@@ -1,3 +1,4 @@
+
 module.exports = (function() {
     'use strict';
     var router = require('express').Router(),
@@ -6,7 +7,8 @@ module.exports = (function() {
         ControllerContacts = require('../lib/controllers/contacts'),
         ControllerAccount = require('../lib/controllers/account'),
         RouterSharedContacts = require('../lib/routers/shared-contacts'),
-        RouterSharedAccount = require('../lib/routers/shared-account');
+        RouterSharedAccount = require('../lib/routers/shared-account'),
+        importFromGoogle = require('../auth').importFromGoogle;
 
 
 
@@ -83,11 +85,18 @@ module.exports = (function() {
 
     // -- //
 
+    router.get(/account\/importgo\/?/i, (req, res, next) => {
+        importFromGoogle(req.user).then(() => {
+          res.redirect('/account');
+        }).catch( (error) => {
+            next(error);
+        });
+    });
 
     // catch all for /account/...
     router.get(/account(?:$|\/(.*))/i, (req, res, next) => {
         var sharedRouter = new RouterSharedAccount({
-            user: new ModelUser(req.user)
+            user: req.user
         });
 
         sharedRouter.match(req.params[0], req.query, (routeParts, query) => {

@@ -5,15 +5,20 @@ var passport = require('passport'),
 
     ModelUser = require('../lib/models/user'),
     ModelContact = require('../lib/models/contact'),
-    request = require('request');
+    request = require('then-request');
 
 
 function serialization() {
   passport.serializeUser(function(user, done) {
-    done(null, user);
+    done(null, user.getID());
   });
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
+
+  passport.deserializeUser(function(userID, done) {
+    ModelUser.findByID(userID).then( (user) => {
+      done(null, user);
+    }, (error) => {
+      done(error);
+    });
   });
 }
 
@@ -30,7 +35,6 @@ function Google() {
       ModelUser.findByProvider(profile.provider, profile.id).then((user) => {
         if (user) {
           //TODO: update?? (yes)
-          console.log(user);
           user = new ModelUser(user);
           user._members.token = accessToken;
           return user.sync().then(() => {
@@ -42,12 +46,12 @@ function Google() {
             email: profile.emails[0].value,
             provider: profile.provider,
             providerID: profile.id,
-            token: accessToken,
+            token: accessToken
           });
           return user.save();
         }
       }).then((user) => {
-        done(null, user.toJSON());
+        done(null, user);
       }, (err) => {
         console.log('google auth model error', err);
         done(err);
@@ -70,13 +74,12 @@ function importFromGoogle(user) {
     'Authorization': 'Bearer ' + user.getToken(),
   };
 
-  return request.get({
-    url: url,
+  return request('GET', url, {
     qs: params,
     headers: headers,
-    json: true,
-  }, function (e, r, result) {
-    var raw = [];
+  }).then( (response) => {
+    let result = JSON.parse(response.body);
+    let raw = [];
     result.feed.entry.forEach(function(contact) {
       let name = contact.title.$t;
       let email = contact.gd$email && contact.gd$email[0] ? contact.gd$email[0].address : null;
@@ -88,11 +91,15 @@ function importFromGoogle(user) {
           email: email,
           phone: phone,
           address: contact.gd$postalAddress && contact.gd$postalAddress[0] ? contact.gd$postalAddress[0].$t : null,
+          provider: 'google',
+          providerID: contact.id.$t,
         });
       }
     });
 
     return ModelContact.insert(raw);
+  }).catch( (error) => {
+    console.log(error);
   });
 }
 
