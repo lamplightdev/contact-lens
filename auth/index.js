@@ -5,7 +5,8 @@ var passport = require('passport'),
 
     ModelUser = require('../lib/models/user'),
     ModelContact = require('../lib/models/contact'),
-    request = require('then-request');
+    request = require('then-request'),
+    kue = require('kue');
 
 
 function serialization() {
@@ -50,6 +51,8 @@ function Google() {
           });
           return user.save();
         }
+      }, (err) => {
+        done(err);
       }).then((user) => {
         done(null, user);
       }, (err) => {
@@ -58,6 +61,49 @@ function Google() {
       });
     }
   ));
+}
+
+function getPhotosFromGoogle(user, batch) {
+  let jobs = kue.createQueue();
+  batch.forEach((item) => {
+    let job = jobs.create('gphoto', {
+      link: item.link,
+      id: item.id
+    }).save( (err) => {
+       if( !err ) {
+        console.log( job.id, 'success' );
+      } else {
+        console.log( job.id, err );
+      }
+    });
+  });
+
+  jobs.process('gphoto', function(job, done){
+    let params = {
+    };
+
+    let headers = {
+      'Authorization': 'Bearer ' + user.getToken(),
+    };
+
+    request('GET', job.data.link, {
+        qs: params,
+        headers: headers,
+      }).then( (response) => {
+        ModelContact.findByID(job.data.id).then( (contact) => {
+          //contact._members.tset.test = 'test';
+          contact._members.avatar = {
+            data: response.body,
+            contentType: 'image/jpeg',
+          };
+          contact.sync().then(() => {
+            done();
+          }, done);
+        }, done);
+      }, done);
+  });
+
+  return true;
 }
 
 function importFromGoogle(user) {
@@ -74,6 +120,7 @@ function importFromGoogle(user) {
     'Authorization': 'Bearer ' + user.getToken(),
   };
 
+
   return request('GET', url, {
     qs: params,
     headers: headers,
@@ -81,9 +128,19 @@ function importFromGoogle(user) {
     let result = JSON.parse(response.body);
     let raw = [];
     result.feed.entry.forEach(function(contact) {
+      //console.log(contact);
       let name = contact.title.$t;
       let email = contact.gd$email && contact.gd$email[0] ? contact.gd$email[0].address : null;
       let phone = contact.gd$phoneNumber && contact.gd$phoneNumber[0] ? contact.gd$phoneNumber[0].$t : null;
+
+      let photo = false;
+      if (contact.link) {
+        contact.link.forEach((link) => {
+          if (link.rel === 'http://schemas.google.com/contacts/2008/rel#photo') {
+            photo = link.href;
+          }
+        });
+      }
 
       if (name && (email || phone)) {
         raw.push({
@@ -93,16 +150,18 @@ function importFromGoogle(user) {
           address: contact.gd$postalAddress && contact.gd$postalAddress[0] ? contact.gd$postalAddress[0].$t : null,
           provider: 'google',
           providerID: contact.id.$t,
+          providerPhoto: photo,
         });
       }
     });
 
     return ModelContact.insert(raw);
-  }).catch( (error) => {
-    console.log(error);
+  }, (error) => {
+    Error(error);
   });
 }
 
 module.exports.serialization = serialization;
 module.exports.Google = Google;
 module.exports.importFromGoogle = importFromGoogle;
+module.exports.getPhotosFromGoogle = getPhotosFromGoogle;

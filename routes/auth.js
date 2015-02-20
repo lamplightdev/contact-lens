@@ -10,6 +10,7 @@ module.exports = (function() {
         'https://www.googleapis.com/auth/contacts.readonly',
         'https://www.googleapis.com/auth/userinfo.email',
         'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/plus.login',
       ],
       state: req.params.state,
       loginHint: req.user ? req.user.getEmail() : null

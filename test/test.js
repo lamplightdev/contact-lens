@@ -7,7 +7,6 @@ var mongoose = require("mongoose");
 var mongooseHelpers = require("./helpers/mongoose");
 
 
-var Storage = require('../lib/models/storage/model');
 var Model = require('../lib/models/model');
 
 describe('Base Model', function () {
@@ -74,9 +73,12 @@ describe('Base Model', function () {
       var data = {
         _id: 1,
         name: 'test',
+        obj: {
+          title: 'mr'
+        }
       };
 
-      var m1 = Model.fromJSON(data, 'model', Storage);
+      var m1 = Model.fromJSON(data);
       var m2 = new Model(data);
 
       //remove storage for these tests as _ids will differ
@@ -129,14 +131,15 @@ describe('Base Model', function () {
         assert.equal(mongoose.Types.ObjectId.isValid(m.getID()), true);
 
         done();
-      }).catch(done);
+      }, done);
 
     });
 
     it('should delete model by id', function (done) {
       m.delete().then(function () {
+        //TODO: assert?
         done();
-      }).catch(done);
+      }, done);
     });
 
     it('should be able to update existing model', function (done) {
@@ -153,7 +156,7 @@ describe('Base Model', function () {
           assert.equal(m._storage.name, 'testnamechanged');
           done();
         }, done);
-      }).catch(done);
+      }, done);
 
     });
 

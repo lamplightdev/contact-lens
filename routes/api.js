@@ -46,12 +46,13 @@ module.exports = (function() {
             _csrf: res.locals._csrf
         });
 
-        new ModelContact().deleteByID(req.params.id).then(function () {
+        ModelContact.deleteByID(req.params.id).then(function () {
             ctrlr.removeByID(req.params.id);
 
             res.statusCode = 204;
             res.end();
-        }).catch(function(err) {
+        }, function(err) {
+            Error(err);
             console.log('remove error', err);
         });
     });

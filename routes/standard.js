@@ -3,13 +3,30 @@ module.exports = (function() {
     'use strict';
     var router = require('express').Router(),
         ModelContact       = require('../lib/models/contact'),
-        ModelUser       = require('../lib/models/user'),
         ControllerContacts = require('../lib/controllers/contacts'),
-        ControllerAccount = require('../lib/controllers/account'),
         RouterSharedContacts = require('../lib/routers/shared-contacts'),
         RouterSharedAccount = require('../lib/routers/shared-account'),
-        importFromGoogle = require('../auth').importFromGoogle;
+        importFromGoogle = require('../auth').importFromGoogle,
+        getPhotosFromGoogle = require('../auth').getPhotosFromGoogle;
 
+
+    router.get('/avatar/:id', (req, res, next) => {
+        ModelContact.findByID(req.params.id).then((contact) => {
+            try {
+                let avatar = contact.getAvatar();
+                if (avatar) {
+                    res.writeHead(200, {'Content-Type': avatar.contentType});
+                    res.end(avatar.data.toString('binary'), 'binary');
+                } else {
+                    next('No image for user id');
+                }
+            } catch (e) {
+                next(e);
+            }
+        }, (error) => {
+            next(error);
+        });
+    });
 
 
     // catch all for /contacts/...
@@ -68,16 +85,38 @@ module.exports = (function() {
         });
     });
 
+    router.post('/contacts/bulkedit', function (req, res, next) {
+        var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
+            _csrf: res.locals._csrf
+        });
+
+        if (req.body.delete === '') {
+            for (let id in req.body) {
+                if (id !== 'delete') {
+                    ModelContact.deleteByID(id).then(() => {
+                        ctrlr.removeByID(id);
+                    }, (err) => {
+                        console.log('remove error', err);
+                        next();
+                    });
+                }
+            }
+            res.redirect('/contacts');
+        } else {
+            next();
+        }
+    });
+
     router.post('/contacts/remove', function (req, res, next) {
         var ctrlr = new ControllerContacts(res.locals.contacts, [], null, {
             _csrf: res.locals._csrf
         });
 
-        new ModelContact().deleteByID(req.body.id).then(() => {
+        ModelContact.deleteByID(req.body.id).then(() => {
             ctrlr.removeByID(req.body.id);
 
             res.redirect('/contacts/');
-        }).catch(function(err) {
+        }, function(err) {
             console.log('remove error', err);
             next();
         });
@@ -88,11 +127,26 @@ module.exports = (function() {
     router.get(/account\/importgo\/?/i, (req, res, next) => {
         importFromGoogle(req.user).then(() => {
           res.redirect('/account');
-        }).catch( (error) => {
-            next(error);
-        });
+        }, next);
     });
 
+    router.get(/account\/getphotos\/?/i, (req, res, next) => {
+        ModelContact.load().then((collection) => {
+            let batch = [];
+            collection._models.forEach((model) => {
+                if (model._members.providerPhoto !== 'false') {
+                    batch.push({
+                        id: model.getID(),
+                        link: model._members.providerPhoto,
+                    });
+                }
+            });
+
+            getPhotosFromGoogle(req.user, batch);
+        }).then(() => {
+            res.redirect('/contacts');
+        });
+    });
     // catch all for /account/...
     router.get(/account(?:$|\/(.*))/i, (req, res, next) => {
         var sharedRouter = new RouterSharedAccount({

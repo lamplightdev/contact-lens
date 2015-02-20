@@ -2,3 +2,5 @@
 *.map
 node_modules/
 .sass-cache/
+avatars/
+kueui.js
