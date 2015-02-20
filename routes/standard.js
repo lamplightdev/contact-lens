@@ -12,20 +12,12 @@ module.exports = (function() {
 
     router.get('/avatar/:id', (req, res, next) => {
         ModelContact.findByID(req.params.id).then((contact) => {
-            try {
-                let avatar = contact.getAvatar();
-                if (avatar) {
-                    res.writeHead(200, {'Content-Type': avatar.contentType});
-                    res.end(avatar.data.toString('binary'), 'binary');
-                } else {
-                    next('No image for user id');
-                }
-            } catch (e) {
-                next(e);
+            let avatar = contact.getAvatar();
+            if (avatar) {
+                res.writeHead(200, {'Content-Type': avatar.contentType});
+                res.end(avatar.data.toString('binary'), 'binary');
             }
-        }, (error) => {
-            next(error);
-        });
+        }).then(null, next);
     });
 
 

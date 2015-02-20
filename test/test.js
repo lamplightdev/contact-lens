@@ -151,12 +151,12 @@ describe('Base Model', function () {
 
       m.save().then(function () {
         m._members.name = 'testnamechanged';
-        m.sync().then(function () {
+        return m.sync().then(function () {
           assert.equal(m._members.name, 'testnamechanged');
           assert.equal(m._storage.name, 'testnamechanged');
           done();
-        }, done);
-      }, done);
+        });
+      }).then(null, done);
 
     });
 
