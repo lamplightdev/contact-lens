@@ -19,9 +19,11 @@
 {{#if model}}
   {{#each model}}
     <div class='wsk-column-layout__child contact' data-id='{{this._id}}'>
-      <input type='checkbox' name='{{this._id}}'>
+      <input type='checkbox' class='bulkedit-select bulkedit-select-{{this._id}}' name='{{this._id}}'>
       {{#if this.avatar}}
-        <img src='/avatar/{{this._id}}' alt=''>
+        <img class='avatar' width="30" height="30" src='/avatar/{{this._id}}' data-id='{{this._id}}' alt=''>
+      {{else}}
+        <img class='avatar' width="30" height="30" src='/images/avatar.png' data-id='{{this._id}}' alt=''>
       {{/if}}
       <a class='' href='/contacts/{{this._id}}' data-nav>{{this.name}}</a>
     </div>

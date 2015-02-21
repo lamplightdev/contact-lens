@@ -125,3 +125,7 @@ a.wsk-button--fab .wsk-icon {
   right: 0;
   margin: 0 auto;
 }
+
+.bulkedit-select:checked + .avatar {
+  opacity: 0.5;
+}

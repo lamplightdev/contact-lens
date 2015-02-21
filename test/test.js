@@ -154,7 +154,7 @@ describe('Base Model', function () {
         return m.sync().then(function () {
           assert.equal(m._members.name, 'testnamechanged');
           assert.equal(m._storage.name, 'testnamechanged');
-          done();
+          return done();
         });
       }).then(null, done);
 
