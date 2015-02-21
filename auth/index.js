@@ -64,7 +64,14 @@ function Google() {
 }
 
 function getPhotosFromGoogle(user, batch) {
-  let jobs = kue.createQueue();
+  let jobs = kue.createQueue({
+    redis: {
+      port: process.env.CONTACTLENS_REDIS_PORT,
+      host: process.env.CONTACTLENS_REDIS_HOST,
+      auth: process.env.CONTACTLENS_REDIS_PASSWORD,
+      db: process.env.CONTACTLENS_REDIS_DB,
+    }
+  });
   batch.forEach((item) => {
     let job = jobs.create('gphoto', {
       link: item.link,
