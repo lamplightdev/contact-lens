@@ -6,7 +6,9 @@
      <h2 class="wsk-card--heading-text">{{currentContact.name}}</h2>
   </div>
   <div class="wsk-card--caption">
-    {{currentContact.email}}
+    {{#each currentContact.emails}}
+      <div>{{this}}</div>
+    {{/each}}
   </div>
   {{#if currentContact.phone}}
   <div class="wsk-card--caption">

@@ -134,11 +134,12 @@ function importFromGoogle(user) {
   }).then( (response) => {
     let result = JSON.parse(response.body);
     let raw = [];
-    result.feed.entry.forEach(function(contact) {
+    result.feed.entry.forEach((contact) => {
       //console.log(contact);
       let name = contact.title.$t;
-      let email = contact.gd$email && contact.gd$email[0] ? contact.gd$email[0].address : null;
       let phone = contact.gd$phoneNumber && contact.gd$phoneNumber[0] ? contact.gd$phoneNumber[0].$t : null;
+
+      let hasEmails = contact.gd$email && contact.gd$email.length > 0;
 
       let photo = false;
       if (contact.link) {
@@ -149,10 +150,16 @@ function importFromGoogle(user) {
         });
       }
 
-      if (name && (email || phone)) {
+      if (name && (hasEmails || phone)) {
+
+        let emails = [];
+        if (hasEmails) {
+          emails = contact.gd$email.map(email => email.address);
+        }
+
         raw.push({
           name: name,
-          email: email,
+          emails: emails,
           phone: phone,
           address: contact.gd$postalAddress && contact.gd$postalAddress[0] ? contact.gd$postalAddress[0].$t : null,
           provider: 'google',
